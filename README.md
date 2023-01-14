@@ -15,5 +15,5 @@ To get started, make sure you have calibrated the zero offsets for the absolute 
 ## Recommended Extensions
 * Colorful Comments v1.1.0 or Higher
 * General Java Extensions
-* Prettier Java
+* Prettier Java v0.1.1
 * Window Colors v1.0.51 or Higher By Stuart Robinson
