@@ -50,15 +50,23 @@ public final class Constants {
 
     // SPARK MAX CAN IDs
     //Driving SPARK MAX IDs
+    //Blue
     public static final int kFrontLeftDrivingCanId = 6;
+    //Black
     public static final int kRearLeftDrivingCanId = 7;
+    //Red
     public static final int kFrontRightDrivingCanId = 9;
+    //Orange
     public static final int kRearRightDrivingCanId = 8;
 
     //Turning SPARK MAX IDs
+    //Blue
     public static final int kFrontLeftTurningCanId = 4;
+    //Black
     public static final int kRearLeftTurningCanId = 3;
+    //Red
     public static final int kFrontRightTurningCanId = 2;
+    //Orange
     public static final int kRearRightTurningCanId = 5;
 
     //Tells the DriveSubsytem whether or not the gyro needs to be reveresed, could be very important
