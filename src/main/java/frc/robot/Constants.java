@@ -16,7 +16,7 @@ import edu.wpi.first.math.util.Units;
  * numerical or boolean
  * constants. This class should not be used for any other purpose. All constants
  * should be declared
- * globally (i.e. public static). Do not put anything functional in this class.
+ * globally (i.e. public static). //!Do not put anything functional in this class.
  *
  * It is advised to statically import this class (or one of its inner classes)
  * wherever the
@@ -78,6 +78,7 @@ public final class Constants {
     // The MAXSwerve module can be configured with one of three pinion gears: 12T, 13T, or 14T.
     // This changes the drive speed of the module (a pinion gear with more teeth will result in a
     // robot that drives faster).
+    //TODO(Caleb) Find CAD file for MAXSwerveModule
     public static final int kDrivingMotorPinionTeeth = 13;
 
     //Taken from SwerveControllerCommand project and are used to create a new ProfiledPIDController
@@ -91,7 +92,7 @@ public final class Constants {
 
     // Calculations required for driving motor conversion factors and feed forward
     public static final double kDrivingMotorFreeSpeedRps = NeoMotorConstants.kFreeSpeedRpm / 60;
-    public static final double kWheelDiameterMeters = 0.0762;
+    public static final double kWheelDiameterMeters = 0.1;
     public static final double kWheelCircumferenceMeters = kWheelDiameterMeters * Math.PI;
     // 45 teeth on the wheel's bevel gear, 22 teeth on the first-stage spur gear, 15 teeth on the bevel pinion
     public static final double kDrivingMotorReduction = (45.0 * 22) / (kDrivingMotorPinionTeeth * 15);
@@ -109,6 +110,7 @@ public final class Constants {
     public static final double kTurningEncoderPositionPIDMinInput = 0; // radians
     public static final double kTurningEncoderPositionPIDMaxInput = kTurningEncoderPositionFactor; // radians
 
+    //TODO(Caleb) Update Driving and Turning PID values to match current robot configuration
     public static final double kDrivingP = 0.04;
     public static final double kDrivingI = 0;
     public static final double kDrivingD = 0;
