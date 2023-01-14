@@ -1,7 +1,7 @@
 # ChargedUp-6358-2023
-The Buhlean Operators code for the 2023 season "Charged Up"
-Now featuring Swerve Drive!
 =======
+The Buhlean Operators code for the 2023 season *Charged Up*
+Now featuring Swerve Drive!
 
 *Note that this is meant to be used with a drivetrain composed of four MAXSwerve Modules, each configured with two SPARKS MAX, a NEO as the driving motor, a PG71 as the turning motor, and a REV Through Bore Encoder as the absolute turning encoder.
 
