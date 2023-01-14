@@ -13,6 +13,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.PS4Controller.Button;
 import frc.robot.Constants.AutoConstants;
@@ -32,11 +33,14 @@ import java.util.List;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems
+  // The Robot's Subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
 
-  // The driver's controller
+  // The Driver's Controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
+
+  // The CoPilots Controller
+  Joystick m_copilotController = new Joystick(OIConstants.kCoPilotControllerPort);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -45,7 +49,8 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
-    // Configure default commands
+    // Configure default commands --> This is how the robot drives, should not need to be adjusted, if the robot is driving
+    //improperly, there is a greater likelyhood that it is somewhere else in the code *cough* MAXSwerveModule.java *cough*
     m_robotDrive.setDefaultCommand(
         // The left stick controls translation of the robot.
         // Turning is controlled by the X axis of the right stick.

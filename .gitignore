@@ -137,7 +137,16 @@ $RECYCLE.BIN/
 
 ### Gradle ###
 .gradle
+/.gradle
 /build/
+
+## VSCode History Exten ##
+.history
+/.history
+
+## VSCode Window Color Exten ##
+.vscode
+/.vscode
 
 # Ignore Gradle GUI config
 gradle-app.setting

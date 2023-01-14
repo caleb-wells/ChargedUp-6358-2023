@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.math.geometry.Translation2d;
@@ -19,7 +18,6 @@ import edu.wpi.first.math.util.Units;
  * should be declared
  * globally (i.e. public static). Do not put anything functional in this class.
  *
- * <p>
  * It is advised to statically import this class (or one of its inner classes)
  * wherever the
  * constants are needed, to reduce verbosity.
@@ -33,8 +31,10 @@ public final class Constants {
 
     // Chassis configuration
     public static final double kTrackWidth = Units.inchesToMeters(26.5);
+
     // Distance between centers of right and left wheels on robot
     public static final double kWheelBase = Units.inchesToMeters(26.5);
+
     // Distance between front and back wheels on robot
     public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
         new Translation2d(kWheelBase / 2, kTrackWidth / 2),
@@ -49,16 +49,19 @@ public final class Constants {
     public static final double kBackRightChassisAngularOffset = Math.PI / 2;
 
     // SPARK MAX CAN IDs
+    //Driving SPARK MAX IDs
     public static final int kFrontLeftDrivingCanId = 6;
     public static final int kRearLeftDrivingCanId = 7;
     public static final int kFrontRightDrivingCanId = 9;
     public static final int kRearRightDrivingCanId = 8;
 
+    //Turning SPARK MAX IDs
     public static final int kFrontLeftTurningCanId = 4;
     public static final int kRearLeftTurningCanId = 3;
     public static final int kFrontRightTurningCanId = 2;
     public static final int kRearRightTurningCanId = 5;
 
+    //Tells the DriveSubsytem whether or not the gyro needs to be reveresed, could be very important
     public static final boolean kGyroReversed = false;
   }
 
@@ -119,9 +122,12 @@ public final class Constants {
   }
 
   public static final class OIConstants {
+    //These are the constants for Operator Input, this is where we tell RobotContained what ports to use for Input for both the Pilot(Driver) and CoPilot
     public static final int kDriverControllerPort = 0;
+    public static final int kCoPilotControllerPort = 1;
   }
 
+  //Constants for autonomous mode, this sets the speed and controllers for autonomous, could be very important in the future
   public static final class AutoConstants {
     public static final double kMaxSpeedMetersPerSecond = 3;
     public static final double kMaxAccelerationMetersPerSecondSquared = 3;
@@ -137,6 +143,7 @@ public final class Constants {
         kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
   }
 
+  //Defines NEO Motor Constants, should NEVER be changed, these are specific to the motors that we are using
   public static final class NeoMotorConstants {
     public static final double kFreeSpeedRpm = 5676;
   }
