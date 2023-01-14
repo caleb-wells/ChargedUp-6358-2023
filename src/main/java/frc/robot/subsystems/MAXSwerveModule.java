@@ -83,6 +83,7 @@ public class MAXSwerveModule {
     m_turningPIDController.setPositionPIDWrappingMinInput(ModuleConstants.kTurningEncoderPositionPIDMinInput);
     m_turningPIDController.setPositionPIDWrappingMaxInput(ModuleConstants.kTurningEncoderPositionPIDMaxInput);
 
+    //TODO(Caleb) Update driving gains for robot
     // Set the PID gains for the driving motor. Note these are example gains, and you
     // may need to tune them for your own robot!
     m_drivingPIDController.setP(ModuleConstants.kDrivingP);
@@ -91,7 +92,7 @@ public class MAXSwerveModule {
     m_drivingPIDController.setFF(ModuleConstants.kDrivingFF);
     m_drivingPIDController.setOutputRange(ModuleConstants.kDrivingMinOutput,
         ModuleConstants.kDrivingMaxOutput);
-
+    //TODO(Caleb) Update turning gains for robot
     // Set the PID gains for the turning motor. Note these are example gains, and you
     // may need to tune them for your own robot!
     m_turningPIDController.setP(ModuleConstants.kTurningP);
@@ -156,12 +157,7 @@ public class MAXSwerveModule {
 
     // Command driving and turning SPARKS MAX towards their respective setpoints.
     m_drivingPIDController.setReference(optimizedDesiredState.speedMetersPerSecond, CANSparkMax.ControlType.kVelocity);
-    //~THIS IS THE LINE THAT IS PREVENTING THE TURNING MOTORS FROM MOVING
-    //?m_turningPIDController.setReference(optimizedDesiredState.angle.getRadians(), CANSparkMax.ControlType.kPosition);
     m_turningPIDController.setReference(optimizedDesiredState.speedMetersPerSecond, CANSparkMax.ControlType.kVelocity);
-    //! The Line above is what is preventing the turning motors from turning, setting the reference ensures that the turning motors are where they should be
-    //* All it takes to get this line uncommented is declaring it as a SparkMaxPIDController --> Which would require the use of SPARK Maxes as our Turning motor controllers
-    //TODO find an equivalent method that sets the reference of the VictorSPXs
 
     m_desiredState = desiredState;
   }
