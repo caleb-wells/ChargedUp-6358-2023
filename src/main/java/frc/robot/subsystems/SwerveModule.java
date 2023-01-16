@@ -20,7 +20,7 @@ import com.revrobotics.RelativeEncoder;
 //Constants Import
 import frc.robot.Constants.ModuleConstants;
 
-public class MAXSwerveModule {
+public class SwerveModule {
   //Motor Controllers
   private final CANSparkMax m_drivingSparkMax;
   private final CANSparkMax m_turningSparkMax;
@@ -42,7 +42,7 @@ public class MAXSwerveModule {
    * encoder, and PID controller. This configuration is specific to the REV
    * MAXSwerve Module built with NEOs, SPARKS MAX, and Analog Encoders
    */
-  public MAXSwerveModule(int drivingCANId, int turningCANId, double chassisAngularOffset) {
+  public SwerveModule(int drivingCANId, int turningCANId, double chassisAngularOffset) {
     m_drivingSparkMax = new CANSparkMax(drivingCANId, MotorType.kBrushless);
     m_turningSparkMax = new CANSparkMax(turningCANId, MotorType.kBrushed);
 
@@ -93,8 +93,7 @@ public class MAXSwerveModule {
     m_drivingPIDController.setOutputRange(ModuleConstants.kDrivingMinOutput,
         ModuleConstants.kDrivingMaxOutput);
     //TODO(Caleb) Update turning gains for robot
-    // Set the PID gains for the turning motor. Note these are example gains, and you
-    // may need to tune them for your own robot!
+    // Set the PID gains for the turning motor.
     m_turningPIDController.setP(ModuleConstants.kTurningP);
     m_turningPIDController.setI(ModuleConstants.kTurningI);
     m_turningPIDController.setD(ModuleConstants.kTurningD);
