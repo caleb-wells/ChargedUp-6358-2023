@@ -68,8 +68,8 @@ public class SwerveModule {
     // want these in radians and radians per second to use with WPILib's swerve
     // APIs.
     //TODO(Caleb) Investigate these lines of code to see if I need to reintroduce them and what they would do to the turning algorithms
-    //m_turningEncoder.setPositionOffset(ModuleConstants.kTurningEncoderPositionFactor);
-    //m_turningEncoder.setDistancePerRotation(ModuleConstants.kTurningEncoderVelocityFactor);
+    //?m_turningEncoder.setPositionOffset(ModuleConstants.kTurningEncoderPositionFactor);
+    //?m_turningEncoder.setDistancePerRotation(ModuleConstants.kTurningEncoderVelocityFactor);
 
     // Invert the turning encoder, since the output shaft rotates in the opposite direction of
     // the steering motor in the MAXSwerve Module.
