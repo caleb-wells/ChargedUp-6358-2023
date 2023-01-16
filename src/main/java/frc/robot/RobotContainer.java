@@ -50,7 +50,7 @@ public class RobotContainer {
     configureButtonBindings();
 
     // Configure default commands --> This is how the robot drives, should not need to be adjusted, if the robot is driving
-    //improperly, there is a greater likelyhood that it is somewhere else in the code *cough* MAXSwerveModule.java *cough*
+    // improperly, there is a greater likelyhood that it is somewhere else in the code *cough* SwerveModule.java *cough*
     m_robotDrive.setDefaultCommand(
         // The left stick controls translation of the robot.
         // Turning is controlled by the X axis of the right stick.

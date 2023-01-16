@@ -57,6 +57,8 @@ public class SwerveModule {
     m_drivingPIDController = m_drivingSparkMax.getPIDController();
     m_turningPIDController = m_turningSparkMax.getPIDController();
     m_drivingPIDController.setFeedbackDevice(m_drivingEncoder);
+    //* May not be needed!
+    m_turningPIDController.setFeedbackDevice(m_turningEncoder);
 
     // Apply position and velocity conversion factors for the driving encoder. The
     // native units for position and velocity are rotations and RPM, respectively,

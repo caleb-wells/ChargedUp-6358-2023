@@ -50,7 +50,7 @@ public final class Constants {
     public static final double kBackRightChassisAngularOffset = Math.PI / 2;
 
     // SPARK MAX CAN IDs
-    //Driving SPARK MAX IDs
+    //?Driving SPARK MAX IDs
     //Blue
     public static final int kFrontLeftDrivingCanId = 6;
     //Black
@@ -71,6 +71,7 @@ public final class Constants {
     public static final int kRearRightTurningCanId = 5;
 
     //Tells the DriveSubsytem whether or not the gyro needs to be reveresed, could be very important
+    //TODO(Caleb) Determine if the gyro needs reveresed or not
     public static final boolean kGyroReversed = false;
   }
 
@@ -79,6 +80,7 @@ public final class Constants {
     // This changes the drive speed of the module (a pinion gear with more teeth will result in a
     // robot that drives faster).
     //TODO(Caleb) Find CAD file for MAXSwerveModule
+    //! NEOS
     public static final int kDrivingMotorPinionTeeth = 13;
 
     //Taken from SwerveControllerCommand project and are used to create a new ProfiledPIDController
@@ -88,14 +90,15 @@ public final class Constants {
 
     // Invert the turning encoder, since the output shaft rotates in the opposite direction of
     // the steering motor in the MAXSwerve Module.
+    //TODO(Caleb) Does the Turning Encoder need inverted?
     public static final boolean kTurningEncoderInverted = true;
 
-    // Calculations required for driving motor conversion factors and feed forward
+    //! Calculations required for driving motor conversion factors and feed forward
     public static final double kDrivingMotorFreeSpeedRps = NeoMotorConstants.kFreeSpeedRpm / 60;
     public static final double kWheelDiameterMeters = 0.1;
     public static final double kWheelCircumferenceMeters = kWheelDiameterMeters * Math.PI;
-    // 45 teeth on the wheel's bevel gear, 22 teeth on the first-stage spur gear, 15 teeth on the bevel pinion
-    public static final double kDrivingMotorReduction = (45.0 * 22) / (kDrivingMotorPinionTeeth * 15);
+    //! 45 teeth on the wheel's bevel gear, 22 teeth on the first-stage spur gear, 15 teeth on the bevel pinion
+    public static final double kDrivingMotorReduction = (40.0 * 20) / (kDrivingMotorPinionTeeth * 15);
     public static final double kDriveWheelFreeSpeedRps = (kDrivingMotorFreeSpeedRps * kWheelCircumferenceMeters)
         / kDrivingMotorReduction;
 
@@ -125,9 +128,11 @@ public final class Constants {
     public static final double kTurningMinOutput = -1;
     public static final double kTurningMaxOutput = 1;
 
+    //* In case Kelsey ever gets an opinion */
     public static final IdleMode kDrivingMotorIdleMode = IdleMode.kBrake;
     public static final IdleMode kTurningMotorIdleMode = IdleMode.kBrake;
 
+    //? CurrentLimits <- Prevents Brownouts and high battery draw
     public static final int kDrivingMotorCurrentLimit = 50; // amps
     public static final int kTurningMotorCurrentLimit = 20; // amps
   }
@@ -154,7 +159,7 @@ public final class Constants {
         kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
   }
 
-  //Defines NEO Motor Constants, should NEVER be changed, these are specific to the motors that we are using
+  //!Defines NEO Motor Constants, should NEVER be changed, these are specific to the motors that we are using
   public static final class NeoMotorConstants {
     public static final double kFreeSpeedRpm = 5676;
   }
