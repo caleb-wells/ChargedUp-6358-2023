@@ -4,14 +4,25 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+
 
 public class Motors extends SubsystemBase {
   /** Creates a new Motors. */
-  public Motors() {}
+
+  public Spark armMotor = new Spark(Constants.ExtraMotorConstants.armMotor);
+  public Motors() {
+  }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
   }
-}
+
+  public void runMotor(Spark motor, double speed){
+    motor.set(speed);
+  }
+  }
+
