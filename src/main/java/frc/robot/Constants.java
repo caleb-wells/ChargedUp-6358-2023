@@ -10,6 +10,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -162,5 +163,9 @@ public final class Constants {
   //!Defines NEO Motor Constants, should NEVER be changed, these are specific to the motors that we are using
   public static final class NeoMotorConstants {
     public static final double kFreeSpeedRpm = 5676;
+  }
+
+  public static final class ExtraMotorConstants {
+    public static final int armMotor = 1;
   }
 }
