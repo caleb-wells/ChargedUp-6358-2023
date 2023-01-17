@@ -82,8 +82,23 @@ public class RobotContainer {
     
     new JoystickButton(m_driverController, 1)
         .whileTrue(new RunCommand(
-            () -> m_motors.runMotor(m_motors.armMotor, .5),
+            () -> m_motors.runMotor(m_motors.armMotor, .75),
              m_motors));
+    
+    new JoystickButton(m_driverController, 1)
+        .whileFalse(new RunCommand(
+            () -> m_motors.runMotor(m_motors.armMotor, 0),
+            m_motors));
+
+    new JoystickButton(m_driverController, 2)
+        .whileTrue(new RunCommand(
+            () -> m_motors.runMotor(m_motors.armMotor, -.75),
+            m_motors));
+        
+    new JoystickButton(m_driverController, 2)
+        .whileFalse(new RunCommand(
+            () -> m_motors.runMotor(m_motors.armMotor, 0),
+            m_motors));
   }
 
   /**
