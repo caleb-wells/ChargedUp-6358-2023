@@ -93,7 +93,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() { 
-    System.out.println("Balancing Gyro Value:" + m_gyro.getGyroAngleY()));
+    System.out.println("Balancing Gyro Y Value:" + m_gyro.getGyroAngleY());
   }
 
   @Override
