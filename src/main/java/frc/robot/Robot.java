@@ -21,6 +21,7 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
+  //TODO(Caleb) Remove after debugging. 
   private ADIS16448_IMU m_gyro = DriveSubsystem.m_balancingGyro;
 
   /**
@@ -93,6 +94,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() { 
+    //TODO(Caleb) Remove after balance gyro debugging
     System.out.println("Balancing Gyro Y Value:" + m_gyro.getGyroAngleY());
   }
 
