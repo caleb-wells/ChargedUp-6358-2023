@@ -4,11 +4,12 @@
 
 package frc.robot;
 
+//~ Other Imports
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.DriveSubsystem;
-import edu.wpi.first.wpilibj.ADIS16448_IMU;
+import frc.robot.subsystems.SwerveModule;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -22,7 +23,10 @@ public class Robot extends TimedRobot {
   private RobotContainer m_robotContainer;
 
   //TODO(Caleb) Remove after debugging. 
-  private ADIS16448_IMU m_gyro = DriveSubsystem.m_balancingGyro;
+  //^private ADIS16448_IMU m_gyro = DriveSubsystem.m_gyro;
+
+
+  public static SwerveModule m_testModule = DriveSubsystem.m_frontLeft;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -53,10 +57,10 @@ public class Robot extends TimedRobot {
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() { }
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() { }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
@@ -93,10 +97,7 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() { 
-    //TODO(Caleb) Remove after balance gyro debugging
-    System.out.println("Balancing Gyro Y Value:" + m_gyro.getGyroAngleY());
-  }
+  public void teleopPeriodic() { }
 
   @Override
   public void testInit() {
