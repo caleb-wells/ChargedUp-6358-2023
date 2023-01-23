@@ -1,34 +1,7 @@
 {
-  "java.configuration.updateBuildConfiguration": "automatic",
-  "java.server.launchMode": "Standard",
-  "files.exclude": {
-    "**/.git": true,
-    "**/.svn": true,
-    "**/.hg": true,
-    "**/CVS": true,
-    "**/.DS_Store": true,
-    "bin/": true,
-    "**/.classpath": true,
-    "**/.project": true,
-    "**/.settings": true,
-    "**/.factorypath": true,
-    "**/*~": true
-  },
-  "java.test.config": [
-    {
-      "name": "WPIlibUnitTests",
-      "workingDirectory": "${workspaceFolder}/build/jni/release",
-      "vmargs": [ "-Djava.library.path=${workspaceFolder}/build/jni/release" ],
-      "env": {
-        "LD_LIBRARY_PATH": "${workspaceFolder}/build/jni/release" ,
-        "DYLD_LIBRARY_PATH": "${workspaceFolder}/build/jni/release"
-      }
-    },
-  ],
-  "java.test.defaultConfig": "WPIlibUnitTests",
-  "workbench.colorCustomizations": {
-    "activityBar.background": "#20009B",
-    "titleBar.activeBackground": "#2D00D9",
-    "titleBar.activeForeground": "#FCFBFF"
-  }
+    "workbench.colorCustomizations": {
+        "activityBar.background": "#452513",
+        "titleBar.activeBackground": "#61341A",
+        "titleBar.activeForeground": "#FDFAF9"
+    }
 }
