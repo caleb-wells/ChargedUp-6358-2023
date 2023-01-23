@@ -15,10 +15,6 @@ import edu.wpi.first.wpilibj.ADIS16448_IMU;
 import frc.robot.Constants.DriveConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-//&Old Gyro Imports
-//~import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-//~import edu.wpi.first.wpilibj.interfaces.Gyro;
-
 public class DriveSubsystem extends SubsystemBase {
   // Create SwerveModules using SwerveModules.java
   //?Blue

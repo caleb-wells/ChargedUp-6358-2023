@@ -29,7 +29,7 @@ public final class Constants {
     //& Driving Parameters - Note that these are not the maximum capable speeds of
     //& the robot, rather, the allowed maximum speeds
     //?Initial value was 4.8 Meters/Second
-    public static final double kMaxSpeedMetersPerSecond = 3.8;
+    public static final double kMaxSpeedMetersPerSecond = 5;
     public static final double kMaxAngularSpeed = 2 * Math.PI; // radians per second
 
     //TODO(Caleb) Double check TrackWidth and WheelBase
@@ -125,7 +125,7 @@ public final class Constants {
     public static final double kDrivingMaxOutput = 1;
 
     public static final double kTurningP = 0.04;
-    public static final double kTurningI = 0;
+    public static final double kTurningI = 1;
     public static final double kTurningD = 0;
     public static final double kTurningFF = 0;
     public static final double kTurningMinOutput = -1;
@@ -136,8 +136,8 @@ public final class Constants {
     public static final IdleMode kTurningMotorIdleMode = IdleMode.kBrake;
 
     //? CurrentLimits <- Prevents Brownouts and high battery draw
-    public static final int kDrivingMotorCurrentLimit = 50; // amps
-    public static final int kTurningMotorCurrentLimit = 20; // amps
+    public static final int kDrivingMotorCurrentLimit = 30; // amps
+    public static final int kTurningMotorCurrentLimit = 10; // amps
   }
 
   public static final class OIConstants {
