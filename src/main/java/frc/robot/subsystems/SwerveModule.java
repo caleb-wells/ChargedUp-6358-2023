@@ -4,12 +4,12 @@
 
 package frc.robot.subsystems;
 
-//^FIRST Math Imports
+//~FIRST Math Imports
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 
-//^REVRobotics Imports
+//~REVRobotics Imports
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -18,7 +18,7 @@ import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.RelativeEncoder;
 
-//^Constants Import
+//~Constants Import
 import frc.robot.Constants.ModuleConstants;
 
 public class SwerveModule {
@@ -30,7 +30,7 @@ public class SwerveModule {
   private final RelativeEncoder m_drivingEncoder;
   private final AbsoluteEncoder m_turningEncoder;
  
-  //~PIDControllers - Must use separate PID Controllers for Driving and Turning
+  //~PIDControllers - Must use separate PID Controllers for Driving and Turning!!
   private final SparkMaxPIDController m_drivingPIDController;
   private final SparkMaxPIDController m_turningPIDController;
 
@@ -38,7 +38,7 @@ public class SwerveModule {
   private double m_chassisAngularOffset = 0;
   private SwerveModuleState m_desiredState = new SwerveModuleState(0.0, new Rotation2d());
 
-  /*
+  /**
    * Constructs a MAXSwerveModule and configures the driving and turning motor,
    * encoder, and PID controller. This configuration is specific to the REV
    * MAXSwerve Module built with NEOs, SPARKS MAX, and Analog Encoders
@@ -62,6 +62,7 @@ public class SwerveModule {
 
     //^Set the feedback devices
     m_drivingPIDController.setFeedbackDevice(m_drivingEncoder);
+    m_turningPIDController.setFeedbackDevice(m_drivingEncoder); //!Potentially Dangerous
 
     // Apply position and velocity conversion factors for the driving encoder. The
     // native units for position and velocity are rotations and RPM, respectively,
@@ -72,8 +73,8 @@ public class SwerveModule {
     // Apply position and velocity conversion factors for the turning encoder. We
     // want these in radians and radians per second to use with WPILib's swerve
     // APIs.
-    m_turningEncoder.setPositionConversionFactor(ModuleConstants.kTurningEncoderPositionFactor);
-    m_turningEncoder.setVelocityConversionFactor(ModuleConstants.kTurningEncoderVelocityFactor);
+    m_turningEncoder.setPositionConversionFactor(ModuleConstants.kTurningEncoderPositionFactor); //!Potentially Dangerous
+    m_turningEncoder.setVelocityConversionFactor(ModuleConstants.kTurningEncoderVelocityFactor);  //!Potentially Dangerous
 
     // Invert the turning encoder, since the output shaft rotates in the opposite direction of
     // the steering motor in the Swerve Module.
@@ -113,11 +114,11 @@ public class SwerveModule {
     m_turningSparkMax.burnFlash();
 
     m_chassisAngularOffset = chassisAngularOffset;
-    m_desiredState.angle = new Rotation2d(m_turningEncoder.getPosition());
+    m_desiredState.angle = new Rotation2d((double) Math.round(m_turningEncoder.getPosition()*100)/100);
     m_drivingEncoder.setPosition(0);
   }
 
-  /*
+  /**
    * Returns the current state of the module.
    *
    * @return The current state of the module.
@@ -125,11 +126,13 @@ public class SwerveModule {
   public SwerveModuleState getState() {
     // Apply chassis angular offset to the encoder position to get the position
     // relative to the chassis.
+    double rawPosition = m_turningEncoder.getPosition();
+    double position = (double) Math.round(rawPosition*100)/100;
     return new SwerveModuleState(m_drivingEncoder.getVelocity(),
-        new Rotation2d(((int) (m_turningEncoder.getPosition()+0.5)) - m_chassisAngularOffset));
+        new Rotation2d((position) - m_chassisAngularOffset));
   }
 
-  /*
+  /**
    * Returns the current position of the module.
    *
    * @return The current position of the module.
@@ -137,23 +140,28 @@ public class SwerveModule {
   public SwerveModulePosition getPosition() {
     // Apply chassis angular offset to the encoder position to get the position
     // relative to the chassis.
+    double rawPosition = m_turningEncoder.getPosition();
+    double position = (double) Math.round(rawPosition*100)/100;
     return new SwerveModulePosition(
         m_drivingEncoder.getPosition(),
-        new Rotation2d(((int) (m_turningEncoder.getPosition()+0.5)) - m_chassisAngularOffset));
+        new Rotation2d((position) - m_chassisAngularOffset));
   }
 
-  /*
-   * Sets the Idle Mode of the Drive Motor, this can be kBrake or kCoast
+  /**
+   * Sets the Idle Mode of the Drive (NEO) Motor, this can be kBrake or kCoast
    */
   public void setDriveIdleMode(IdleMode mode) {
     this.m_drivingSparkMax.setIdleMode(mode);
   }
 
+  /**
+   * Sets the Idle Mode of the Turn (PG) Motor, this can be kBrake or kCoast
+   */
   public void setTurnIdleMode(IdleMode mode) {
     this.m_turningSparkMax.setIdleMode(mode);
   }
 
-  /*
+  /**
    * Sets the desired state for the module.
    *
    * @param desiredState Desired state with speed and angle.
@@ -165,8 +173,10 @@ public class SwerveModule {
     correctedDesiredState.angle = desiredState.angle.plus(Rotation2d.fromRadians(m_chassisAngularOffset));
 
     // Optimize the reference state to avoid spinning further than 90 degrees.
+    double rawPosition = m_turningEncoder.getPosition();
+    double position = (double) Math.round(rawPosition*100)/100;
     SwerveModuleState optimizedDesiredState = SwerveModuleState.optimize(correctedDesiredState,
-        new Rotation2d(((int) (m_turningEncoder.getPosition()+0.5))));
+        new Rotation2d(position));
 
     // Command driving and turning SPARKS MAX towards their respective setpoints.
     m_drivingPIDController.setReference(optimizedDesiredState.speedMetersPerSecond, CANSparkMax.ControlType.kVelocity);

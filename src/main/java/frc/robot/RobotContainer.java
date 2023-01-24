@@ -15,19 +15,19 @@ import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.PS4Controller.Button;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.DriveSubsystem;
-//import frc.robot.subsystems.Motors;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+//import frc.robot.subsystems.Motors;
+
 import java.util.List;
 
-/*
+/**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
  * periodic methods (other than the scheduler calls).  Instead, the structure of the robot
@@ -35,7 +35,8 @@ import java.util.List;
  */
 public class RobotContainer {
   //^ The Robot's Subsystems
-  private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+  public final static DriveSubsystem m_robotDrive = new DriveSubsystem();
+  //? Will uncomment once it is required, currently the SPARK is off of the robot
   //private final Motors m_motors = new Motors();
 
   //^ The Driver's Controller
@@ -44,7 +45,7 @@ public class RobotContainer {
   //^ The CoPilots Controller
   Joystick m_copilotController = new Joystick(OIConstants.kCoPilotControllerPort);
 
-  /*
+  /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
@@ -65,7 +66,7 @@ public class RobotContainer {
             m_robotDrive));
   }
 
-  /*
+  /**
    * Use this method to define your button->command mappings. Buttons can be
    * created by
    * instantiating a {@link edu.wpi.first.wpilibj.GenericHID} or one of its
@@ -75,7 +76,8 @@ public class RobotContainer {
    * {@link JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(m_driverController, Button.kR1.value)
+
+    new JoystickButton(m_driverController, 1)
         .whileTrue(new RunCommand(
             () -> m_robotDrive.setX(),
             m_robotDrive));
@@ -101,7 +103,7 @@ public class RobotContainer {
             m_motors));*/
   }
 
-  /*
+  /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
    * @return the command to run in autonomous
