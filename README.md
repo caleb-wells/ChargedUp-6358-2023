@@ -9,9 +9,9 @@ Note that this is meant to be used with a drivetrain composed of four Swerve and
 To get started, make sure you have calibrated the zero offsets for the absolute encoders in the `REV Hardware Client` using the `Absolute Encoder` tab under the associated turning SPARK MAX devices.
 
 ## Prerequisites
-* SPARK MAX Firmware v1.6.2 - Adds features that are required for swerve
-* REVLib v2023.1.1 - Includes APIs for the new firmware features
-* WPILib v2023.2.1 - Newest version available at the time this repository was created. *Future versions may not be compatible with this project*
+* `SPARK MAX Firmware` **v1.6.2** - Adds features that are required for our swerve
+* `REVLib` **v2023.1.1** - Includes APIs for the new firmware features
+* `WPILib` **v2023.2.1** - Newest version available at the time this repository was created. *Future versions may not be compatible with this project*
 
 ## Recommended Extensions
 * Colorful Comments v1.1.0 or Higher

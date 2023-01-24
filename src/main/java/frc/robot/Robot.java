@@ -8,11 +8,11 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.SetCoastModeCommand;
 //TODO(Caleb) Remove after debugging.
 /*import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.SwerveModule;*/
-import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.commands.SetCoastModeCommand;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -84,7 +84,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
-    RobotContainer.m_robotDrive.setBrakeMode(true); // Enable brake mode
+    RobotContainer.m_robotDrive.setBrakeMode(true); // Enable Brake Mode
   }
 
   /* This function is called periodically during autonomous. */
@@ -100,7 +100,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    RobotContainer.m_robotDrive.setBrakeMode(true); // Enable brake mode
+    RobotContainer.m_robotDrive.setBrakeMode(true); // Enable Brake Mode
   }
 
   /* This function is called periodically during operator control. */
@@ -111,7 +111,7 @@ public class Robot extends TimedRobot {
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
-    RobotContainer.m_robotDrive.setBrakeMode(true); // Enable brake mode
+    RobotContainer.m_robotDrive.setBrakeMode(true); // Enable Brake Mode
   }
 
   /* This function is called periodically during test mode. */
