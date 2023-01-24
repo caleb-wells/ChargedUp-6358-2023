@@ -4,8 +4,8 @@
 
 package frc.robot;
 
-//~ CANSparkMax Imports
-import com.revrobotics.CANSparkMax.IdleMode;
+//~ OLD CANSparkMax Imports
+//import com.revrobotics.CANSparkMax.IdleMode;
 
 //~ Math Imports
 import edu.wpi.first.math.geometry.Translation2d;
