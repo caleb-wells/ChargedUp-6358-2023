@@ -132,8 +132,9 @@ public final class Constants {
     public static final double kTurningMaxOutput = 1;
 
     //* In case Kelsey ever gets an opinion */
-    public static final IdleMode kDrivingMotorIdleMode = IdleMode.kBrake;
-    public static final IdleMode kTurningMotorIdleMode = IdleMode.kBrake;
+    //? Old Braking System
+    //public static final IdleMode kDrivingMotorIdleMode = IdleMode.kBrake;
+    //public static final IdleMode kTurningMotorIdleMode = IdleMode.kBrake;
 
     //? CurrentLimits <- Prevents Brownouts and high battery draw
     public static final int kDrivingMotorCurrentLimit = 30; // amps

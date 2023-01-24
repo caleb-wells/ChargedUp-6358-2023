@@ -104,8 +104,9 @@ public class SwerveModule {
     m_turningPIDController.setFF(ModuleConstants.kTurningFF);
     m_turningPIDController.setOutputRange(ModuleConstants.kTurningMinOutput, ModuleConstants.kTurningMaxOutput);
 
-    m_drivingSparkMax.setIdleMode(ModuleConstants.kDrivingMotorIdleMode);
-    m_turningSparkMax.setIdleMode(ModuleConstants.kTurningMotorIdleMode);
+    //? Old Braking System
+    //m_drivingSparkMax.setIdleMode(ModuleConstants.kDrivingMotorIdleMode);
+    //m_turningSparkMax.setIdleMode(ModuleConstants.kTurningMotorIdleMode);
     m_drivingSparkMax.setSmartCurrentLimit(ModuleConstants.kDrivingMotorCurrentLimit);
 
     //! Save the SPARK MAX configurations. If a SPARK MAX browns out during
