@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkMax.IdleMode;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -55,7 +57,7 @@ public class DriveSubsystem extends SubsystemBase {
           m_rearRight.getPosition()
       });
 
-  /** Creates a new DriveSubsystem. */
+  /* Creates a new DriveSubsystem. */
   public DriveSubsystem() {
   }
 
@@ -72,7 +74,7 @@ public class DriveSubsystem extends SubsystemBase {
         });
   }
 
-  /**
+  /*
    * Returns the currently-estimated pose of the robot.
    *
    * @return The pose.
@@ -81,7 +83,7 @@ public class DriveSubsystem extends SubsystemBase {
     return m_odometry.getPoseMeters();
   }
 
-  /**
+  /*
    * Resets the odometry to the specified pose.
    *
    * @param pose The pose to which to set the odometry.
@@ -98,7 +100,7 @@ public class DriveSubsystem extends SubsystemBase {
         pose);
   }
 
-  /**
+  /*
    * Method to drive the robot using joystick info.
    *
    * @param xSpeed        Speed of the robot in the x direction (forward).
@@ -125,7 +127,27 @@ public class DriveSubsystem extends SubsystemBase {
     m_rearRight.setDesiredState(swerveModuleStates[3]);
   }
 
-  /**
+/*
+ * Sets idle mode to be either brake mode or coast mode.
+ * 
+ * @param brake If true, sets brake mode, otherwise sets coast mode
+ */
+public void setBrakeMode(boolean brake) {
+  //? Determine whether the mode should be Brake or Coast
+  IdleMode mode = brake ? IdleMode.kBrake : IdleMode.kCoast;
+  //&Define Idle Mode for Driving Motors
+  m_frontLeft.setDriveIdleMode(mode);
+  m_frontRight.setDriveIdleMode(mode);
+  m_rearLeft.setDriveIdleMode(mode);
+  m_rearRight.setDriveIdleMode(mode);
+  //&Define Idle Mode for Turning Motors
+  m_frontLeft.setTurnIdleMode(mode);
+  m_frontRight.setTurnIdleMode(mode);
+  m_rearLeft.setTurnIdleMode(mode);
+  m_rearRight.setTurnIdleMode(mode);
+}
+
+  /*
    * Sets the wheels into an X formation to prevent movement.
    */
   public void setX() {
@@ -135,7 +157,7 @@ public class DriveSubsystem extends SubsystemBase {
     m_rearRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
   }
 
-  /**
+  /*
    * Sets the swerve ModuleStates.
    *
    * @param desiredStates The desired SwerveModule states.
@@ -149,7 +171,7 @@ public class DriveSubsystem extends SubsystemBase {
     m_rearRight.setDesiredState(desiredStates[3]);
   }
 
-  /** Resets the drive encoders to currently read a position of 0. */
+  /* Resets the drive encoders to currently read a position of 0. */
   public void resetEncoders() {
     m_frontLeft.resetEncoders();
     m_rearLeft.resetEncoders();
@@ -157,12 +179,12 @@ public class DriveSubsystem extends SubsystemBase {
     m_rearRight.resetEncoders();
   }
 
-  /** Zeroes the heading of the robot. */
+  /* Zeroes the heading of the robot. */
   public void zeroHeading() {
     m_gyro.reset();
   }
 
-  /**
+  /*
    * Returns the heading of the robot.
    *
    * @return the robot's heading in degrees, from -180 to 180
@@ -171,7 +193,7 @@ public class DriveSubsystem extends SubsystemBase {
     return Rotation2d.fromDegrees((int) (m_gyro.getGyroAngleZ() + 0.5)).getDegrees();
   }
 
-  /**
+  /*
    * Returns the turn rate of the robot.
    *
    * @return The turn rate of the robot, in degrees per second

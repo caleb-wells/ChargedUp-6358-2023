@@ -15,6 +15,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.RelativeEncoder;
 
 //^Constants Import
@@ -71,8 +72,8 @@ public class SwerveModule {
     // Apply position and velocity conversion factors for the turning encoder. We
     // want these in radians and radians per second to use with WPILib's swerve
     // APIs.
-    //m_turningEncoder.setPositionConversionFactor(ModuleConstants.kTurningEncoderPositionFactor);
-    //m_turningEncoder.setVelocityConversionFactor(ModuleConstants.kTurningEncoderVelocityFactor);
+    m_turningEncoder.setPositionConversionFactor(ModuleConstants.kTurningEncoderPositionFactor);
+    m_turningEncoder.setVelocityConversionFactor(ModuleConstants.kTurningEncoderVelocityFactor);
 
     // Invert the turning encoder, since the output shaft rotates in the opposite direction of
     // the steering motor in the Swerve Module.
@@ -116,7 +117,7 @@ public class SwerveModule {
     m_drivingEncoder.setPosition(0);
   }
 
-  /**
+  /*
    * Returns the current state of the module.
    *
    * @return The current state of the module.
@@ -128,7 +129,7 @@ public class SwerveModule {
         new Rotation2d(((int) (m_turningEncoder.getPosition()+0.5)) - m_chassisAngularOffset));
   }
 
-  /**
+  /*
    * Returns the current position of the module.
    *
    * @return The current position of the module.
@@ -141,7 +142,18 @@ public class SwerveModule {
         new Rotation2d(((int) (m_turningEncoder.getPosition()+0.5)) - m_chassisAngularOffset));
   }
 
-  /**
+  /*
+   * Sets the Idle Mode of the Drive Motor, this can be kBrake or kCoast
+   */
+  public void setDriveIdleMode(IdleMode mode) {
+    this.m_drivingSparkMax.setIdleMode(mode);
+  }
+
+  public void setTurnIdleMode(IdleMode mode) {
+    this.m_turningSparkMax.setIdleMode(mode);
+  }
+
+  /*
    * Sets the desired state for the module.
    *
    * @param desiredState Desired state with speed and angle.

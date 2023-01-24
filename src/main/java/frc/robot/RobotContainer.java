@@ -44,7 +44,7 @@ public class RobotContainer {
   //^ The CoPilots Controller
   Joystick m_copilotController = new Joystick(OIConstants.kCoPilotControllerPort);
 
-  /**
+  /*
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
@@ -65,7 +65,7 @@ public class RobotContainer {
             m_robotDrive));
   }
 
-  /**
+  /*
    * Use this method to define your button->command mappings. Buttons can be
    * created by
    * instantiating a {@link edu.wpi.first.wpilibj.GenericHID} or one of its
@@ -101,7 +101,7 @@ public class RobotContainer {
             m_motors));*/
   }
 
-  /**
+  /*
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
    * @return the command to run in autonomous
