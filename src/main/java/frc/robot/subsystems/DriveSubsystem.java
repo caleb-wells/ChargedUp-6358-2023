@@ -18,33 +18,33 @@ import frc.robot.Constants.DriveConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveSubsystem extends SubsystemBase {
-  // Create SwerveModules using SwerveModules.java
+  //& Create SwerveModules using SwerveModules.java
   //?Blue
-  public static final SwerveModule m_frontLeft = new SwerveModule(
+  private final SwerveModule m_frontLeft = new SwerveModule(
       DriveConstants.kFrontLeftDrivingCanId,
       DriveConstants.kFrontLeftTurningCanId,
       DriveConstants.kFrontLeftChassisAngularOffset);
 
   //!Red
-  public final SwerveModule m_frontRight = new SwerveModule(
+  private final SwerveModule m_frontRight = new SwerveModule(
       DriveConstants.kFrontRightDrivingCanId,
       DriveConstants.kFrontRightTurningCanId,
       DriveConstants.kFrontRightChassisAngularOffset);
 
   //Black
-  public final SwerveModule m_rearLeft = new SwerveModule(
+  private final SwerveModule m_rearLeft = new SwerveModule(
       DriveConstants.kRearLeftDrivingCanId,
       DriveConstants.kRearLeftTurningCanId,
       DriveConstants.kBackLeftChassisAngularOffset);
 
   //TODO Orange
-  public final SwerveModule m_rearRight = new SwerveModule(
+  private final SwerveModule m_rearRight = new SwerveModule(
       DriveConstants.kRearRightDrivingCanId,
       DriveConstants.kRearRightTurningCanId,
       DriveConstants.kBackRightChassisAngularOffset);
 
   //^Initialize the ADIS16448 IMU Gyro, located in the expansion port on the robot
-  public final static ADIS16448_IMU m_gyro = new ADIS16448_IMU();
+  private final ADIS16448_IMU m_gyro = new ADIS16448_IMU();
 
   // Odometry class for tracking robot pose
   SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(
@@ -110,7 +110,7 @@ public class DriveSubsystem extends SubsystemBase {
    *                      field.
    */
   public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
-    //Adjust input based on max speed
+    // Adjust input based on max speed
     xSpeed *= DriveConstants.kMaxSpeedMetersPerSecond;
     ySpeed *= DriveConstants.kMaxSpeedMetersPerSecond;
     rot *= DriveConstants.kMaxAngularSpeed;

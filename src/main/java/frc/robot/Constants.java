@@ -29,7 +29,7 @@ public final class Constants {
     //& Driving Parameters - Note that these are not the maximum capable speeds of
     //& the robot, rather, the allowed maximum speeds
     //?Initial value was 4.8 Meters/Second
-    public static final double kMaxSpeedMetersPerSecond = 5;
+    public static final double kMaxSpeedMetersPerSecond = 4.8;
     public static final double kMaxAngularSpeed = 2 * Math.PI; // radians per second
 
     //TODO(Caleb) Double check TrackWidth and WheelBase
@@ -84,8 +84,8 @@ public final class Constants {
     //? robot that drives faster).
     //TODO(Caleb) Find CAD file for MAXSwerveModule
     //& NEOS
-    //^ Pinion teeth for drive motor
-    public static final int kDrivingMotorPinionTeeth = 14;
+    //^ Pinion teeth for drive motor - 12 tooth spur gear is driven by CIM Falcon 500 Motor - Per AndyMark
+    public static final int kDrivingMotorPinionTeeth = 12;
 
     //~Taken from SwerveControllerCommand project and are used to create a new ProfiledPIDController
     public static final double kMaxModuleAngularSpeedRadiansPerSecond = 2 * Math.PI;
@@ -133,8 +133,8 @@ public final class Constants {
 
     //* In case Kelsey ever gets an opinion */
     //? Old Braking System
-    //public static final IdleMode kDrivingMotorIdleMode = IdleMode.kBrake;
-    //public static final IdleMode kTurningMotorIdleMode = IdleMode.kBrake;
+    /*public static final IdleMode kDrivingMotorIdleMode = IdleMode.kBrake;
+    public static final IdleMode kTurningMotorIdleMode = IdleMode.kBrake;*/
 
     //? CurrentLimits <- Prevents Brownouts and high battery draw
     public static final int kDrivingMotorCurrentLimit = 30; // amps
@@ -149,7 +149,7 @@ public final class Constants {
 
   //Constants for autonomous mode, this sets the speed and controllers for autonomous, could be very important in the future
   public static final class AutoConstants {
-    public static final double kMaxSpeedMetersPerSecond = 3;
+    public static final double kMaxSpeedMetersPerSecond = 1;
     public static final double kMaxAccelerationMetersPerSecondSquared = 3;
     public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
     public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;

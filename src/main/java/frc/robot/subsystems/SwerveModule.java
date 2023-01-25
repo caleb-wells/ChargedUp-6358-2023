@@ -81,9 +81,9 @@ public class SwerveModule {
     m_turningEncoder.setInverted(ModuleConstants.kTurningEncoderInverted);
 
     //~ Enable PID wrap around for the turning motor. This will allow the PID
-    // controller to go through 0 to get to the setpoint i.e. going from 350 degrees
-    // to 10 degrees will go through 0 rather than the other direction which is a
-    // longer route.
+    //~ controller to go through 0 to get to the setpoint i.e. going from 350 degrees
+    //~ to 10 degrees will go through 0 rather than the other direction which is a
+    //~ longer route.
     m_turningPIDController.setPositionPIDWrappingEnabled(true);
     m_turningPIDController.setPositionPIDWrappingMinInput(ModuleConstants.kTurningEncoderPositionPIDMinInput);
     m_turningPIDController.setPositionPIDWrappingMaxInput(ModuleConstants.kTurningEncoderPositionPIDMaxInput);
@@ -115,7 +115,7 @@ public class SwerveModule {
     m_turningSparkMax.burnFlash();
 
     m_chassisAngularOffset = chassisAngularOffset;
-    m_desiredState.angle = new Rotation2d((double) Math.round(m_turningEncoder.getPosition()*100)/100);
+    m_desiredState.angle = new Rotation2d((m_turningEncoder.getPosition())/100);
     m_drivingEncoder.setPosition(0);
   }
 
@@ -127,10 +127,10 @@ public class SwerveModule {
   public SwerveModuleState getState() {
     // Apply chassis angular offset to the encoder position to get the position
     // relative to the chassis.
-    double rawPosition = m_turningEncoder.getPosition();
-    double position = (double) Math.round(rawPosition*100)/100;
+    /*double rawPosition = m_turningEncoder.getPosition();
+    double position = (double) Math.round(rawPosition*100)/100;*/
     return new SwerveModuleState(m_drivingEncoder.getVelocity(),
-        new Rotation2d((position) - m_chassisAngularOffset));
+        new Rotation2d((m_turningEncoder.getPosition()) - m_chassisAngularOffset));
   }
 
   /**
@@ -141,11 +141,11 @@ public class SwerveModule {
   public SwerveModulePosition getPosition() {
     // Apply chassis angular offset to the encoder position to get the position
     // relative to the chassis.
-    double rawPosition = m_turningEncoder.getPosition();
-    double position = (double) Math.round(rawPosition*100)/100;
+    /*double rawPosition = m_turningEncoder.getPosition();
+    double position = (double) Math.round(rawPosition*100)/100;*/
     return new SwerveModulePosition(
         m_drivingEncoder.getPosition(),
-        new Rotation2d((position) - m_chassisAngularOffset));
+        new Rotation2d((m_turningEncoder.getPosition()) - m_chassisAngularOffset));
   }
 
   /**
@@ -173,17 +173,26 @@ public class SwerveModule {
     correctedDesiredState.speedMetersPerSecond = desiredState.speedMetersPerSecond;
     correctedDesiredState.angle = desiredState.angle.plus(Rotation2d.fromRadians(m_chassisAngularOffset));
 
-    // Optimize the reference state to avoid spinning further than 90 degrees.
-    double rawPosition = m_turningEncoder.getPosition();
-    double position = (double) Math.round(rawPosition*100)/100;
+    //^ Optimize the reference state to avoid spinning further than 90 degrees.
     SwerveModuleState optimizedDesiredState = SwerveModuleState.optimize(correctedDesiredState,
-        new Rotation2d(position));
+        new Rotation2d(m_turningEncoder.getPosition()));
 
-    // Command driving and turning SPARKS MAX towards their respective setpoints.
+    //^ Command driving and turning SPARKS MAX towards their respective setpoints.
     m_drivingPIDController.setReference(optimizedDesiredState.speedMetersPerSecond, CANSparkMax.ControlType.kVelocity);
-    m_turningPIDController.setReference(optimizedDesiredState.speedMetersPerSecond, CANSparkMax.ControlType.kVelocity);
+    m_turningPIDController.setReference(optimizedDesiredState.angle.getRadians(), CANSparkMax.ControlType.kPosition);
 
     m_desiredState = desiredState;
+  }
+
+  public double getEncoderValue() {
+    double rawValue = m_turningEncoder.getPosition();
+    double value = (double) Math.round(rawValue*100)/100;
+    return value;
+  }
+
+  public double getRawEncoderValue() {
+    double rawValue = m_turningEncoder.getPosition();
+    return rawValue;
   }
 
   /* Zeroes all the SwerveModule encoders. */

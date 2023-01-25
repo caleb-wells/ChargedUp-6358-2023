@@ -27,7 +27,7 @@ public class Robot extends TimedRobot {
 
   //TODO(Caleb) Remove after debugging. 
   //^private ADIS16448_IMU m_gyro = DriveSubsystem.m_gyro;
-  //^public static SwerveModule m_testModule = DriveSubsystem.m_frontLeft;
+  //^public static SwerveModule m_testModule = DriveSubsystem.m_frontRight;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -41,7 +41,7 @@ public class Robot extends TimedRobot {
     // Turn brake mode off shortly after the robot is disabled
     new Trigger(this::isEnabled)
       .negate()
-      .debounce(5)
+      .debounce(6)
       .whileTrue(new SetCoastModeCommand(RobotContainer.m_robotDrive));
   }
 
@@ -84,7 +84,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
-    RobotContainer.m_robotDrive.setBrakeMode(true); // Enable Brake Mode
+    RobotContainer.m_robotDrive.setBrakeMode(true); //? Enable Brake Mode
   }
 
   /* This function is called periodically during autonomous. */
@@ -100,7 +100,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    RobotContainer.m_robotDrive.setBrakeMode(true); // Enable Brake Mode
+    RobotContainer.m_robotDrive.setBrakeMode(true); //? Enable Brake Mode
   }
 
   /* This function is called periodically during operator control. */
@@ -111,7 +111,7 @@ public class Robot extends TimedRobot {
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
-    RobotContainer.m_robotDrive.setBrakeMode(true); // Enable Brake Mode
+    RobotContainer.m_robotDrive.setBrakeMode(true); //? Enable Brake Mode
   }
 
   /* This function is called periodically during test mode. */
