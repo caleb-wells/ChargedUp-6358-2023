@@ -56,7 +56,7 @@ public final class Constants {
     //&Driving SPARK MAX IDs
     //?Blue
     public static final int kFrontLeftDrivingCanId = 6;
-    //Black
+    //^Yellow
     public static final int kRearLeftDrivingCanId = 7;
     //!Red
     public static final int kFrontRightDrivingCanId = 9;
@@ -66,7 +66,7 @@ public final class Constants {
     //&Turning SPARK MAX IDs
     //?Blue
     public static final int kFrontLeftTurningCanId = 4;
-    //Black
+    //^Yellow
     public static final int kRearLeftTurningCanId = 3;
     //!Red
     public static final int kFrontRightTurningCanId = 2;
@@ -75,7 +75,7 @@ public final class Constants {
 
     //!Tells the DriveSubsytem whether or not the gyro needs to be reveresed, could be very important
     //TODO(Caleb) Determine if the gyro needs reveresed or not
-    public static final boolean kGyroReversed = false;
+    public static final boolean kGyroReversed = true;
   }
 
   public static final class ModuleConstants {
@@ -124,7 +124,7 @@ public final class Constants {
     public static final double kDrivingMinOutput = -1;
     public static final double kDrivingMaxOutput = 1;
 
-    public static final double kTurningP = 0.04;
+    public static final double kTurningP = 0.1;
     public static final double kTurningI = 0;
     public static final double kTurningD = 0;
     public static final double kTurningFF = 0;
@@ -137,8 +137,8 @@ public final class Constants {
     public static final IdleMode kTurningMotorIdleMode = IdleMode.kBrake;*/
 
     //? CurrentLimits <- Prevents Brownouts and high battery draw
-    public static final int kDrivingMotorCurrentLimit = 30; // amps
-    public static final int kTurningMotorCurrentLimit = 10; // amps
+    public static final int kDrivingMotorCurrentLimit = 50; // amps
+    public static final int kTurningMotorCurrentLimit = 30; // amps
   }
 
   public static final class OIConstants {

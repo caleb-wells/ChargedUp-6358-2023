@@ -62,7 +62,7 @@ public class SwerveModule {
 
     //^Set the feedback devices
     m_drivingPIDController.setFeedbackDevice(m_drivingEncoder);
-    m_turningPIDController.setFeedbackDevice(m_drivingEncoder); //!Potentially Dangerous
+    m_turningPIDController.setFeedbackDevice(m_turningEncoder); //* Fixed 
 
     // Apply position and velocity conversion factors for the driving encoder. The
     // native units for position and velocity are rotations and RPM, respectively,
@@ -88,15 +88,12 @@ public class SwerveModule {
     m_turningPIDController.setPositionPIDWrappingMinInput(ModuleConstants.kTurningEncoderPositionPIDMinInput);
     m_turningPIDController.setPositionPIDWrappingMaxInput(ModuleConstants.kTurningEncoderPositionPIDMaxInput);
 
-    //TODO(Caleb) Update driving gains for robot
-    // Set the PID gains for the driving motor. Note these are example gains, and you
-    // may need to tune them for your own robot!
+    //^ Set the PID gains for the driving motor.
     m_drivingPIDController.setP(ModuleConstants.kDrivingP);
     m_drivingPIDController.setI(ModuleConstants.kDrivingI);
     m_drivingPIDController.setD(ModuleConstants.kDrivingD);
     m_drivingPIDController.setFF(ModuleConstants.kDrivingFF);
     m_drivingPIDController.setOutputRange(ModuleConstants.kDrivingMinOutput, ModuleConstants.kDrivingMaxOutput);
-    //TODO(Caleb) Update turning gains for robot
     //^ Set the PID gains for the turning motor.
     m_turningPIDController.setP(ModuleConstants.kTurningP);
     m_turningPIDController.setI(ModuleConstants.kTurningI);
