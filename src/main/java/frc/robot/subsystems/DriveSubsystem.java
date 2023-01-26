@@ -31,7 +31,7 @@ public class DriveSubsystem extends SubsystemBase {
       DriveConstants.kFrontRightTurningCanId,
       DriveConstants.kFrontRightChassisAngularOffset);
 
-  //^Yellwo
+  //^Yellow
   private final SwerveModule m_rearLeft = new SwerveModule(
       DriveConstants.kRearLeftDrivingCanId,
       DriveConstants.kRearLeftTurningCanId,
@@ -43,10 +43,12 @@ public class DriveSubsystem extends SubsystemBase {
       DriveConstants.kRearRightTurningCanId,
       DriveConstants.kBackRightChassisAngularOffset);
 
-  //^Initialize the ADIS16448 IMU Gyro, located in the expansion port on the robot
+  //~Initialize the ADIS16448 IMU Gyro, located in the expansion port on the RoboRio
   private final ADIS16448_IMU m_gyro = new ADIS16448_IMU();
 
-  // Odometry class for tracking robot pose
+  //~Initialize the ADIS16470 IMU Gyro, located in the SPI Port on the RoboRio
+
+  //^ Odometry class for tracking robot pose
   SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(
       DriveConstants.kDriveKinematics,
       Rotation2d.fromDegrees(m_gyro.getGyroAngleZ()),
@@ -57,7 +59,7 @@ public class DriveSubsystem extends SubsystemBase {
           m_rearRight.getPosition()
       });
 
-  /* Creates a new DriveSubsystem. */
+  /* Creates a new DriveSubsystem. Nothing goes in here...for now.*/
   public DriveSubsystem() {
   }
 
@@ -160,7 +162,7 @@ public void setBrakeMode(boolean brake) {
   /**
    * Sets the wheels to face the 'same' direction of 45 degrees, this is primarily used for debugging
    */
-  public void setStraight() {
+  public void setToZero() {
     m_frontLeft.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(0)));
     m_frontRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(0)));
     m_rearLeft.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(0)));

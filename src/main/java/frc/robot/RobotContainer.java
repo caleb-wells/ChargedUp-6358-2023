@@ -23,7 +23,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-//import frc.robot.subsystems.Motors;
+//import frc.robot.subsystems.Motors; //& Uncomment when it is time to use additional motors
 
 import java.util.List;
 
@@ -46,7 +46,7 @@ public class RobotContainer {
   Joystick m_copilotController = new Joystick(OIConstants.kCoPilotControllerPort);
 
   /**
-   * The container for the robot. Contains subsystems, OI devices, and commands.
+   * *The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     //^ Configure the button bindings
@@ -79,7 +79,7 @@ public class RobotContainer {
 
     new JoystickButton(m_driverController, 1)
         .whileTrue(new RunCommand(
-            () -> m_robotDrive.setStraight(),
+            () -> m_robotDrive.setToZero(),
             m_robotDrive));
     
     /*new JoystickButton(m_driverController, 1)

@@ -29,7 +29,7 @@ public final class Constants {
     //& Driving Parameters - Note that these are not the maximum capable speeds of
     //& the robot, rather, the allowed maximum speeds
     //?Initial value was 4.8 Meters/Second
-    public static final double kMaxSpeedMetersPerSecond = 4.8;
+    public static final double kMaxSpeedMetersPerSecond = 5;
     public static final double kMaxAngularSpeed = 2 * Math.PI; // radians per second
 
     //TODO(Caleb) Double check TrackWidth and WheelBase

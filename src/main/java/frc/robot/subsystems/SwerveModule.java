@@ -107,7 +107,7 @@ public class SwerveModule {
     m_drivingSparkMax.setSmartCurrentLimit(ModuleConstants.kDrivingMotorCurrentLimit);
 
     //! Save the SPARK MAX configurations. If a SPARK MAX browns out during
-    //! operation, it will maintain the above configurations.
+    //! operation, it will maintain the above configurations. DO NOT REMOVE
     m_drivingSparkMax.burnFlash();
     m_turningSparkMax.burnFlash();
 
@@ -124,8 +124,6 @@ public class SwerveModule {
   public SwerveModuleState getState() {
     // Apply chassis angular offset to the encoder position to get the position
     // relative to the chassis.
-    /*double rawPosition = m_turningEncoder.getPosition();
-    double position = (double) Math.round(rawPosition*100)/100;*/
     return new SwerveModuleState(m_drivingEncoder.getVelocity(),
         new Rotation2d((m_turningEncoder.getPosition()) - m_chassisAngularOffset));
   }
@@ -138,8 +136,6 @@ public class SwerveModule {
   public SwerveModulePosition getPosition() {
     // Apply chassis angular offset to the encoder position to get the position
     // relative to the chassis.
-    /*double rawPosition = m_turningEncoder.getPosition();
-    double position = (double) Math.round(rawPosition*100)/100;*/
     return new SwerveModulePosition(
         m_drivingEncoder.getPosition(),
         new Rotation2d((m_turningEncoder.getPosition()) - m_chassisAngularOffset));
@@ -153,7 +149,7 @@ public class SwerveModule {
   }
 
   /**
-   * Sets the Idle Mode of the Turn (PG) Motor, this can be kBrake or kCoast
+   * *Sets the Idle Mode of the Turn (PG) Motor, this can be kBrake or kCoast
    */
   public void setTurnIdleMode(IdleMode mode) {
     this.m_turningSparkMax.setIdleMode(mode);
@@ -181,16 +177,16 @@ public class SwerveModule {
     m_desiredState = desiredState;
   }
 
-  public double getEncoderValue() {
+  /*public double getEncoderValue() {
     double rawValue = m_turningEncoder.getPosition();
     double value = (double) Math.round(rawValue*100)/100;
     return value;
-  }
+  }*/
 
-  public double getRawEncoderValue() {
+  /*public double getRawEncoderValue() {
     double rawValue = m_turningEncoder.getPosition();
     return rawValue;
-  }
+  }*/
 
   /* Zeroes all the SwerveModule encoders. */
   public void resetEncoders() {
