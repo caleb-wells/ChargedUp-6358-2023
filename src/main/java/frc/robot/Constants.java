@@ -4,9 +4,6 @@
 
 package frc.robot;
 
-//~ OLD CANSparkMax Imports
-//import com.revrobotics.CANSparkMax.IdleMode;
-
 //~ Math Imports
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -29,7 +26,7 @@ public final class Constants {
     //& Driving Parameters - Note that these are not the maximum capable speeds of
     //& the robot, rather, the allowed maximum speeds
     //?Initial value was 4.8 Meters/Second
-    public static final double kMaxSpeedMetersPerSecond = 5;
+    public static final double kMaxSpeedMetersPerSecond = 4.8;
     public static final double kMaxAngularSpeed = 2 * Math.PI; // radians per second
 
     //TODO(Caleb) Double check TrackWidth and WheelBase
@@ -48,7 +45,7 @@ public final class Constants {
 
     //^ Angular offsets of the modules relative to the chassis in radians
     public static final double kFrontLeftChassisAngularOffset = -Math.PI / 2;
-    public static final double kFrontRightChassisAngularOffset = 0;
+    public static final double kFrontRightChassisAngularOffset = -Math.PI;//TODO Change back to zero if having difficulties
     public static final double kBackLeftChassisAngularOffset = Math.PI;
     public static final double kBackRightChassisAngularOffset = Math.PI / 2;
 
@@ -75,7 +72,7 @@ public final class Constants {
 
     //!Tells the DriveSubsytem whether or not the gyro needs to be reveresed, could be very important
     //TODO(Caleb) Determine if the gyro needs reveresed or not
-    public static final boolean kGyroReversed = true;
+    public static final boolean kGyroReversed = false;
   }
 
   public static final class ModuleConstants {
@@ -124,7 +121,7 @@ public final class Constants {
     public static final double kDrivingMinOutput = -1;
     public static final double kDrivingMaxOutput = 1;
 
-    public static final double kTurningP = 0.1;
+    public static final double kTurningP = 1;
     public static final double kTurningI = 0;
     public static final double kTurningD = 0;
     public static final double kTurningFF = 0;
@@ -138,7 +135,7 @@ public final class Constants {
 
     //? CurrentLimits <- Prevents Brownouts and high battery draw
     public static final int kDrivingMotorCurrentLimit = 50; // amps
-    public static final int kTurningMotorCurrentLimit = 30; // amps
+    public static final int kTurningMotorCurrentLimit = 20; // amps
   }
 
   public static final class OIConstants {

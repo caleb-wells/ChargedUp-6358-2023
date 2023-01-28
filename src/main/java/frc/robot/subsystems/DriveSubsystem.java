@@ -14,44 +14,39 @@ import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.ADIS16448_IMU;
+//import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import frc.robot.Constants.DriveConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveSubsystem extends SubsystemBase {
-  //& Create SwerveModules using SwerveModules.java
-  //?Blue
+  // Create MAXSwerveModules
   private final SwerveModule m_frontLeft = new SwerveModule(
       DriveConstants.kFrontLeftDrivingCanId,
       DriveConstants.kFrontLeftTurningCanId,
       DriveConstants.kFrontLeftChassisAngularOffset);
 
-  //!Red
   private final SwerveModule m_frontRight = new SwerveModule(
       DriveConstants.kFrontRightDrivingCanId,
       DriveConstants.kFrontRightTurningCanId,
       DriveConstants.kFrontRightChassisAngularOffset);
 
-  //^Yellow
   private final SwerveModule m_rearLeft = new SwerveModule(
       DriveConstants.kRearLeftDrivingCanId,
       DriveConstants.kRearLeftTurningCanId,
       DriveConstants.kBackLeftChassisAngularOffset);
 
-  //TODO Orange
   private final SwerveModule m_rearRight = new SwerveModule(
       DriveConstants.kRearRightDrivingCanId,
       DriveConstants.kRearRightTurningCanId,
       DriveConstants.kBackRightChassisAngularOffset);
 
-  //~Initialize the ADIS16448 IMU Gyro, located in the expansion port on the RoboRio
+  // The gyro sensor
   private final ADIS16448_IMU m_gyro = new ADIS16448_IMU();
 
-  //~Initialize the ADIS16470 IMU Gyro, located in the SPI Port on the RoboRio
-
-  //^ Odometry class for tracking robot pose
+  // Odometry class for tracking robot pose
   SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(
       DriveConstants.kDriveKinematics,
-      Rotation2d.fromDegrees(m_gyro.getGyroAngleZ()),
+      Rotation2d.fromDegrees(m_gyro.getAngle()),
       new SwerveModulePosition[] {
           m_frontLeft.getPosition(),
           m_frontRight.getPosition(),
@@ -59,7 +54,7 @@ public class DriveSubsystem extends SubsystemBase {
           m_rearRight.getPosition()
       });
 
-  /* Creates a new DriveSubsystem. Nothing goes in here...for now.*/
+  /** Creates a new DriveSubsystem. */
   public DriveSubsystem() {
   }
 
@@ -67,7 +62,7 @@ public class DriveSubsystem extends SubsystemBase {
   public void periodic() {
     // Update the odometry in the periodic block
     m_odometry.update(
-        Rotation2d.fromDegrees(m_gyro.getGyroAngleZ()),
+        Rotation2d.fromDegrees(m_gyro.getAngle()),
         new SwerveModulePosition[] {
             m_frontLeft.getPosition(),
             m_frontRight.getPosition(),
@@ -92,7 +87,7 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public void resetOdometry(Pose2d pose) {
     m_odometry.resetPosition(
-        Rotation2d.fromDegrees(m_gyro.getGyroAngleZ()),
+        Rotation2d.fromDegrees(m_gyro.getAngle()),
         new SwerveModulePosition[] {
             m_frontLeft.getPosition(),
             m_frontRight.getPosition(),
@@ -119,7 +114,7 @@ public class DriveSubsystem extends SubsystemBase {
 
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(
         fieldRelative
-            ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, Rotation2d.fromDegrees(m_gyro.getGyroAngleZ()))
+            ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, Rotation2d.fromDegrees(m_gyro.getAngle()))
             : new ChassisSpeeds(xSpeed, ySpeed, rot));
     SwerveDriveKinematics.desaturateWheelSpeeds(
         swerveModuleStates, DriveConstants.kMaxSpeedMetersPerSecond);
@@ -129,26 +124,6 @@ public class DriveSubsystem extends SubsystemBase {
     m_rearRight.setDesiredState(swerveModuleStates[3]);
   }
 
-/**
- * Sets idle mode to be either brake mode or coast mode.
- * 
- * @param brake If true, sets brake mode, otherwise sets coast mode
- */
-public void setBrakeMode(boolean brake) {
-  //? Determine whether the mode should be Brake or Coast
-  IdleMode mode = brake ? IdleMode.kBrake : IdleMode.kCoast;
-  //&Define Idle Mode for Driving Motors
-  m_frontLeft.setDriveIdleMode(mode);
-  m_frontRight.setDriveIdleMode(mode);
-  m_rearLeft.setDriveIdleMode(mode);
-  m_rearRight.setDriveIdleMode(mode);
-  //&Define Idle Mode for Turning Motors
-  m_frontLeft.setTurnIdleMode(mode);
-  m_frontRight.setTurnIdleMode(mode);
-  m_rearLeft.setTurnIdleMode(mode);
-  m_rearRight.setTurnIdleMode(mode);
-}
-
   /**
    * Sets the wheels into an X formation to prevent movement.
    */
@@ -157,16 +132,6 @@ public void setBrakeMode(boolean brake) {
     m_frontRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)));
     m_rearLeft.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)));
     m_rearRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
-  }
-
-  /**
-   * Sets the wheels to face the 'same' direction of 45 degrees, this is primarily used for debugging
-   */
-  public void setToZero() {
-    m_frontLeft.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(0)));
-    m_frontRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(0)));
-    m_rearLeft.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(0)));
-    m_rearRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(0)));
   }
 
   /**
@@ -183,7 +148,7 @@ public void setBrakeMode(boolean brake) {
     m_rearRight.setDesiredState(desiredStates[3]);
   }
 
-  /* Resets the drive encoders to currently read a position of 0. */
+  /** Resets the drive encoders to currently read a position of 0. */
   public void resetEncoders() {
     m_frontLeft.resetEncoders();
     m_rearLeft.resetEncoders();
@@ -191,9 +156,24 @@ public void setBrakeMode(boolean brake) {
     m_rearRight.resetEncoders();
   }
 
-  /* Zeroes the heading of the robot. */
+  /** Zeroes the heading of the robot. */
   public void zeroHeading() {
     m_gyro.reset();
+  }
+
+  public void setBrakeMode(boolean brake) {
+    //? Determine whether the mode should be Brake or Coast
+    IdleMode mode = brake ? IdleMode.kBrake : IdleMode.kCoast;
+    //&Define Idle Mode for Driving Motors
+    m_frontLeft.setDriveIdleMode(mode);
+    m_frontRight.setDriveIdleMode(mode);
+    m_rearLeft.setDriveIdleMode(mode);
+    m_rearRight.setDriveIdleMode(mode);
+    //&Define Idle Mode for Turning Motors
+    m_frontLeft.setTurnIdleMode(IdleMode.kCoast);
+    m_frontRight.setTurnIdleMode(IdleMode.kCoast);
+    m_rearLeft.setTurnIdleMode(IdleMode.kCoast);
+    m_rearRight.setTurnIdleMode(IdleMode.kCoast);
   }
 
   /**
@@ -202,7 +182,7 @@ public void setBrakeMode(boolean brake) {
    * @return the robot's heading in degrees, from -180 to 180
    */
   public double getHeading() {
-    return Rotation2d.fromDegrees(m_gyro.getGyroAngleZ()).getDegrees();
+    return Rotation2d.fromDegrees(m_gyro.getAngle()).getDegrees();
   }
 
   /**
@@ -211,6 +191,6 @@ public void setBrakeMode(boolean brake) {
    * @return The turn rate of the robot, in degrees per second
    */
   public double getTurnRate() {
-    return (m_gyro.getGyroAngleZ()) * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
+    return m_gyro.getRate() * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
   }
 }
