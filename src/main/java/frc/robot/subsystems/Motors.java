@@ -13,8 +13,8 @@ public class Motors extends SubsystemBase {
   /* Creates a new Motors. */
 
   public Spark armMotor = new Spark(Constants.ExtraMotorConstants.armMotor);
-  public Motors() {
-  }
+
+  public Motors() { }
 
   @Override
   public void periodic() {

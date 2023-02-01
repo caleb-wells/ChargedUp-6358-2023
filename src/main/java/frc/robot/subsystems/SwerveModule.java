@@ -29,7 +29,7 @@ public class SwerveModule {
   //~Encoders - Relative for driving, and Absolute for turning -- ALWAYS
   private final RelativeEncoder m_drivingEncoder;
   private final AbsoluteEncoder m_turningEncoder;
- 
+
   //~PIDControllers - Must use separate PID Controllers for Driving and Turning!!
   private final SparkMaxPIDController m_drivingPIDController;
   private final SparkMaxPIDController m_turningPIDController;
@@ -54,7 +54,7 @@ public class SwerveModule {
 
     //^ Setup encoders and PID controllers for the driving and turning SPARKS MAX.
     m_drivingEncoder = m_drivingSparkMax.getEncoder();
-    m_turningEncoder = m_turningSparkMax.getAbsoluteEncoder(Type.kDutyCycle);
+    m_turningEncoder = m_turningSparkMax.getAbsoluteEncoder(Type.kDutyCycle); //! Buggy
 
     //^Create PID Controllers
     m_drivingPIDController = m_drivingSparkMax.getPIDController();
@@ -62,7 +62,7 @@ public class SwerveModule {
 
     //^Set the feedback devices
     m_drivingPIDController.setFeedbackDevice(m_drivingEncoder);
-    m_turningPIDController.setFeedbackDevice(m_turningEncoder); //* Fixed 
+    m_turningPIDController.setFeedbackDevice(m_turningEncoder);
 
     // Apply position and velocity conversion factors for the driving encoder. The
     // native units for position and velocity are rotations and RPM, respectively,
@@ -73,8 +73,8 @@ public class SwerveModule {
     // Apply position and velocity conversion factors for the turning encoder. We
     // want these in radians and radians per second to use with WPILib's swerve
     // APIs.
-    m_turningEncoder.setPositionConversionFactor(ModuleConstants.kTurningEncoderPositionFactor); //!Potentially Dangerous
-    m_turningEncoder.setVelocityConversionFactor(ModuleConstants.kTurningEncoderVelocityFactor);  //!Potentially Dangerous
+    m_turningEncoder.setPositionConversionFactor(ModuleConstants.kTurningEncoderPositionFactor); 
+    m_turningEncoder.setVelocityConversionFactor(ModuleConstants.kTurningEncoderVelocityFactor);
 
     // Invert the turning encoder, since the output shaft rotates in the opposite direction of
     // the steering motor in the Swerve Module.
@@ -104,6 +104,7 @@ public class SwerveModule {
     //? Old Braking System
     //m_drivingSparkMax.setIdleMode(ModuleConstants.kDrivingMotorIdleMode);
     //m_turningSparkMax.setIdleMode(ModuleConstants.kTurningMotorIdleMode);
+    
     m_drivingSparkMax.setSmartCurrentLimit(ModuleConstants.kDrivingMotorCurrentLimit);
     m_turningSparkMax.setSmartCurrentLimit(ModuleConstants.kTurningMotorCurrentLimit);
 
@@ -154,6 +155,10 @@ public class SwerveModule {
    */
   public void setTurnIdleMode(IdleMode mode) {
     this.m_turningSparkMax.setIdleMode(mode);
+  }
+
+  public double getTurningEncoderValue() {
+    return this.m_turningEncoder.getPosition();
   }
 
   /**

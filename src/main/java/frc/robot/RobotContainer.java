@@ -57,12 +57,13 @@ public class RobotContainer {
     m_robotDrive.setDefaultCommand(
         // The left stick controls translation of the robot.
         // Turning is controlled by the X axis of the right stick.
+        //! Keep Robot Centric until debugging has finished
         new RunCommand(
             () -> m_robotDrive.drive(
-                MathUtil.applyDeadband(-m_driverController.getLeftY(), 0.06),
-                MathUtil.applyDeadband(-m_driverController.getLeftX(), 0.06),
-                MathUtil.applyDeadband(-m_driverController.getRightX(), 0.06),
-                true),
+                MathUtil.applyDeadband(-m_driverController.getLeftY(), 0.10),
+                MathUtil.applyDeadband(-m_driverController.getLeftX(), 0.10),
+                MathUtil.applyDeadband(-m_driverController.getRightX(), 0.10),
+                false),
             m_robotDrive));
   }
 

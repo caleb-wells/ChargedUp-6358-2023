@@ -26,7 +26,7 @@ public class DriveSubsystem extends SubsystemBase {
       DriveConstants.kFrontLeftChassisAngularOffset);
 
   //!Red
-  private final SwerveModule m_frontRight = new SwerveModule(
+  public static final SwerveModule m_frontRight = new SwerveModule(
       DriveConstants.kFrontRightDrivingCanId,
       DriveConstants.kFrontRightTurningCanId,
       DriveConstants.kFrontRightChassisAngularOffset);
@@ -114,9 +114,9 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
     // Adjust input based on max speed
-    xSpeed *= DriveConstants.kMaxSpeedMetersPerSecond;
-    ySpeed *= DriveConstants.kMaxSpeedMetersPerSecond;
-    rot *= DriveConstants.kMaxAngularSpeed;
+    xSpeed *= DriveConstants.kMaxSpeedMetersPerSecond; //& Gives you the amount of input to translate into x
+    ySpeed *= DriveConstants.kMaxSpeedMetersPerSecond; //& Gives you the amount of input to translate into y
+    rot *= DriveConstants.kMaxAngularSpeed; //& Gives you the amount of input to translate into robot rotation
 
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(
         fieldRelative
@@ -144,10 +144,10 @@ public void setBrakeMode(boolean brake) {
   m_rearLeft.setDriveIdleMode(mode);
   m_rearRight.setDriveIdleMode(mode);
   //&Define Idle Mode for Turning Motors
-  m_frontLeft.setTurnIdleMode(IdleMode.kCoast);
-  m_frontRight.setTurnIdleMode(IdleMode.kCoast);
-  m_rearLeft.setTurnIdleMode(IdleMode.kCoast);
-  m_rearRight.setTurnIdleMode(IdleMode.kCoast);
+  m_frontLeft.setTurnIdleMode(mode);
+  m_frontRight.setTurnIdleMode(mode);
+  m_rearLeft.setTurnIdleMode(mode);
+  m_rearRight.setTurnIdleMode(mode);
 }
 
   /**

@@ -44,8 +44,9 @@ public final class Constants {
         new Translation2d(-kWheelBase / 2, -kTrackWidth / 2));
 
     //^ Angular offsets of the modules relative to the chassis in radians
-    public static final double kFrontLeftChassisAngularOffset = -Math.PI / 2;
-    public static final double kFrontRightChassisAngularOffset = -Math.PI;//TODO Change back to zero if having difficulties
+    //! I think some of our issues are rooted here.
+    public static final double kFrontLeftChassisAngularOffset = -Math.PI / 2; //3π/2?
+    public static final double kFrontRightChassisAngularOffset = 0;
     public static final double kBackLeftChassisAngularOffset = Math.PI;
     public static final double kBackRightChassisAngularOffset = Math.PI / 2;
 
@@ -79,7 +80,6 @@ public final class Constants {
     //! The Configured Swerve module can be configured with one of three pinion gears: 12T, 13T, or 14T.
     //? This changes the drive speed of the module (a pinion gear with more teeth will result in a
     //? robot that drives faster).
-    //TODO(Caleb) Find CAD file for MAXSwerveModule
     //& NEOS
     //^ Pinion teeth for drive motor - 12 tooth spur gear is driven by CIM Falcon 500 Motor - Per AndyMark
     public static final int kDrivingMotorPinionTeeth = 12;
@@ -121,19 +121,18 @@ public final class Constants {
     public static final double kDrivingMinOutput = -1;
     public static final double kDrivingMaxOutput = 1;
 
-    public static final double kTurningP = 1;
+    public static final double kTurningP = 0.5;
     public static final double kTurningI = 0;
     public static final double kTurningD = 0;
     public static final double kTurningFF = 0;
     public static final double kTurningMinOutput = -1;
     public static final double kTurningMaxOutput = 1;
 
-    //* In case Kelsey ever gets an opinion */
     //? Old Braking System
     /*public static final IdleMode kDrivingMotorIdleMode = IdleMode.kBrake;
     public static final IdleMode kTurningMotorIdleMode = IdleMode.kBrake;*/
 
-    //? CurrentLimits <- Prevents Brownouts and high battery draw
+    //? Current limits <- Prevents Brownouts and high battery draw
     public static final int kDrivingMotorCurrentLimit = 50; // amps
     public static final int kTurningMotorCurrentLimit = 20; // amps
   }
