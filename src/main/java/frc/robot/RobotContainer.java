@@ -37,7 +37,7 @@ public class RobotContainer {
   //^ The Robot's Subsystems
   public final static DriveSubsystem m_robotDrive = new DriveSubsystem();
   //? Will uncomment once it is required, currently the SPARK is off of the robot
-  //private final Motors m_motors = new Motors();
+  //private final Motors m_motors = new Motors(); <-- Will uncomment once it is time for other motors.
 
   //^ The Driver's Controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
