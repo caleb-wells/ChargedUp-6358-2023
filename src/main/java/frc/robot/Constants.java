@@ -71,7 +71,7 @@ public final class Constants {
     //TODO Orange
     public static final int kRearRightTurningCanId = 5;
 
-    //!Tells the DriveSubsytem whether or not the gyro needs to be reveresed, could be very important
+    //!Tells the DriveSubsytem whether or not the gyro needs to be reveresed
     //TODO(Caleb) Determine if the gyro needs reveresed or not
     public static final boolean kGyroReversed = false;
   }
@@ -110,6 +110,7 @@ public final class Constants {
     public static final double kTurningEncoderPositionFactor = (2 * Math.PI); // radians
     public static final double kTurningEncoderVelocityFactor = (2 * Math.PI) / 60.0; // radians per second
 
+    //?PID Mins and Maxs
     public static final double kTurningEncoderPositionPIDMinInput = 0; // radians
     public static final double kTurningEncoderPositionPIDMaxInput = kTurningEncoderPositionFactor; // radians
 

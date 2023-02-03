@@ -48,7 +48,7 @@ public class RobotContainer {
   //^ The CoPilots Controller
   Joystick m_copilotController = new Joystick(OIConstants.kCoPilotControllerPort);
 
-  //^LED Instances
+  //^LED Instance
   private Spark m_LEDs = LEDStrip.m_underglowLEDs;
 
   /**

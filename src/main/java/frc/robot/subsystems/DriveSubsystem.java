@@ -43,11 +43,8 @@ public class DriveSubsystem extends SubsystemBase {
       DriveConstants.kRearRightTurningCanId,
       DriveConstants.kBackRightChassisAngularOffset);
 
-  //~Initialize the ADIS16448 IMU Gyro, located in the expansion port on the RoboRio
-  public static final ADIS16470_IMU m_gyro = new ADIS16470_IMU();
-
   //~Initialize the ADIS16470 IMU Gyro, located in the SPI Port on the RoboRio
-  //~private final ADIS16470_IMU m_gyro = new ADIS16470_IMU();
+  public static final ADIS16470_IMU m_gyro = new ADIS16470_IMU();
 
   //^ Odometry class for tracking robot pose
   SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(

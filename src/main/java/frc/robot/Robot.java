@@ -71,9 +71,9 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
     //*Vars
     double encoder = m_testModule.getTurningEncoderValue();
+    double gyroAngle = m_gyro.getAngle();
     String position = m_testModule.getPosition().toString();
     String state = m_testModule.getState().toString();
-    double gyroAngle = m_gyro.getAngle();
     //*SmartDashboard Keys
     SmartDashboard.putNumber("Front Right Encoder", encoder);
     SmartDashboard.putString("Front Right Position", position);
@@ -120,6 +120,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    m_leds.set(0.85);
     RobotContainer.m_robotDrive.setBrakeMode(true); //? Enable Brake Mode
   }
 
