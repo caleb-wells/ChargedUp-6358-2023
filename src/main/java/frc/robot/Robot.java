@@ -6,14 +6,17 @@ package frc.robot;
 
 //~ Other Imports
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.LEDController;
 import frc.robot.commands.SetCoastModeCommand;
-//TODO(Caleb) Remove after debugging.
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.LEDStrip;
 import frc.robot.subsystems.SwerveModule;
+import edu.wpi.first.wpilibj.ADIS16470_IMU;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -26,9 +29,11 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
-  //TODO(Caleb) Remove after debugging. 
-  //^private ADIS16470_IMU m_gyro = DriveSubsystem.m_gyro;
+  private ADIS16470_IMU m_gyro = DriveSubsystem.m_gyro;
+
   public static SwerveModule m_testModule = DriveSubsystem.m_frontRight;
+
+  private static Spark m_leds = LEDStrip.m_underglowLEDs;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -39,11 +44,15 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    m_leds.set(0.63);
     //! Turn brake mode off shortly after the robot is disabled
     new Trigger(this::isEnabled)
       .negate()
       .debounce(6) //Should be greater than 5 seconds
       .whileTrue(new SetCoastModeCommand(RobotContainer.m_robotDrive));
+    new Trigger(this::isEnabled)
+      .negate()
+      .whileTrue(new LEDController(0.73, m_leds));
   }
 
   /**
@@ -64,10 +73,12 @@ public class Robot extends TimedRobot {
     double encoder = m_testModule.getTurningEncoderValue();
     String position = m_testModule.getPosition().toString();
     String state = m_testModule.getState().toString();
+    double gyroAngle = m_gyro.getAngle();
     //*SmartDashboard Keys
     SmartDashboard.putNumber("Front Right Encoder", encoder);
     SmartDashboard.putString("Front Right Position", position);
     SmartDashboard.putString("Front Right State", state);
+    SmartDashboard.putNumber("Gyro", gyroAngle);
   }
 
   /* This function is called once each time the robot enters Disabled mode. */

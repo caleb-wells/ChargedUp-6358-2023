@@ -54,7 +54,7 @@ public class SwerveModule {
 
     //^ Setup encoders and PID controllers for the driving and turning SPARKS MAX.
     m_drivingEncoder = m_drivingSparkMax.getEncoder();
-    m_turningEncoder = m_turningSparkMax.getAbsoluteEncoder(Type.kDutyCycle); //! Buggy
+    m_turningEncoder = m_turningSparkMax.getAbsoluteEncoder(Type.kDutyCycle); //* Fixed
 
     //^Create PID Controllers
     m_drivingPIDController = m_drivingSparkMax.getPIDController();

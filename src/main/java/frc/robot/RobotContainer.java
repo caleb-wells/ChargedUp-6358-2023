@@ -18,7 +18,10 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.LEDController;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.LEDStrip;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
@@ -45,6 +48,9 @@ public class RobotContainer {
   //^ The CoPilots Controller
   Joystick m_copilotController = new Joystick(OIConstants.kCoPilotControllerPort);
 
+  //^LED Instances
+  private Spark m_LEDs = LEDStrip.m_underglowLEDs;
+
   /**
    * *The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -63,7 +69,7 @@ public class RobotContainer {
                 MathUtil.applyDeadband(-m_driverController.getLeftY(), 0.10),
                 MathUtil.applyDeadband(-m_driverController.getLeftX(), 0.10),
                 MathUtil.applyDeadband(-m_driverController.getRightX(), 0.10),
-                false),
+                true),
             m_robotDrive));
   }
 
@@ -77,28 +83,41 @@ public class RobotContainer {
    * {@link JoystickButton}.
    */
   private void configureButtonBindings() {
-
-    /*new JoystickButton(m_driverController, 1)
-        .whileTrue(new RunCommand(
-            () -> m_robotDrive.setX(),
-            m_robotDrive));*/
     
-    /*new JoystickButton(m_driverController, 1)
+    //Orange
+    new JoystickButton(m_driverController, 1)
+        .whileTrue(new RunCommand(
+            () -> new LEDController(0.63, m_LEDs),
+                m_robotDrive));
+    
+    //Purple
+    new JoystickButton(m_driverController, 2)
+        .whileTrue(new RunCommand(
+            () -> new LEDController(0.91, m_LEDs),
+                m_robotDrive));
+
+    //Yellow
+    new JoystickButton(m_driverController, 3)
+        .whileTrue(new RunCommand(
+            () -> new LEDController(0.69, m_LEDs),
+                m_robotDrive));
+
+    /*new JoystickButton(m_driverController, 3)
         .whileTrue(new RunCommand(
             () -> m_motors.runMotor(m_motors.armMotor, .75),
              m_motors));*/
     
-    /*new JoystickButton(m_driverController, 1)
+    /*new JoystickButton(m_driverController, 3)
         .whileFalse(new RunCommand(
             () -> m_motors.runMotor(m_motors.armMotor, 0),
             m_motors));*/
 
-    /*new JoystickButton(m_driverController, 2)
+    /*new JoystickButton(m_driverController, 4)
         .whileTrue(new RunCommand(
-            () -> m_motors.runMotor(m_motors.armMotor, -.75),
+            () -> m_motors.runMotor(m_motors.armMotor, -0.75),
             m_motors));*/
         
-    /*new JoystickButton(m_driverController, 2)
+    /*new JoystickButton(m_driverController, 4)
         .whileFalse(new RunCommand(
             () -> m_motors.runMotor(m_motors.armMotor, 0),
             m_motors));*/

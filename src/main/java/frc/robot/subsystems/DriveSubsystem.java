@@ -13,7 +13,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.ADIS16448_IMU;
+import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import frc.robot.Constants.DriveConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -44,7 +44,7 @@ public class DriveSubsystem extends SubsystemBase {
       DriveConstants.kBackRightChassisAngularOffset);
 
   //~Initialize the ADIS16448 IMU Gyro, located in the expansion port on the RoboRio
-  private final ADIS16448_IMU m_gyro = new ADIS16448_IMU();
+  public static final ADIS16470_IMU m_gyro = new ADIS16470_IMU();
 
   //~Initialize the ADIS16470 IMU Gyro, located in the SPI Port on the RoboRio
   //~private final ADIS16470_IMU m_gyro = new ADIS16470_IMU();
