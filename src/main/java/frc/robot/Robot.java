@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.commands.LEDController;
 import frc.robot.commands.SetCoastModeCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.LEDStrip;
@@ -44,15 +43,11 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    m_leds.set(0.63);
     //! Turn brake mode off shortly after the robot is disabled
     new Trigger(this::isEnabled)
       .negate()
       .debounce(6) //Should be greater than 5 seconds
       .whileTrue(new SetCoastModeCommand(RobotContainer.m_robotDrive));
-    new Trigger(this::isEnabled)
-      .negate()
-      .whileTrue(new LEDController(0.73, m_leds));
   }
 
   /**
@@ -120,7 +115,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    m_leds.set(0.85);
+    m_leds.set(0.73);
     RobotContainer.m_robotDrive.setBrakeMode(true); //? Enable Brake Mode
   }
 
