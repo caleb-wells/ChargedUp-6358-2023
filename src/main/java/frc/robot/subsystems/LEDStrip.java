@@ -10,4 +10,7 @@ import edu.wpi.first.wpilibj.motorcontrol.Spark;
 public class LEDStrip {
     //Creates the LEDs
     public static Spark m_underglowLEDs = new Spark(0);
+    public static void set(double value) {
+        m_underglowLEDs.set(value);
+    }
 }

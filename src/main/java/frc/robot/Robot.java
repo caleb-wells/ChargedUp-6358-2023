@@ -6,7 +6,6 @@ package frc.robot;
 
 //~ Other Imports
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -16,6 +15,7 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.LEDStrip;
 import frc.robot.subsystems.SwerveModule;
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
+import frc.robot.Constants.OIConstants;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -32,7 +32,7 @@ public class Robot extends TimedRobot {
 
   public static SwerveModule m_testModule = DriveSubsystem.m_frontRight;
 
-  private static Spark m_leds = LEDStrip.m_underglowLEDs;
+  public static double defaultLEDColor = 0.73;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -43,6 +43,14 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    if(OIConstants.kAllianceString == "Red1" || OIConstants.kAllianceString == "Red2" || OIConstants.kAllianceString == "Red3") {
+      defaultLEDColor = 0.61;
+    }
+    if(OIConstants.kAllianceString == "Blue1" || OIConstants.kAllianceString == "Blue2" || OIConstants.kAllianceString == "Blue3") {
+      defaultLEDColor = 0.85;
+    }
+    LEDStrip.set(defaultLEDColor);
+    System.out.println("Robot Initialization Completed");
     //! Turn brake mode off shortly after the robot is disabled
     new Trigger(this::isEnabled)
       .negate()
@@ -69,6 +77,7 @@ public class Robot extends TimedRobot {
     double gyroAngle = m_gyro.getAngle();
     String position = m_testModule.getPosition().toString();
     String state = m_testModule.getState().toString();
+
     //*SmartDashboard Keys
     SmartDashboard.putNumber("Front Right Encoder", encoder);
     SmartDashboard.putString("Front Right Position", position);
@@ -78,10 +87,14 @@ public class Robot extends TimedRobot {
 
   /* This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() { }
+  public void disabledInit() { 
+    LEDStrip.set(0.93);
+  }
 
   @Override
-  public void disabledPeriodic() { }
+  public void disabledPeriodic() { 
+    LEDStrip.set(0.93);
+  }
 
   /* This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
@@ -115,7 +128,6 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    m_leds.set(0.73);
     RobotContainer.m_robotDrive.setBrakeMode(true); //? Enable Brake Mode
   }
 

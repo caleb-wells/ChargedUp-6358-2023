@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.subsystems.RobotBalance;
 import frc.robot.commands.LEDController;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import frc.robot.subsystems.DriveSubsystem;
@@ -102,6 +103,10 @@ public class RobotContainer {
             () -> new LEDController(0.69, m_LEDs),
                 m_robotDrive));
 
+    //Balance Robot on Charging Station
+    new JoystickButton(m_driverController, 5)
+        .whileTrue(new RunCommand(() -> RobotBalance.balanceRobotonX(), m_robotDrive));
+    
     /*new JoystickButton(m_driverController, 3)
         .whileTrue(new RunCommand(
             () -> m_motors.runMotor(m_motors.armMotor, .75),
