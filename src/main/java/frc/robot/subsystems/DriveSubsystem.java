@@ -100,6 +100,10 @@ public class DriveSubsystem extends SubsystemBase {
         pose);
   }
 
+  public SwerveDriveKinematics getKinematics() {
+    return DriveConstants.kDriveKinematics;
+  }
+
   /**
    * Method to drive the robot using joystick info.
    *
