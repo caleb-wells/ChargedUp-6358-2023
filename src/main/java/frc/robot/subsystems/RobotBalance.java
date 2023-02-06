@@ -15,24 +15,29 @@ public class RobotBalance {
 
     public static void balanceRobotonX() {
         gyro.setYawAxis(IMUAxis.kX);
+        double xSpeed = 0;
         while(gyro.getAngle() < -5.0 || gyro.getAngle() > 5.0) {
+            xSpeed = gyro.getAngle()/5;
             robotDrive.drive(
-                0.1,
+                xSpeed,
                 0,
                 0,
                 false);
         }
-        gyro.setYawAxis(IMUAxis.kY);
+        gyro.setYawAxis(IMUAxis.kZ);
     }
 
     public static void balanceRobotonY() {
         gyro.setYawAxis(IMUAxis.kY);
+        double ySpeed = 0;
         while(gyro.getAngle() < -5.0 || gyro.getAngle() > 5.0) {
+            ySpeed = gyro.getAngle()/5;
             robotDrive.drive(
                 0,
-                0.1,
+                ySpeed,
                 0,
                 false);
         }
+        gyro.setYawAxis(IMUAxis.kZ);
     }
 }

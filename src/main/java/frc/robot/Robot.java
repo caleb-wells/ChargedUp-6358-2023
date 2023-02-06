@@ -32,7 +32,7 @@ public class Robot extends TimedRobot {
 
   public static SwerveModule m_testModule = DriveSubsystem.m_frontRight;
 
-  public static double defaultLEDColor = 0.73;
+  public static double defaultLEDColor = 0.75;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -40,9 +40,11 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
-    // autonomous chooser on the dashboard.
+    // Instantiate our RobotContainer.  This will perform all our button bindings
     m_robotContainer = new RobotContainer();
+
+    //~ Sets the color of the LEDs on the robot
+    System.out.println(OIConstants.kAllianceString);
     if(OIConstants.kAllianceString == "Red1" || OIConstants.kAllianceString == "Red2" || OIConstants.kAllianceString == "Red3") {
       defaultLEDColor = 0.61;
     }
@@ -50,11 +52,11 @@ public class Robot extends TimedRobot {
       defaultLEDColor = 0.85;
     }
     LEDStrip.set(defaultLEDColor);
-    System.out.println("Robot Initialization Completed");
+
     //! Turn brake mode off shortly after the robot is disabled
     new Trigger(this::isEnabled)
       .negate()
-      .debounce(6) //Should be greater than 5 seconds
+      .debounce(6) //!Should be greater than 5 seconds for Charged Up
       .whileTrue(new SetCoastModeCommand(RobotContainer.m_robotDrive));
   }
 
@@ -87,13 +89,11 @@ public class Robot extends TimedRobot {
 
   /* This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() { 
-    LEDStrip.set(0.93);
-  }
+  public void disabledInit() { }
 
   @Override
   public void disabledPeriodic() { 
-    
+    LEDStrip.set(0.93);
   }
 
   /* This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
@@ -101,6 +101,7 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
+    //This will be useful in the future when we have several autonomous commands
     /**
      * String autoSelected = SmartDashboard.getString("Auto Selector",
      * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
@@ -108,11 +109,15 @@ public class Robot extends TimedRobot {
      * autonomousCommand = new ExampleCommand(); break; }
      */
 
-    // schedule the autonomous command (example)
+    //Schedules the autonomous command -> Currently only one is available
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
+
     RobotContainer.m_robotDrive.setBrakeMode(true); //? Enable Brake Mode
+
+    //Sets the LED color for auto
+    LEDStrip.set(0.67);
   }
 
   /* This function is called periodically during autonomous. */
@@ -128,7 +133,9 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    
     RobotContainer.m_robotDrive.setBrakeMode(true); //? Enable Brake Mode
+    LEDStrip.set(defaultLEDColor);
   }
 
   /* This function is called periodically during operator control. */

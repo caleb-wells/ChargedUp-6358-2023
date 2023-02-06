@@ -169,6 +169,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
 
+    //Creates the first auto command, this will be set as m_autonomousCommand in Robot.java
     Command MainAuto = autoBuilder.fullAuto(pathGroup);
 
     return MainAuto;

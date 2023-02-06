@@ -54,7 +54,7 @@ public class SwerveModule {
 
     //^ Setup encoders and PID controllers for the driving and turning SPARKS MAX.
     m_drivingEncoder = m_drivingSparkMax.getEncoder();
-    m_turningEncoder = m_turningSparkMax.getAbsoluteEncoder(Type.kDutyCycle); //* Fixed
+    m_turningEncoder = m_turningSparkMax.getAbsoluteEncoder(Type.kDutyCycle);
 
     //^Create PID Controllers
     m_drivingPIDController = m_drivingSparkMax.getPIDController();
@@ -94,6 +94,7 @@ public class SwerveModule {
     m_drivingPIDController.setD(ModuleConstants.kDrivingD);
     m_drivingPIDController.setFF(ModuleConstants.kDrivingFF);
     m_drivingPIDController.setOutputRange(ModuleConstants.kDrivingMinOutput, ModuleConstants.kDrivingMaxOutput);
+    
     //^ Set the PID gains for the turning motor.
     m_turningPIDController.setP(ModuleConstants.kTurningP);
     m_turningPIDController.setI(ModuleConstants.kTurningI);
