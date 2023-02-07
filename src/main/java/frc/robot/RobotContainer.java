@@ -63,7 +63,7 @@ public class RobotContainer {
   Joystick m_copilotController = new Joystick(OIConstants.kCoPilotControllerPort);
 
   //^LED Instance
-  private Spark m_LEDs = LEDStrip.m_underglowLEDs;
+  private Spark m_LEDs = LEDStrip.get();
 
   //*Beginning of PathPlanner Code
   // This will load the file "MainAuto.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
@@ -119,12 +119,6 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     
-    //Orange
-    new JoystickButton(m_driverController, 1)
-        .whileTrue(new RunCommand(
-            () -> new LEDController(0.63, m_LEDs),
-                m_robotDrive));
-    
     //Purple
     new JoystickButton(m_driverController, 2)
         .whileTrue(new RunCommand(
@@ -137,9 +131,13 @@ public class RobotContainer {
             () -> new LEDController(0.69, m_LEDs),
                 m_robotDrive));
 
-    //Balance Robot on Charging Station
+    //Balance Robot on Charging Station on X
     new JoystickButton(m_driverController, 5)
         .whileTrue(new RunCommand(() -> RobotBalance.balanceRobotonX(), m_robotDrive));
+
+    //Balance Robot on Charging Station on Y
+    new JoystickButton(m_driverController, 6)
+        .whileTrue(new RunCommand(() -> RobotBalance.balanceRobotonY(), m_robotDrive));
     
     /*new JoystickButton(m_driverController, 3)
         .whileTrue(new RunCommand(
@@ -173,45 +171,5 @@ public class RobotContainer {
     Command MainAuto = autoBuilder.fullAuto(pathGroup);
 
     return MainAuto;
-    //?Old Autonomous Command
-    /*
-    // Create config for trajectory
-    TrajectoryConfig config = new TrajectoryConfig(
-        AutoConstants.kMaxSpeedMetersPerSecond,
-        AutoConstants.kMaxAccelerationMetersPerSecondSquared)
-        // Add kinematics to ensure max speed is actually obeyed
-        .setKinematics(DriveConstants.kDriveKinematics);
-
-    // An example trajectory to follow. All units in meters.
-    Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
-        // Start at the origin facing the +X direction
-        new Pose2d(0, 0, new Rotation2d(0)),
-        // Pass through these two interior waypoints, making an 's' curve path
-        List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
-        // End 3 meters straight ahead of where we started, facing forward
-        new Pose2d(3, 0, new Rotation2d(0)),
-        config);
-
-    var thetaController = new ProfiledPIDController(
-        AutoConstants.kPThetaController, 0, 0, AutoConstants.kThetaControllerConstraints);
-    thetaController.enableContinuousInput(-Math.PI, Math.PI);
-
-    SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
-        exampleTrajectory,
-        m_robotDrive::getPose, // Functional interface to feed supplier
-        DriveConstants.kDriveKinematics,
-
-        // Position controllers
-        new PIDController(AutoConstants.kPXController, 0, 0),
-        new PIDController(AutoConstants.kPYController, 0, 0),
-        thetaController,
-        m_robotDrive::setModuleStates,
-        m_robotDrive);
-
-    // Reset odometry to the starting pose of the trajectory.
-    m_robotDrive.resetOdometry(exampleTrajectory.getInitialPose());
-
-    // Run path following command, then stop at the end.
-    return swerveControllerCommand.andThen(() -> m_robotDrive.drive(0, 0, 0, false));*/
   }
 }

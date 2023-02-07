@@ -9,8 +9,6 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -144,8 +142,6 @@ public final class Constants {
     //These are the constants for Operator Input, this is where we tell RobotContainer what ports to use for Input for both the Pilot(Driver) and CoPilot
     public static final int kDriverControllerPort = 0;
     public static final int kCoPilotControllerPort = 1;
-    public static final Alliance kAlliance = DriverStation.getAlliance();
-    public static final String kAllianceString = DriverStation.getAlliance().toString();
   }
 
   //Constants for autonomous mode, this sets the speed and controllers for autonomous, could be very important in the future

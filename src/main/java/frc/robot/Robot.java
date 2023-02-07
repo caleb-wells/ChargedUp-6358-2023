@@ -6,6 +6,7 @@ package frc.robot;
 
 //~ Other Imports
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -15,7 +16,7 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.LEDStrip;
 import frc.robot.subsystems.SwerveModule;
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
-import frc.robot.Constants.OIConstants;
+import edu.wpi.first.wpilibj.DriverStation;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -32,7 +33,11 @@ public class Robot extends TimedRobot {
 
   public static SwerveModule m_testModule = DriveSubsystem.m_frontRight;
 
-  public static double defaultLEDColor = 0.75;
+  public static double defaultLEDColor = 0.99;
+
+  public static Alliance kAlliance = DriverStation.getAlliance();
+
+  public static String kAllianceString = DriverStation.getAlliance().toString();
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -43,15 +48,16 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings
     m_robotContainer = new RobotContainer();
 
+    kAlliance = DriverStation.getAlliance();
+    kAllianceString = DriverStation.getAlliance().toString();
+
     //~ Sets the color of the LEDs on the robot
-    System.out.println(OIConstants.kAllianceString);
-    if(OIConstants.kAllianceString == "Red1" || OIConstants.kAllianceString == "Red2" || OIConstants.kAllianceString == "Red3") {
+    if(kAllianceString == "Red") {
       defaultLEDColor = 0.61;
-    }
-    if(OIConstants.kAllianceString == "Blue1" || OIConstants.kAllianceString == "Blue2" || OIConstants.kAllianceString == "Blue3") {
+      }
+    if(kAllianceString == "Blue") {
       defaultLEDColor = 0.85;
-    }
-    LEDStrip.set(defaultLEDColor);
+      }
 
     //! Turn brake mode off shortly after the robot is disabled
     new Trigger(this::isEnabled)
@@ -74,6 +80,7 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+
     //*Vars
     double encoder = m_testModule.getTurningEncoderValue();
     double gyroAngle = m_gyro.getAngle();
@@ -89,12 +96,12 @@ public class Robot extends TimedRobot {
 
   /* This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() { }
-
-  @Override
-  public void disabledPeriodic() { 
+  public void disabledInit() { 
     LEDStrip.set(0.93);
   }
+
+  @Override
+  public void disabledPeriodic() { }
 
   /* This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
@@ -133,14 +140,15 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    
     RobotContainer.m_robotDrive.setBrakeMode(true); //? Enable Brake Mode
     LEDStrip.set(defaultLEDColor);
   }
 
   /* This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() { }
+  public void teleopPeriodic() { 
+
+  }
 
   @Override
   public void testInit() {

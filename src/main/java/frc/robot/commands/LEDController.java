@@ -9,9 +9,11 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Robot;
 public class LEDController extends InstantCommand {
+  private WaitCommand wait = new WaitCommand(5);
+  
   public LEDController(double setting, Spark LED) {
     LED.set(setting);
-    new WaitCommand(10); //This should make it wait 10 seconds...hopefully this works
+    wait.execute();
     LED.set(Robot.defaultLEDColor);
   }
 
