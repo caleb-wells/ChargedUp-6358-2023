@@ -55,10 +55,11 @@ public class Robot extends TimedRobot {
     //Sets the color of the LEDs on the robot
     if(kAllianceString == "Red") {
       defaultLEDColor = 0.61;
-      }
+    }
     if(kAllianceString == "Blue") {
       defaultLEDColor = 0.85;
-      }
+    }
+    //TODO(Caleb) if this doesn't work embed it inside a RunCommand()
     new LEDController(defaultLEDColor, m_leds);
 
     //! Turn brake mode off shortly after the robot is disabled
