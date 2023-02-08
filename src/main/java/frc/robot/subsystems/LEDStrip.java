@@ -18,8 +18,4 @@ public class LEDStrip {
         new WaitCommand(10); //This should make it wait 10 seconds...hopefully this works
         m_underglowLEDs.set(Robot.defaultLEDColor);
     }
-
-    public static Spark get() {
-        return m_underglowLEDs;
-    }
 }

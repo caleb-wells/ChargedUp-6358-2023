@@ -31,7 +31,6 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 //import frc.robot.subsystems.Motors; //& Uncomment when it is time to use additional motors
 
 //?New Auto Imports
-//import java.util.ArrayList;
 //!Java Auto Imports
 import java.util.HashMap;
 import java.util.List;
@@ -42,7 +41,6 @@ import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.auto.PIDConstants;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
-//import com.pathplanner.lib.*;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -63,7 +61,7 @@ public class RobotContainer {
   Joystick m_copilotController = new Joystick(OIConstants.kCoPilotControllerPort);
 
   //^LED Instance
-  private Spark m_LEDs = LEDStrip.get();
+  private Spark m_LEDs = LEDStrip.m_underglowLEDs;
 
   //*Beginning of PathPlanner Code
   // This will load the file "MainAuto.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
