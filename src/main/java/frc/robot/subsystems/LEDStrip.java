@@ -5,17 +5,13 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.Robot;
 
 /** Add your docs here. */
 public class LEDStrip {
     //Creates the LEDs
     public static Spark m_underglowLEDs = new Spark(0);
-    
-    public static void set(double value) {
-        m_underglowLEDs.set(value);
-        new WaitCommand(10); //This should make it wait 10 seconds...hopefully this works
-        m_underglowLEDs.set(Robot.defaultLEDColor);
-    }
+
+    public static Spark get() {
+        return m_underglowLEDs;
+    } 
 }

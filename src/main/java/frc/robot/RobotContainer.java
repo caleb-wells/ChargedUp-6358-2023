@@ -16,6 +16,7 @@ import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;*/
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -35,7 +36,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import java.util.HashMap;
 import java.util.List;
 import java.util.*;
-//!PathPlanner Imports
+//!PathPlanner Imp orts
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
@@ -61,7 +62,7 @@ public class RobotContainer {
   Joystick m_copilotController = new Joystick(OIConstants.kCoPilotControllerPort);
 
   //^LED Instance
-  private Spark m_LEDs = LEDStrip.m_underglowLEDs;
+  private Spark m_LEDs = LEDStrip.get();
 
   //*Beginning of PathPlanner Code
   // This will load the file "MainAuto.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
