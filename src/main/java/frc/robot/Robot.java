@@ -6,7 +6,6 @@ package frc.robot;
 
 //~ Other Imports
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -34,15 +33,15 @@ public class Robot extends TimedRobot {
 
   private ADIS16470_IMU m_gyro = DriveSubsystem.m_gyro;
 
-  public static SwerveModule m_testModule = DriveSubsystem.m_frontRight;
+  public static SwerveModule m_SDModule = DriveSubsystem.m_frontRight;
 
   public static Spark m_leds = LEDStrip.get();
 
-  public static double defaultLEDColor = 0.99;
-
-  public static Alliance kAlliance = DriverStation.getAlliance();
+  public static double defaultLEDColor = 0.99; //Sets the color to white if no Alliance Color is found
 
   public static String kAllianceString = DriverStation.getAlliance().toString();
+
+  public static InstantCommand setLEDCommandDefault = new InstantCommand(() -> new LEDController(defaultLEDColor, m_leds));
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -54,15 +53,13 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
 
     //Sets the color of the LEDs on the robot
-    if(kAllianceString == "Red") {
+    kAllianceString = DriverStation.getAlliance().toString();
+    if(kAllianceString.contains("Red")) {
       defaultLEDColor = 0.61;
     }
-    if(kAllianceString == "Blue") {
+    if(kAllianceString.contains("Blue")) {
       defaultLEDColor = 0.85;
     }
-    //TODO(Caleb) if this doesn't work embed it inside a RunCommand()
-
-    new InstantCommand(() -> new LEDController(defaultLEDColor, m_leds));
 
     //! Turn brake mode off shortly after the robot is disabled
     new Trigger(this::isEnabled)
@@ -86,11 +83,20 @@ public class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
 
+    //Sets the color of the LEDs on the robot
+    kAllianceString = DriverStation.getAlliance().toString();
+    if(kAllianceString.contains("Red")) {
+      defaultLEDColor = 0.61;
+    }
+    if(kAllianceString.contains("Blue")) {
+      defaultLEDColor = 0.85;
+    }
+
     //*Vars
-    double encoder = m_testModule.getTurningEncoderValue();
+    double encoder = m_SDModule.getTurningEncoderValue();
     double gyroAngle = m_gyro.getAngle();
-    String position = m_testModule.getPosition().toString();
-    String state = m_testModule.getState().toString();
+    String position = m_SDModule.getPosition().toString();
+    String state = m_SDModule.getState().toString();
 
     //*SmartDashboard Keys
     SmartDashboard.putNumber("Front Right Encoder", encoder);
@@ -101,14 +107,10 @@ public class Robot extends TimedRobot {
 
   /* This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() { 
-    new InstantCommand(() -> new LEDController(0.93, m_leds));
-  }
+  public void disabledInit() { }
 
   @Override
-  public void disabledPeriodic() { 
-    new InstantCommand(() -> new LEDController(0.93, m_leds));
-  }
+  public void disabledPeriodic() { }
 
   /* This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
@@ -129,16 +131,11 @@ public class Robot extends TimedRobot {
     }
 
     RobotContainer.m_robotDrive.setBrakeMode(true); //? Enable Brake Mode
-
-    //Sets the LED color for auto
-    new InstantCommand(() -> new LEDController(0.75, m_leds));
   }
 
   /* This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {
-    new InstantCommand(() -> new LEDController(0.75, m_leds));
-   }
+  public void autonomousPeriodic() { }
 
   @Override
   public void teleopInit() {
@@ -152,18 +149,13 @@ public class Robot extends TimedRobot {
 
     RobotContainer.m_robotDrive.setBrakeMode(true); //? Enable Brake Mode
 
-    new InstantCommand(() -> new LEDController(defaultLEDColor, m_leds));
+    setLEDCommandDefault.execute();
   }
 
   /* This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() { 
-    if(kAllianceString == "Red") {
-      defaultLEDColor = 0.61;
-      }
-    if(kAllianceString == "Blue") {
-      defaultLEDColor = 0.85;
-      }
+
   }
 
   @Override
@@ -171,12 +163,9 @@ public class Robot extends TimedRobot {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
     RobotContainer.m_robotDrive.setBrakeMode(true); //? Enable Brake Mode
-    new InstantCommand(() -> new LEDController(-0.47, m_leds));
   }
 
   /* This function is called periodically during test mode. */
   @Override
-  public void testPeriodic() {
-    new InstantCommand(() -> new LEDController(-0.47, m_leds));
-  }
+  public void testPeriodic() { }
 }

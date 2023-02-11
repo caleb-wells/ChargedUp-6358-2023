@@ -50,7 +50,6 @@ public class RobotContainer {
 
   //^LED Instances
   private Spark m_LEDs = LEDStrip.get();
-  private Spark m_testLEDS = LEDStrip.m_underglowLEDs;
 
   //*Beginning of PathPlanner Code
   // This will load the file "MainAuto.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
@@ -110,13 +109,19 @@ public class RobotContainer {
     new JoystickButton(m_driverController, 2)
         .whileTrue(new RunCommand(
             () -> new LEDController(0.91, m_LEDs),
+                m_robotDrive))
+        .whileFalse(new RunCommand(
+            () -> new LEDController(Robot.defaultLEDColor, m_LEDs),
                 m_robotDrive));
 
     //Set LEDs to Yellow
     new JoystickButton(m_driverController, 3)
         .whileTrue(new RunCommand(
-            () -> new LEDController(0.69, m_testLEDS),
-                m_robotDrive));
+            () -> new LEDController(0.69, m_LEDs),
+                m_robotDrive))
+        .whileFalse(new RunCommand(
+            () -> new LEDController(Robot.defaultLEDColor, m_LEDs),
+                m_robotDrive));;
 
     //Calls setX() method in DriveSubsystem
     new JoystickButton(m_driverController, 4)
