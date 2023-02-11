@@ -5,50 +5,78 @@
 package frc.robot;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.PS4Controller.Button;
-import frc.robot.Constants.AutoConstants;
-import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.subsystems.RobotBalance;
+import frc.robot.commands.LEDController;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.Motors;
+import frc.robot.subsystems.LEDStrip;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import java.util.List;
+//import frc.robot.subsystems.Motors; //& Uncomment when it is time to use additional motors
 
-/*
+//?New Auto Imports
+//!Java Auto Imports
+import java.util.HashMap;
+import java.util.List;
+import java.util.*;
+//!PathPlanner Imports
+import com.pathplanner.lib.PathConstraints;
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.auto.PIDConstants;
+import com.pathplanner.lib.auto.SwerveAutoBuilder;
+
+/**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
  * periodic methods (other than the scheduler calls).  Instead, the structure of the robot
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The Robot's Subsystems
-  private final DriveSubsystem m_robotDrive = new DriveSubsystem();
-  private final Motors m_motors = new Motors();
+  //^ The Robot's Subsystems
+  public final static DriveSubsystem m_robotDrive = new DriveSubsystem();
+  //? Will uncomment once it is required, currently the SPARK is off of the robot
+  //private final Motors m_motors = new Motors(); <-- Will uncomment once it is time for other motors.
 
-  // The Driver's Controller
+  //^ The Driver's Controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
 
-  // The CoPilots Controller
+  //^ The CoPilots Controller
   Joystick m_copilotController = new Joystick(OIConstants.kCoPilotControllerPort);
 
+  //^LED Instances
+  private Spark m_LEDs = LEDStrip.get();
+
+  //*Beginning of PathPlanner Code
+  // This will load the file "MainAuto.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
+  // for every path in the group
+  public static List<PathPlannerTrajectory> pathGroup = PathPlanner.loadPathGroup("MainAuto", new PathConstraints(4, 3));
+
+  private Map<String, Command> eventMap = new HashMap<>();
+
+  // Create the AutoBuilder. This only needs to be created once when robot code starts, not every time you want to create an auto command. A good place to put this is in RobotContainer along with your subsystems.
+  SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
+    m_robotDrive::getPose, // Pose2d supplier
+    m_robotDrive::resetOdometry, // Pose2d consumer, used to reset odometry at the beginning of auto
+    m_robotDrive.getKinematics(), // SwerveDriveKinematics
+    new PIDConstants(5.0, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
+    new PIDConstants(0.5, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
+    m_robotDrive::setModuleStates, // Module states consumer used to output to the drive subsystem
+    eventMap,
+    true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
+    m_robotDrive // The drive subsystem. Used to properly set the requirements of path following commands
+   );
+  //*End of PathPlanner Code
+
   /**
-   * The container for the robot. Contains subsystems, OI devices, and commands.
+   * *The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    // Configure the button bindings
+    //^ Configure the button bindings
     configureButtonBindings();
 
     // Configure default commands --> This is how the robot drives, should not need to be adjusted, if the robot is driving
@@ -56,11 +84,12 @@ public class RobotContainer {
     m_robotDrive.setDefaultCommand(
         // The left stick controls translation of the robot.
         // Turning is controlled by the X axis of the right stick.
+        //! Keep Robot Centric until debugging has finished
         new RunCommand(
             () -> m_robotDrive.drive(
-                MathUtil.applyDeadband(-m_driverController.getLeftY(), 0.06),
-                MathUtil.applyDeadband(-m_driverController.getLeftX(), 0.06),
-                MathUtil.applyDeadband(-m_driverController.getRightX(), 0.06),
+                MathUtil.applyDeadband(-m_driverController.getLeftY(), 0.10),
+                MathUtil.applyDeadband(-m_driverController.getLeftX(), 0.10),
+                MathUtil.applyDeadband(-m_driverController.getRightX(), 0.10),
                 true),
             m_robotDrive));
   }
@@ -75,30 +104,58 @@ public class RobotContainer {
    * {@link JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(m_driverController, Button.kR1.value)
+    
+    //Set LEDs to Purple
+    new JoystickButton(m_driverController, 2)
+        .whileTrue(new RunCommand(
+            () -> new LEDController(0.91, m_LEDs),
+                m_robotDrive))
+        .whileFalse(new RunCommand(
+            () -> new LEDController(Robot.defaultLEDColor, m_LEDs),
+                m_robotDrive));
+
+    //Set LEDs to Yellow
+    new JoystickButton(m_driverController, 3)
+        .whileTrue(new RunCommand(
+            () -> new LEDController(0.69, m_LEDs),
+                m_robotDrive))
+        .whileFalse(new RunCommand(
+            () -> new LEDController(Robot.defaultLEDColor, m_LEDs),
+                m_robotDrive));;
+
+    //Calls setX() method in DriveSubsystem
+    new JoystickButton(m_driverController, 4)
         .whileTrue(new RunCommand(
             () -> m_robotDrive.setX(),
             m_robotDrive));
     
-    new JoystickButton(m_driverController, 1)
+    //Balance Robot on Charging Station on X axis
+    new JoystickButton(m_driverController, 5)
+        .whileTrue(new RunCommand(() -> RobotBalance.balanceRobotOnX(), m_robotDrive));
+
+    //Balance Robot on Charging Station on Y axis
+    new JoystickButton(m_driverController, 6)
+        .whileTrue(new RunCommand(() -> RobotBalance.balanceRobotOnY(), m_robotDrive));
+    
+    /*new JoystickButton(m_driverController, 3)
         .whileTrue(new RunCommand(
             () -> m_motors.runMotor(m_motors.armMotor, .75),
-             m_motors));
+             m_motors));*/
     
-    new JoystickButton(m_driverController, 1)
+    /*new JoystickButton(m_driverController, 3)
         .whileFalse(new RunCommand(
             () -> m_motors.runMotor(m_motors.armMotor, 0),
-            m_motors));
+            m_motors));*/
 
-    new JoystickButton(m_driverController, 2)
+    /*new JoystickButton(m_driverController, 4)
         .whileTrue(new RunCommand(
-            () -> m_motors.runMotor(m_motors.armMotor, -.75),
-            m_motors));
+            () -> m_motors.runMotor(m_motors.armMotor, -0.75),
+            m_motors));*/
         
-    new JoystickButton(m_driverController, 2)
+    /*new JoystickButton(m_driverController, 4)
         .whileFalse(new RunCommand(
             () -> m_motors.runMotor(m_motors.armMotor, 0),
-            m_motors));
+            m_motors));*/
   }
 
   /**
@@ -107,43 +164,10 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // Create config for trajectory
-    TrajectoryConfig config = new TrajectoryConfig(
-        AutoConstants.kMaxSpeedMetersPerSecond,
-        AutoConstants.kMaxAccelerationMetersPerSecondSquared)
-        // Add kinematics to ensure max speed is actually obeyed
-        .setKinematics(DriveConstants.kDriveKinematics);
 
-    // An example trajectory to follow. All units in meters.
-    Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
-        // Start at the origin facing the +X direction
-        new Pose2d(0, 0, new Rotation2d(0)),
-        // Pass through these two interior waypoints, making an 's' curve path
-        List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
-        // End 3 meters straight ahead of where we started, facing forward
-        new Pose2d(3, 0, new Rotation2d(0)),
-        config);
+    //Creates the main auto command, this will be set as m_autonomousCommand in Robot.java
+    Command MainAuto = autoBuilder.fullAuto(pathGroup);
 
-    var thetaController = new ProfiledPIDController(
-        AutoConstants.kPThetaController, 0, 0, AutoConstants.kThetaControllerConstraints);
-    thetaController.enableContinuousInput(-Math.PI, Math.PI);
-
-    SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
-        exampleTrajectory,
-        m_robotDrive::getPose, // Functional interface to feed supplier
-        DriveConstants.kDriveKinematics,
-
-        // Position controllers
-        new PIDController(AutoConstants.kPXController, 0, 0),
-        new PIDController(AutoConstants.kPYController, 0, 0),
-        thetaController,
-        m_robotDrive::setModuleStates,
-        m_robotDrive);
-
-    // Reset odometry to the starting pose of the trajectory.
-    m_robotDrive.resetOdometry(exampleTrajectory.getInitialPose());
-
-    // Run path following command, then stop at the end.
-    return swerveControllerCommand.andThen(() -> m_robotDrive.drive(0, 0, 0, false));
+    return MainAuto;
   }
 }

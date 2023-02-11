@@ -4,9 +4,21 @@
 
 package frc.robot;
 
+//~ Other Imports
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.LEDController;
+import frc.robot.commands.SetCoastModeCommand;
+import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.LEDStrip;
+import frc.robot.subsystems.SwerveModule;
+import edu.wpi.first.wpilibj.ADIS16470_IMU;
+import edu.wpi.first.wpilibj.DriverStation;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -19,15 +31,41 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
+  private ADIS16470_IMU m_gyro = DriveSubsystem.m_gyro;
+
+  public static SwerveModule m_SDModule = DriveSubsystem.m_frontRight;
+
+  public static Spark m_leds = LEDStrip.get();
+
+  public static double defaultLEDColor = 0.99; //Sets the color to white if no Alliance Color is found
+
+  public static String kAllianceString = DriverStation.getAlliance().toString();
+
+  public static InstantCommand setLEDCommandDefault = new InstantCommand(() -> new LEDController(defaultLEDColor, m_leds));
+
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
   @Override
   public void robotInit() {
-    // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
-    // autonomous chooser on the dashboard.
+    // Instantiate our RobotContainer.  This will perform all our button bindings
     m_robotContainer = new RobotContainer();
+
+    //Sets the color of the LEDs on the robot
+    kAllianceString = DriverStation.getAlliance().toString();
+    if(kAllianceString.contains("Red")) {
+      defaultLEDColor = 0.61;
+    }
+    if(kAllianceString.contains("Blue")) {
+      defaultLEDColor = 0.85;
+    }
+
+    //! Turn brake mode off shortly after the robot is disabled
+    new Trigger(this::isEnabled)
+      .negate()
+      .debounce(6) //!Should be greater than 5 seconds for Charged Up
+      .whileTrue(new SetCoastModeCommand(RobotContainer.m_robotDrive));
   }
 
   /**
@@ -44,34 +82,58 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+
+    //Sets the color of the LEDs on the robot
+    kAllianceString = DriverStation.getAlliance().toString();
+    if(kAllianceString.contains("Red")) {
+      defaultLEDColor = 0.61;
+    }
+    if(kAllianceString.contains("Blue")) {
+      defaultLEDColor = 0.85;
+    }
+
+    //*Vars
+    double encoder = m_SDModule.getTurningEncoderValue();
+    double gyroAngle = m_gyro.getAngle();
+    String position = m_SDModule.getPosition().toString();
+    String state = m_SDModule.getState().toString();
+
+    //*SmartDashboard Keys
+    SmartDashboard.putNumber("Front Right Encoder", encoder);
+    SmartDashboard.putString("Front Right Position", position);
+    SmartDashboard.putString("Front Right State", state);
+    SmartDashboard.putNumber("Gyro", gyroAngle);
   }
 
-  /** This function is called once each time the robot enters Disabled mode. */
+  /* This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() { }
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() { }
 
-  /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
+  /* This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
-    /*
+    //This will be useful in the future when we have several autonomous commands
+    /**
      * String autoSelected = SmartDashboard.getString("Auto Selector",
      * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
      * = new MyAutoCommand(); break; case "Default Auto": default:
      * autonomousCommand = new ExampleCommand(); break; }
      */
 
-    // schedule the autonomous command (example)
+    //Schedules the autonomous command -> Currently only one is available
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
+
+    RobotContainer.m_robotDrive.setBrakeMode(true); //? Enable Brake Mode
   }
 
-  /** This function is called periodically during autonomous. */
+  /* This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() { }
 
@@ -84,19 +146,26 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+
+    RobotContainer.m_robotDrive.setBrakeMode(true); //? Enable Brake Mode
+
+    setLEDCommandDefault.execute();
   }
 
-  /** This function is called periodically during operator control. */
+  /* This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() { }
+  public void teleopPeriodic() { 
+
+  }
 
   @Override
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
+    RobotContainer.m_robotDrive.setBrakeMode(true); //? Enable Brake Mode
   }
 
-  /** This function is called periodically during test mode. */
+  /* This function is called periodically during test mode. */
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() { }
 }

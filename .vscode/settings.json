@@ -1,34 +1,12 @@
 {
-  "java.configuration.updateBuildConfiguration": "automatic",
-  "java.server.launchMode": "Standard",
-  "files.exclude": {
-    "**/.git": true,
-    "**/.svn": true,
-    "**/.hg": true,
-    "**/CVS": true,
-    "**/.DS_Store": true,
-    "bin/": true,
-    "**/.classpath": true,
-    "**/.project": true,
-    "**/.settings": true,
-    "**/.factorypath": true,
-    "**/*~": true
-  },
-  "java.test.config": [
-    {
-      "name": "WPIlibUnitTests",
-      "workingDirectory": "${workspaceFolder}/build/jni/release",
-      "vmargs": [ "-Djava.library.path=${workspaceFolder}/build/jni/release" ],
-      "env": {
-        "LD_LIBRARY_PATH": "${workspaceFolder}/build/jni/release" ,
-        "DYLD_LIBRARY_PATH": "${workspaceFolder}/build/jni/release"
-      }
+    "workbench.colorCustomizations": {
+        "activityBar.background": "#db6a00",
+        "titleBar.activeBackground": "#db6a00",
+        "titleBar.activeForeground": "#000000",
+        "titleBar.inactiveBackground": "#db6a00",
+        "titleBar.inactiveForeground": "#cdcdcd",
+        "activityBar.foreground": "#000000",
+        //"titleBar.inactiveBackground": "#8c4400",
     },
-  ],
-  "java.test.defaultConfig": "WPIlibUnitTests",
-  "workbench.colorCustomizations": {
-    "activityBar.background": "#20009B",
-    "titleBar.activeBackground": "#2D00D9",
-    "titleBar.activeForeground": "#FCFBFF"
-  }
+    "java.configuration.updateBuildConfiguration": "interactive"
 }
