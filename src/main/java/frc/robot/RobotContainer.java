@@ -9,10 +9,12 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.RobotBalance;
+//import frc.robot.commands.ExtendPiston;
 import frc.robot.commands.LEDController;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.LEDStrip;
+import frc.robot.subsystems.Piston;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -50,6 +52,8 @@ public class RobotContainer {
 
   //^LED Instances
   private Spark m_LEDs = LEDStrip.get();
+
+  public Piston m_piston = new Piston();
 
   //*Beginning of PathPlanner Code
   // This will load the file "MainAuto.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
@@ -104,6 +108,9 @@ public class RobotContainer {
    * {@link JoystickButton}.
    */
   private void configureButtonBindings() {
+
+    new JoystickButton(m_driverController, 1)
+        .onTrue(new RunCommand(() -> m_piston.ExtendPiston(), m_piston));
     
     //Set LEDs to Purple
     new JoystickButton(m_driverController, 2)
