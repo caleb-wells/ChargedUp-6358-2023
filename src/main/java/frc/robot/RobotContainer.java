@@ -9,8 +9,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.RobotBalance;
-//import frc.robot.commands.ExtendPiston;
 import frc.robot.commands.LEDController;
+import frc.robot.commands.RetractPiston;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.LEDStrip;
@@ -110,7 +110,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     new JoystickButton(m_driverController, 1)
-        .onTrue(new RunCommand(() -> m_piston.ExtendPiston(), m_piston));
+        .onTrue(new RunCommand(() -> new RetractPiston(), m_piston));
     
     //Set LEDs to Purple
     new JoystickButton(m_driverController, 2)

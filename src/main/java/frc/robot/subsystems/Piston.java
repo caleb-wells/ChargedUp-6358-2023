@@ -4,31 +4,23 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticHub;
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Piston extends SubsystemBase {
   /** Creates a new Piston. */
-  private static Compressor compressor;
-  public static DoubleSolenoid piston;
-  private static PneumaticHub hub;
+  private static final int PH_CAN_ID = 10;
+  private static int forwardChannel =8;
+  private static int reverseChannel =9;
+  public static PneumaticHub m_pH = new PneumaticHub(PH_CAN_ID);
+  public static DoubleSolenoid m_doubleSolenoid = m_pH.makeDoubleSolenoid(forwardChannel,reverseChannel);
 
   public Piston() { 
-    compressor = new Compressor(PneumaticsModuleType.REVPH);
-    piston = new DoubleSolenoid(PneumaticsModuleType.REVPH, 9, 8);
-    hub = new PneumaticHub(10);
   }
 
-  public static void ExtendPiston() {
-    piston.set(Value.kForward);
-   }
-
-  public static void retract() {
-    piston.set(Value.kReverse);
+  public DoubleSolenoid getSolenoid() {
+    return m_doubleSolenoid;
   }
 
   @Override
