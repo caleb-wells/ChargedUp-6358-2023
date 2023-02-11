@@ -100,6 +100,7 @@ public class DriveSubsystem extends SubsystemBase {
         pose);
   }
 
+
   public SwerveDriveKinematics getKinematics() {
     return DriveConstants.kDriveKinematics;
   }
@@ -115,9 +116,9 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
     // Adjust input based on max speed
-    xSpeed *= DriveConstants.kMaxSpeedMetersPerSecond; //& Gives you the amount of input to translate into x
-    ySpeed *= DriveConstants.kMaxSpeedMetersPerSecond; //& Gives you the amount of input to translate into y
-    rot *= DriveConstants.kMaxAngularSpeed; //& Gives you the amount of input to translate into robot rotation
+    xSpeed *= DriveConstants.kMaxSpeedMetersPerSecond;
+    ySpeed *= DriveConstants.kMaxSpeedMetersPerSecond;
+    rot *= DriveConstants.kMaxAngularSpeed;
 
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(
         fieldRelative
@@ -213,6 +214,6 @@ public void setBrakeMode(boolean brake) {
    * @return The turn rate of the robot, in degrees per second
    */
   public double getTurnRate() {
-    return (m_gyro.getRate()) * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
+    return m_gyro.getRate() * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
   }
 }

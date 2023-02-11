@@ -13,7 +13,7 @@ public class RobotBalance {
     private static ADIS16470_IMU gyro = DriveSubsystem.m_gyro;
     private static DriveSubsystem robotDrive = RobotContainer.m_robotDrive;
 
-    public static void balanceRobotonX() {
+    public static void balanceRobotOnX() {
         gyro.setYawAxis(IMUAxis.kX);
         double xSpeed = 0;
         while(gyro.getAngle() < -5.0 || gyro.getAngle() > 5.0) {
@@ -27,7 +27,7 @@ public class RobotBalance {
         gyro.setYawAxis(IMUAxis.kZ);
     }
 
-    public static void balanceRobotonY() {
+    public static void balanceRobotOnY() {
         gyro.setYawAxis(IMUAxis.kY);
         double ySpeed = 0;
         while(gyro.getAngle() < -5.0 || gyro.getAngle() > 5.0) {

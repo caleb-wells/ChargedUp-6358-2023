@@ -4,19 +4,6 @@
 
 package frc.robot;
 
-//? Old Auto Imports
-/*import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
-import frc.robot.Constants.AutoConstants;
-import frc.robot.Constants.DriveConstants;
-import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;*/
-
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -36,7 +23,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import java.util.HashMap;
 import java.util.List;
 import java.util.*;
-//!PathPlanner Imp orts
+//!PathPlanner Imports
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
@@ -61,8 +48,9 @@ public class RobotContainer {
   //^ The CoPilots Controller
   Joystick m_copilotController = new Joystick(OIConstants.kCoPilotControllerPort);
 
-  //^LED Instance
+  //^LED Instances
   private Spark m_LEDs = LEDStrip.get();
+  private Spark m_testLEDS = LEDStrip.m_underglowLEDs;
 
   //*Beginning of PathPlanner Code
   // This will load the file "MainAuto.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
@@ -118,25 +106,31 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     
-    //Purple
+    //Set LEDs to Purple
     new JoystickButton(m_driverController, 2)
         .whileTrue(new RunCommand(
             () -> new LEDController(0.91, m_LEDs),
                 m_robotDrive));
 
-    //Yellow
+    //Set LEDs to Yellow
     new JoystickButton(m_driverController, 3)
         .whileTrue(new RunCommand(
-            () -> new LEDController(0.69, m_LEDs),
+            () -> new LEDController(0.69, m_testLEDS),
                 m_robotDrive));
 
-    //Balance Robot on Charging Station on X
+    //Calls setX() method in DriveSubsystem
+    new JoystickButton(m_driverController, 4)
+        .whileTrue(new RunCommand(
+            () -> m_robotDrive.setX(),
+            m_robotDrive));
+    
+    //Balance Robot on Charging Station on X axis
     new JoystickButton(m_driverController, 5)
-        .whileTrue(new RunCommand(() -> RobotBalance.balanceRobotonX(), m_robotDrive));
+        .whileTrue(new RunCommand(() -> RobotBalance.balanceRobotOnX(), m_robotDrive));
 
-    //Balance Robot on Charging Station on Y
+    //Balance Robot on Charging Station on Y axis
     new JoystickButton(m_driverController, 6)
-        .whileTrue(new RunCommand(() -> RobotBalance.balanceRobotonY(), m_robotDrive));
+        .whileTrue(new RunCommand(() -> RobotBalance.balanceRobotOnY(), m_robotDrive));
     
     /*new JoystickButton(m_driverController, 3)
         .whileTrue(new RunCommand(
@@ -166,7 +160,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
 
-    //Creates the first auto command, this will be set as m_autonomousCommand in Robot.java
+    //Creates the main auto command, this will be set as m_autonomousCommand in Robot.java
     Command MainAuto = autoBuilder.fullAuto(pathGroup);
 
     return MainAuto;

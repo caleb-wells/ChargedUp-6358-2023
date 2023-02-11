@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.LEDController;
 import frc.robot.commands.SetCoastModeCommand;
@@ -35,7 +36,7 @@ public class Robot extends TimedRobot {
 
   public static SwerveModule m_testModule = DriveSubsystem.m_frontRight;
 
-  public static Spark m_leds = LEDStrip.m_underglowLEDs;
+  public static Spark m_leds = LEDStrip.get();
 
   public static double defaultLEDColor = 0.99;
 
@@ -60,7 +61,8 @@ public class Robot extends TimedRobot {
       defaultLEDColor = 0.85;
     }
     //TODO(Caleb) if this doesn't work embed it inside a RunCommand()
-    new LEDController(defaultLEDColor, m_leds);
+
+    new InstantCommand(() -> new LEDController(defaultLEDColor, m_leds));
 
     //! Turn brake mode off shortly after the robot is disabled
     new Trigger(this::isEnabled)
@@ -100,12 +102,12 @@ public class Robot extends TimedRobot {
   /* This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() { 
-    new LEDController(0.93, m_leds);
+    new InstantCommand(() -> new LEDController(0.93, m_leds));
   }
 
   @Override
   public void disabledPeriodic() { 
-    new LEDController(0.93, m_leds);
+    new InstantCommand(() -> new LEDController(0.93, m_leds));
   }
 
   /* This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
@@ -129,13 +131,13 @@ public class Robot extends TimedRobot {
     RobotContainer.m_robotDrive.setBrakeMode(true); //? Enable Brake Mode
 
     //Sets the LED color for auto
-    new LEDController(0.75, m_leds);
+    new InstantCommand(() -> new LEDController(0.75, m_leds));
   }
 
   /* This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    new LEDController(0.75, m_leds);
+    new InstantCommand(() -> new LEDController(0.75, m_leds));
    }
 
   @Override
@@ -150,7 +152,7 @@ public class Robot extends TimedRobot {
 
     RobotContainer.m_robotDrive.setBrakeMode(true); //? Enable Brake Mode
 
-    new LEDController(defaultLEDColor, m_leds);;
+    new InstantCommand(() -> new LEDController(defaultLEDColor, m_leds));
   }
 
   /* This function is called periodically during operator control. */
@@ -169,12 +171,12 @@ public class Robot extends TimedRobot {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
     RobotContainer.m_robotDrive.setBrakeMode(true); //? Enable Brake Mode
-    new LEDController(-0.47, m_leds);
+    new InstantCommand(() -> new LEDController(-0.47, m_leds));
   }
 
   /* This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {
-    new LEDController(0.75, m_leds);
+    new InstantCommand(() -> new LEDController(-0.47, m_leds));
   }
 }
