@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 public class LEDController extends InstantCommand {
-  
   public LEDController(double setting, Spark LED) {
     LED.set(setting);
   }

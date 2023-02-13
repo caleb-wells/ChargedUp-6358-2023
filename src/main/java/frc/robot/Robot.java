@@ -6,6 +6,7 @@ package frc.robot;
 
 //~ Other Imports
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.event.EventLoop;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -42,6 +43,8 @@ public class Robot extends TimedRobot {
   public static String kAllianceString = DriverStation.getAlliance().toString();
 
   public static InstantCommand setLEDCommandDefault = new InstantCommand(() -> new LEDController(defaultLEDColor, m_leds));
+
+  public static EventLoop m_loop = RobotContainer.m_loop;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -91,6 +94,8 @@ public class Robot extends TimedRobot {
     if(kAllianceString.contains("Blue")) {
       defaultLEDColor = 0.85;
     }
+
+    m_loop.poll();
 
     //*Vars
     double encoder = m_SDModule.getTurningEncoderValue();
@@ -149,6 +154,14 @@ public class Robot extends TimedRobot {
 
     RobotContainer.m_robotDrive.setBrakeMode(true); //? Enable Brake Mode
 
+    //Sets the color of the LEDs on the robot
+    kAllianceString = DriverStation.getAlliance().toString();
+    if(kAllianceString.contains("Red")) {
+      defaultLEDColor = 0.61;
+    }
+    if(kAllianceString.contains("Blue")) {
+      defaultLEDColor = 0.85;
+    }
     setLEDCommandDefault.execute();
   }
 
