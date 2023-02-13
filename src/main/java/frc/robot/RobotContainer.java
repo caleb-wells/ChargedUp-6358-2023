@@ -145,7 +145,6 @@ public class RobotContainer {
         .onTrue(new RunCommand(() -> new ExtendPiston(), m_piston))
         .onFalse(new RunCommand(() -> new RetractPiston(), m_piston));
 
-
     //Balance Robot on Charging Station on X axis //& Will uncomment once required, currently very buggy
     //new JoystickButton(m_driverController, 5)
         //.whileTrue(new RunCommand(() -> RobotBalance.balanceRobotOnX(), m_robotDrive));
