@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-//~ Other Imports
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.event.EventLoop;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
@@ -38,9 +37,9 @@ public class Robot extends TimedRobot {
 
   public static Spark m_leds = LEDStrip.get();
 
-  public static double defaultLEDColor = 0.99; //Sets the color to white if no Alliance Color is found
-
   public static String kAllianceString = DriverStation.getAlliance().toString();
+
+  public static double defaultLEDColor = (kAllianceString.contains("Blue") ? 0.85 : 0.61); //Sets the color to our alliance color
 
   public static InstantCommand setLEDCommandDefault = new InstantCommand(() -> new LEDController(defaultLEDColor, m_leds));
 
@@ -63,7 +62,7 @@ public class Robot extends TimedRobot {
     if(kAllianceString.contains("Blue")) {
       defaultLEDColor = 0.85;
     }
-
+    
     //! Turn brake mode off shortly after the robot is disabled
     new Trigger(this::isEnabled)
       .negate()
@@ -162,14 +161,13 @@ public class Robot extends TimedRobot {
     if(kAllianceString.contains("Blue")) {
       defaultLEDColor = 0.85;
     }
-    setLEDCommandDefault.execute();
+
+    m_leds.set(defaultLEDColor);
   }
 
   /* This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() { 
-
-  }
+  public void teleopPeriodic() { }
 
   @Override
   public void testInit() {

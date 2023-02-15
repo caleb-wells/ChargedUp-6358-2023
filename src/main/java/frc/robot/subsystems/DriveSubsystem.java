@@ -100,7 +100,6 @@ public class DriveSubsystem extends SubsystemBase {
         pose);
   }
 
-
   public SwerveDriveKinematics getKinematics() {
     return DriveConstants.kDriveKinematics;
   }
@@ -140,11 +139,13 @@ public class DriveSubsystem extends SubsystemBase {
 public void setBrakeMode(boolean brake) {
   //? Determine whether the mode should be Brake or Coast
   IdleMode mode = brake ? IdleMode.kBrake : IdleMode.kCoast;
+  
   //&Define Idle Mode for Driving Motors
   m_frontLeft.setDriveIdleMode(mode);
   m_frontRight.setDriveIdleMode(mode);
   m_rearLeft.setDriveIdleMode(mode);
   m_rearRight.setDriveIdleMode(mode);
+
   //&Define Idle Mode for Turning Motors
   m_frontLeft.setTurnIdleMode(mode);
   m_frontRight.setTurnIdleMode(mode);

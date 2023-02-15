@@ -16,8 +16,8 @@ public class RobotBalance {
     public static void balanceRobotOnX() {
         gyro.setYawAxis(IMUAxis.kX);
         double xSpeed = 0;
-        while(gyro.getAngle() < -5.0 || gyro.getAngle() > 5.0) {
-            xSpeed = gyro.getAngle()/5;
+        while(gyro.getAngle() < -4.0 || gyro.getAngle() > 4.0) {
+            xSpeed = (gyro.getAngle()/5)/3;
             robotDrive.drive(
                 xSpeed,
                 0,
@@ -30,8 +30,8 @@ public class RobotBalance {
     public static void balanceRobotOnY() {
         gyro.setYawAxis(IMUAxis.kY);
         double ySpeed = 0;
-        while(gyro.getAngle() < -5.0 || gyro.getAngle() > 5.0) {
-            ySpeed = gyro.getAngle()/5;
+        while(gyro.getAngle() < -4.0 || gyro.getAngle() > 4.0) {
+            ySpeed = (gyro.getAngle()/5)/3;
             robotDrive.drive(
                 0,
                 ySpeed,
