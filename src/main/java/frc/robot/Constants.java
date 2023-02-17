@@ -26,7 +26,7 @@ public final class Constants {
     //& Driving Parameters - Note that these are not the maximum capable speeds of
     //& the robot, rather, the allowed maximum speeds
     //?Initial value was 4.8 Meters/Second
-    public static final double kMaxSpeedMetersPerSecond = 2.15;
+    public static final double kMaxSpeedMetersPerSecond = 2;
     public static final double kMaxAngularSpeed = 2 * Math.PI; // radians per second
 
     //TODO(Caleb) Double check TrackWidth and WheelBase
@@ -44,8 +44,7 @@ public final class Constants {
         new Translation2d(-kWheelBase / 2, -kTrackWidth / 2));
 
     //^ Angular offsets of the modules relative to the chassis in radians
-    //! I think some of our issues are rooted here.
-    public static final double kFrontLeftChassisAngularOffset = -Math.PI / 2; //3π/2?
+    public static final double kFrontLeftChassisAngularOffset = -Math.PI / 2;
     public static final double kFrontRightChassisAngularOffset = 0;
     public static final double kBackLeftChassisAngularOffset = Math.PI;
     public static final double kBackRightChassisAngularOffset = Math.PI / 2;
@@ -53,23 +52,23 @@ public final class Constants {
     //^ SPARK MAX CAN IDs
     //&Driving SPARK MAX IDs
     //?Blue
-    public static final int kFrontLeftDrivingCanId = 6; //Originally 6
+    public static final int kFrontLeftDrivingCanId = 6;
     //^Yellow
-    public static final int kRearLeftDrivingCanId = 7; //Originally 7
+    public static final int kRearLeftDrivingCanId = 7;
     //!Red
-    public static final int kFrontRightDrivingCanId = 9; //Originally 9
+    public static final int kFrontRightDrivingCanId = 9;
     //TODO Orange
-    public static final int kRearRightDrivingCanId = 8; //Originally 8
+    public static final int kRearRightDrivingCanId = 8;
 
     //&Turning SPARK MAX IDs
     //?Blue
-    public static final int kFrontLeftTurningCanId = 4; //Originally 4
+    public static final int kFrontLeftTurningCanId = 4;
     //^Yellow
-    public static final int kRearLeftTurningCanId = 3; //Originally 3
+    public static final int kRearLeftTurningCanId = 3;
     //!Red
-    public static final int kFrontRightTurningCanId = 2; //Originally 2
+    public static final int kFrontRightTurningCanId = 2;
     //TODO Orange
-    public static final int kRearRightTurningCanId = 5; //Originally 5
+    public static final int kRearRightTurningCanId = 5;
  
     //!Tells the DriveSubsytem whether or not the gyro needs to be reveresed
     //TODO(Caleb) Determine if the gyro needs reveresed or not IMPORTANT
@@ -98,6 +97,7 @@ public final class Constants {
     public static final double kDrivingMotorFreeSpeedRps = NeoMotorConstants.kFreeSpeedRpm / 60;
     public static final double kWheelDiameterMeters = 0.1;
     public static final double kWheelCircumferenceMeters = kWheelDiameterMeters * Math.PI;
+    
     //! 45 teeth on the wheel's bevel gear, 22 teeth on the first-stage spur gear, 15 teeth on the bevel pinion
     public static final double kDrivingMotorReduction = (40.0 * 20) / (kDrivingMotorPinionTeeth * 15);
     public static final double kDriveWheelFreeSpeedRps = (kDrivingMotorFreeSpeedRps * kWheelCircumferenceMeters) / kDrivingMotorReduction;

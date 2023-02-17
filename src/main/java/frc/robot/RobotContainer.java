@@ -142,7 +142,7 @@ public class RobotContainer {
             () -> m_robotDrive.setX(),
             m_robotDrive));
     
-    //Creates a new trigger that when true activates our pneumatic system
+    //Creates a new trigger that when the trigger activates our pneumatic system
     new Trigger(m_driverController.axisGreaterThan(2, 0.5, m_loop))
         .onTrue(new RunCommand(() -> new ExtendPiston(), m_piston))
         .onFalse(new RunCommand(() -> new RetractPiston(), m_piston));
