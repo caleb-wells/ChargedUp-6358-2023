@@ -31,10 +31,10 @@ public final class Constants {
 
     //TODO(Caleb) Double check TrackWidth and WheelBase
     //^ Chassis configuration
-    public static final double kTrackWidth = Units.inchesToMeters(21);
+    public static final double kTrackWidth = Units.inchesToMeters(11.5);
 
     //^ Distance between centers of right and left wheels on robot
-    public static final double kWheelBase = Units.inchesToMeters(12);
+    public static final double kWheelBase = Units.inchesToMeters(21);
 
     //^ Distance between front and back wheels on robot
     public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
