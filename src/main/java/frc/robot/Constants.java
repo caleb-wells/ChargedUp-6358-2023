@@ -29,12 +29,11 @@ public final class Constants {
     public static final double kMaxSpeedMetersPerSecond = 2;
     public static final double kMaxAngularSpeed = 2 * Math.PI; // radians per second
 
-    //TODO(Caleb) Double check TrackWidth and WheelBase
     //^ Chassis configuration
-    public static final double kTrackWidth = Units.inchesToMeters(11.5);
+    public static final double kTrackWidth = Units.inchesToMeters(21);
 
     //^ Distance between centers of right and left wheels on robot
-    public static final double kWheelBase = Units.inchesToMeters(21);
+    public static final double kWheelBase = Units.inchesToMeters(11.5);
 
     //^ Distance between front and back wheels on robot
     public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
@@ -51,24 +50,24 @@ public final class Constants {
 
     //^ SPARK MAX CAN IDs
     //&Driving SPARK MAX IDs
-    //?Blue
-    public static final int kFrontLeftDrivingCanId = 6;
-    //^Yellow
-    public static final int kRearLeftDrivingCanId = 7;
     //!Red
-    public static final int kFrontRightDrivingCanId = 9;
+    public static final int kFrontLeftDrivingCanId = 9;
+    //?Blue
+    public static final int kRearLeftDrivingCanId = 6;
     //TODO Orange
-    public static final int kRearRightDrivingCanId = 8;
+    public static final int kFrontRightDrivingCanId = 8;
+    //^Yellow
+    public static final int kRearRightDrivingCanId = 7;
 
     //&Turning SPARK MAX IDs
-    //?Blue
-    public static final int kFrontLeftTurningCanId = 4;
-    //^Yellow
-    public static final int kRearLeftTurningCanId = 3;
     //!Red
-    public static final int kFrontRightTurningCanId = 2;
+    public static final int kFrontLeftTurningCanId = 2;
+    //? Blue
+    public static final int kRearLeftTurningCanId = 4;
     //TODO Orange
-    public static final int kRearRightTurningCanId = 5;
+    public static final int kFrontRightTurningCanId = 5;
+    //^ Yellow
+    public static final int kRearRightTurningCanId = 3;
  
     //!Tells the DriveSubsytem whether or not the gyro needs to be reveresed
     //TODO(Caleb) Determine if the gyro needs reveresed or not IMPORTANT
@@ -90,7 +89,6 @@ public final class Constants {
 
     //^ Invert the turning encoder, since the output shaft rotates in the opposite direction of
     //^ the steering motor in the Swerve Module.
-    //TODO(Caleb) Does the Turning Encoder need inverted?
     public static final boolean kTurningEncoderInverted = false;
 
     //! Calculations required for driving motor conversion factors and feed forward
@@ -114,7 +112,6 @@ public final class Constants {
     public static final double kTurningEncoderPositionPIDMinInput = 0; // radians
     public static final double kTurningEncoderPositionPIDMaxInput = kTurningEncoderPositionFactor; // radians
 
-    //TODO(Caleb) Update Driving and Turning PID values to match current robot configuration, values must be <= 1
     public static final double kDrivingP = 0.02;
     public static final double kDrivingI = 0;
     public static final double kDrivingD = 0;
@@ -134,8 +131,8 @@ public final class Constants {
     public static final IdleMode kTurningMotorIdleMode = IdleMode.kBrake;*/
 
     //? Current limits <- Prevents Brownouts and high battery draw
-    public static final int kDrivingMotorCurrentLimit = 50; // amps //TODO(Caleb) May need to be adjusted.
-    public static final int kTurningMotorCurrentLimit = 20; // amps //TODO(Caleb) May need to be adjusted.
+    public static final int kDrivingMotorCurrentLimit = 50; // amps
+    //public static final int kTurningMotorCurrentLimit = 20; // amps 
   }
 
   public static final class OIConstants {

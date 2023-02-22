@@ -7,7 +7,6 @@ package frc.robot;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.event.EventLoop;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.LEDs.SetLEDController;
 import frc.robot.commands.Piston.ExtendPiston;
@@ -19,7 +18,6 @@ import frc.robot.subsystems.Piston;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 //import frc.robot.subsystems.Motors; //& Uncomment when it is time to use additional motors
 
 //?New Auto Imports
@@ -57,8 +55,6 @@ public class RobotContainer {
 
   public Piston m_piston = new Piston();
 
-  public static EventLoop m_loop = new EventLoop();
-
   //*Beginning of PathPlanner Code
   // This will load the file "MainAuto.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
   // for every path in the group
@@ -95,10 +91,10 @@ public class RobotContainer {
         //! Keep Robot Centric until debugging has finished
         new RunCommand(
             () -> m_robotDrive.drive(
-                MathUtil.applyDeadband(-m_driverController.getLeftY(), 0.25),
-                MathUtil.applyDeadband(-m_driverController.getLeftX(), 0.25),
-                MathUtil.applyDeadband(-m_driverController.getRightX(), 0.25),
-                false),
+                MathUtil.applyDeadband(m_driverController.getLeftY(), 0.25),
+                MathUtil.applyDeadband(m_driverController.getLeftX(), 0.25),
+                MathUtil.applyDeadband(m_driverController.getRightX(), 0.25),
+                true),
             m_robotDrive));
   }
 
@@ -142,10 +138,11 @@ public class RobotContainer {
             () -> m_robotDrive.setX(),
             m_robotDrive));
     
-    //Creates a new trigger that when the trigger activates our pneumatic system
-    new Trigger(m_driverController.axisGreaterThan(2, 0.5, m_loop))
-        .onTrue(new RunCommand(() -> new ExtendPiston(), m_piston))
-        .onFalse(new RunCommand(() -> new RetractPiston(), m_piston));
+    new JoystickButton(m_copilotController, 1)
+        .whileTrue(new RunCommand(() -> new ExtendPiston(), m_piston));
+
+    new JoystickButton(m_copilotController, 2)
+        .whileTrue(new RunCommand(() -> new RetractPiston(), m_piston));
 
     //Balance Robot on Charging Station on X axis //& Will uncomment once required, currently very buggy
     //new JoystickButton(m_driverController, 5)
