@@ -73,7 +73,8 @@ public class SwerveModule {
     // Apply position and velocity conversion factors for the turning encoder. We
     // want these in radians and radians per second to use with WPILib's swerve
     // APIs.
-    m_turningEncoder.setPositionConversionFactor(ModuleConstants.kTurningEncoderPositionFactor); 
+    //This line must be set in order to be used with WPILib since it expects radians
+    //
     m_turningEncoder.setVelocityConversionFactor(ModuleConstants.kTurningEncoderVelocityFactor);
 
     // Invert the turning encoder, since the output shaft rotates in the opposite direction of
@@ -102,12 +103,13 @@ public class SwerveModule {
     m_turningPIDController.setFF(ModuleConstants.kTurningFF);
     m_turningPIDController.setOutputRange(ModuleConstants.kTurningMinOutput, ModuleConstants.kTurningMaxOutput);
 
-    //? Old Braking System
-    //m_drivingSparkMax.setIdleMode(ModuleConstants.kDrivingMotorIdleMode);
-    //m_turningSparkMax.setIdleMode(ModuleConstants.kTurningMotorIdleMode);
+    //Old Braking System
+    m_drivingSparkMax.setIdleMode(IdleMode.kCoast);
+    m_turningSparkMax.setIdleMode(IdleMode.kCoast);
     
-    m_drivingSparkMax.setSmartCurrentLimit(ModuleConstants.kDrivingMotorCurrentLimit);
-    m_turningSparkMax.setSmartCurrentLimit(ModuleConstants.kTurningMotorCurrentLimit);
+    //?Smart Current Limits
+    //m_drivingSparkMax.setSmartCurrentLimit(ModuleConstants.kDrivingMotorCurrentLimit);
+    //m_turningSparkMax.setSmartCurrentLimit(ModuleConstants.kTurningMotorCurrentLimit);
 
     //! Save the SPARK MAX configurations. If a SPARK MAX browns out during
     //! operation, it will maintain the above configurations. DO NOT REMOVE
@@ -130,6 +132,10 @@ public class SwerveModule {
     return new SwerveModuleState(m_drivingEncoder.getVelocity(),
         new Rotation2d(m_turningEncoder.getPosition() - m_chassisAngularOffset));
   }
+//TESTING
+  public double getPositionConversionFactor() {
+    return this.m_turningEncoder.getPositionConversionFactor();
+  }
 
   /**
    * Returns the current position of the module.
@@ -142,6 +148,20 @@ public class SwerveModule {
     return new SwerveModulePosition(
         m_drivingEncoder.getPosition(),
         new Rotation2d(m_turningEncoder.getPosition() - m_chassisAngularOffset));
+  }
+
+  /*public SwerveModulePosition getRadiansPosition() {
+    return new SwerveModulePosition(
+        (m_drivingEncoder.getPosition() * (Math.PI * 2)),
+        new Rotation2d((m_turningEncoder.getPosition() * (Math.PI * 2)) - m_chassisAngularOffset));
+  }*/
+
+  public void setPositionConversionFactor(boolean radians) {
+    if(radians) {
+      this.m_turningEncoder.setPositionConversionFactor(ModuleConstants.kTurningEncoderPositionFactor);
+    } else {
+      this.m_turningEncoder.setPositionConversionFactor(1);
+    }
   }
 
   /**
@@ -160,6 +180,10 @@ public class SwerveModule {
 
   public double getTurningEncoderValue() {
     return this.m_turningEncoder.getPosition();
+  }
+
+  public double getDrivingEncoderValue() {
+    return this.m_drivingEncoder.getPosition();
   }
 
   /**

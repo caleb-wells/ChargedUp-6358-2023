@@ -4,16 +4,15 @@
 
 package frc.robot;
 
-//~ Other Imports
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.commands.LEDController;
-import frc.robot.commands.SetCoastModeCommand;
+//import edu.wpi.first.wpilibj2.command.button.Trigger;
+//import frc.robot.commands.SetCoastModeCommand;
+import frc.robot.commands.LEDs.LEDController;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.LEDStrip;
 import frc.robot.subsystems.SwerveModule;
@@ -37,11 +36,11 @@ public class Robot extends TimedRobot {
 
   public static Spark m_leds = LEDStrip.get();
 
-  public static double defaultLEDColor = 0.99; //Sets the color to white if no Alliance Color is found
-
   public static String kAllianceString = DriverStation.getAlliance().toString();
 
-  public static InstantCommand setLEDCommandDefault = new InstantCommand(() -> new LEDController(defaultLEDColor, m_leds));
+  public static double defaultLEDColor = (kAllianceString.contains("Blue") ? 0.85 : 0.61); //Sets the color to our alliance color
+
+  public static InstantCommand setLEDDefault = new InstantCommand(() -> new LEDController(defaultLEDColor, m_leds));
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -60,12 +59,12 @@ public class Robot extends TimedRobot {
     if(kAllianceString.contains("Blue")) {
       defaultLEDColor = 0.85;
     }
-
+    
     //! Turn brake mode off shortly after the robot is disabled
-    new Trigger(this::isEnabled)
+    /*new Trigger(this::isEnabled)
       .negate()
       .debounce(6) //!Should be greater than 5 seconds for Charged Up
-      .whileTrue(new SetCoastModeCommand(RobotContainer.m_robotDrive));
+      .whileTrue(new SetCoastModeCommand(RobotContainer.m_robotDrive));*/
   }
 
   /**
@@ -93,13 +92,17 @@ public class Robot extends TimedRobot {
     }
 
     //*Vars
-    double encoder = m_SDModule.getTurningEncoderValue();
+    double turnEncoder = m_SDModule.getTurningEncoderValue();
+    double driveEncoder = m_SDModule.getDrivingEncoderValue();
     double gyroAngle = m_gyro.getAngle();
+    double encoderConversionValue = m_SDModule.getPositionConversionFactor();
     String position = m_SDModule.getPosition().toString();
     String state = m_SDModule.getState().toString();
 
     //*SmartDashboard Keys
-    SmartDashboard.putNumber("Front Right Encoder", encoder);
+    SmartDashboard.putNumber("Front Right Turn Encoder", turnEncoder);
+    SmartDashboard.putNumber("Front Right Drive Encoder", driveEncoder);
+    SmartDashboard.putNumber("Front Right Drive Encoder Position Conversion", encoderConversionValue);
     SmartDashboard.putString("Front Right Position", position);
     SmartDashboard.putString("Front Right State", state);
     SmartDashboard.putNumber("Gyro", gyroAngle);
@@ -130,7 +133,7 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.schedule();
     }
 
-    RobotContainer.m_robotDrive.setBrakeMode(true); //? Enable Brake Mode
+    //RobotContainer.m_robotDrive.setBrakeMode(true); //? Enable Brake Mode
   }
 
   /* This function is called periodically during autonomous. */
@@ -147,22 +150,29 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
 
-    RobotContainer.m_robotDrive.setBrakeMode(true); //? Enable Brake Mode
+    //RobotContainer.m_robotDrive.setBrakeMode(true); //? Enable Brake Mode
 
-    setLEDCommandDefault.execute();
+    //Sets the color of the LEDs on the robot
+    kAllianceString = DriverStation.getAlliance().toString();
+    if(kAllianceString.contains("Red")) {
+      defaultLEDColor = 0.61;
+    }
+    if(kAllianceString.contains("Blue")) {
+      defaultLEDColor = 0.85;
+    }
+
+    m_leds.set(defaultLEDColor);
   }
 
   /* This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() { 
-
-  }
+  public void teleopPeriodic() { }
 
   @Override
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
-    RobotContainer.m_robotDrive.setBrakeMode(true); //? Enable Brake Mode
+    //RobotContainer.m_robotDrive.setBrakeMode(true); //? Enable Brake Mode
   }
 
   /* This function is called periodically during test mode. */

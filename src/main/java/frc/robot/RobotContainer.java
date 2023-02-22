@@ -8,11 +8,13 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.OIConstants;
-import frc.robot.subsystems.RobotBalance;
-import frc.robot.commands.LEDController;
+import frc.robot.commands.LEDs.SetLEDController;
+import frc.robot.commands.Piston.ExtendPiston;
+import frc.robot.commands.Piston.RetractPiston;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.LEDStrip;
+import frc.robot.subsystems.Piston;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -51,6 +53,8 @@ public class RobotContainer {
   //^LED Instances
   private Spark m_LEDs = LEDStrip.get();
 
+  public Piston m_piston = new Piston();
+
   //*Beginning of PathPlanner Code
   // This will load the file "MainAuto.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
   // for every path in the group
@@ -87,9 +91,9 @@ public class RobotContainer {
         //! Keep Robot Centric until debugging has finished
         new RunCommand(
             () -> m_robotDrive.drive(
-                MathUtil.applyDeadband(-m_driverController.getLeftY(), 0.10),
-                MathUtil.applyDeadband(-m_driverController.getLeftX(), 0.10),
-                MathUtil.applyDeadband(-m_driverController.getRightX(), 0.10),
+                MathUtil.applyDeadband(m_driverController.getLeftY(), 0.25),
+                MathUtil.applyDeadband(m_driverController.getLeftX(), 0.25),
+                MathUtil.applyDeadband(m_driverController.getRightX(), 0.25),
                 true),
             m_robotDrive));
   }
@@ -104,24 +108,29 @@ public class RobotContainer {
    * {@link JoystickButton}.
    */
   private void configureButtonBindings() {
-    
-    //Set LEDs to Purple
-    new JoystickButton(m_driverController, 2)
-        .whileTrue(new RunCommand(
-            () -> new LEDController(0.91, m_LEDs),
-                m_robotDrive))
-        .whileFalse(new RunCommand(
-            () -> new LEDController(Robot.defaultLEDColor, m_LEDs),
-                m_robotDrive));
 
-    //Set LEDs to Yellow
-    new JoystickButton(m_driverController, 3)
+    new JoystickButton(m_driverController, 1)
         .whileTrue(new RunCommand(
-            () -> new LEDController(0.69, m_LEDs),
-                m_robotDrive))
-        .whileFalse(new RunCommand(
+            () -> m_robotDrive.setToZero(),
+            m_robotDrive));
+    
+    //~Set LEDs to Purple
+    new JoystickButton(m_driverController, 2)
+        .onTrue(new RunCommand(
+            () -> new SetLEDController(0.91, m_LEDs),
+                m_robotDrive));
+        /*.onFalse(new RunCommand(
             () -> new LEDController(Robot.defaultLEDColor, m_LEDs),
-                m_robotDrive));;
+                m_robotDrive));*/
+
+    //^Set LEDs to Yellow
+    new JoystickButton(m_driverController, 3)
+        .onTrue(new RunCommand(
+            () -> new SetLEDController(0.69, m_LEDs),
+                m_robotDrive));
+        /*.onFalse(new RunCommand(
+            () -> new LEDController(Robot.defaultLEDColor, m_LEDs),
+                m_robotDrive));*/
 
     //Calls setX() method in DriveSubsystem
     new JoystickButton(m_driverController, 4)
@@ -129,30 +138,21 @@ public class RobotContainer {
             () -> m_robotDrive.setX(),
             m_robotDrive));
     
-    //Balance Robot on Charging Station on X axis
-    new JoystickButton(m_driverController, 5)
-        .whileTrue(new RunCommand(() -> RobotBalance.balanceRobotOnX(), m_robotDrive));
+    new JoystickButton(m_copilotController, 1)
+        .whileTrue(new RunCommand(() -> new ExtendPiston(), m_piston));
 
-    //Balance Robot on Charging Station on Y axis
-    new JoystickButton(m_driverController, 6)
-        .whileTrue(new RunCommand(() -> RobotBalance.balanceRobotOnY(), m_robotDrive));
-    
-    /*new JoystickButton(m_driverController, 3)
-        .whileTrue(new RunCommand(
-            () -> m_motors.runMotor(m_motors.armMotor, .75),
-             m_motors));*/
-    
-    /*new JoystickButton(m_driverController, 3)
-        .whileFalse(new RunCommand(
-            () -> m_motors.runMotor(m_motors.armMotor, 0),
-            m_motors));*/
+    new JoystickButton(m_copilotController, 2)
+        .whileTrue(new RunCommand(() -> new RetractPiston(), m_piston));
 
-    /*new JoystickButton(m_driverController, 4)
-        .whileTrue(new RunCommand(
-            () -> m_motors.runMotor(m_motors.armMotor, -0.75),
-            m_motors));*/
-        
-    /*new JoystickButton(m_driverController, 4)
+    //Balance Robot on Charging Station on X axis //& Will uncomment once required, currently very buggy
+    //new JoystickButton(m_driverController, 5)
+        //.whileTrue(new RunCommand(() -> RobotBalance.balanceRobotOnX(), m_robotDrive));
+
+    //Balance Robot on Charging Station on Y axis //& Will uncomment once required, currently very buggy
+    //new JoystickButton(m_driverController, 6)
+        //.whileTrue(new RunCommand(() -> RobotBalance.balanceRobotOnY(), m_robotDrive));
+    
+    /*new JoystickButton(m_driverController, 3) //& Will uncomment once required
         .whileFalse(new RunCommand(
             () -> m_motors.runMotor(m_motors.armMotor, 0),
             m_motors));*/
