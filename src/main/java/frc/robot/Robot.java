@@ -10,14 +10,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-//import edu.wpi.first.wpilibj2.command.button.Trigger;
-//import frc.robot.commands.SetCoastModeCommand;
 import frc.robot.commands.LEDs.LEDController;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.LEDStrip;
 import frc.robot.subsystems.SwerveModule;
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.DriverStation;
+//import edu.wpi.first.wpilibj2.command.button.Trigger;
+//import frc.robot.commands.SetCoastModeCommand;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -34,7 +34,7 @@ public class Robot extends TimedRobot {
 
   public static SwerveModule m_SDModule = DriveSubsystem.m_frontRight;
 
-  public static Spark m_leds = LEDStrip.get();
+  public static Spark m_leds = LEDStrip.getLEDs();
 
   public static String kAllianceString = DriverStation.getAlliance().toString();
 
@@ -60,10 +60,9 @@ public class Robot extends TimedRobot {
       defaultLEDColor = 0.85;
     }
     
-    //! Turn brake mode off shortly after the robot is disabled
     /*new Trigger(this::isEnabled)
       .negate()
-      .debounce(6) //!Should be greater than 5 seconds for Charged Up
+      .debounce(6)
       .whileTrue(new SetCoastModeCommand(RobotContainer.m_robotDrive));*/
   }
 
@@ -133,7 +132,7 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.schedule();
     }
 
-    //RobotContainer.m_robotDrive.setBrakeMode(true); //? Enable Brake Mode
+    //RobotContainer.m_robotDrive.setBrakeMode(true);
   }
 
   /* This function is called periodically during autonomous. */
@@ -150,7 +149,7 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
 
-    //RobotContainer.m_robotDrive.setBrakeMode(true); //? Enable Brake Mode
+    //RobotContainer.m_robotDrive.setBrakeMode(true);
 
     //Sets the color of the LEDs on the robot
     kAllianceString = DriverStation.getAlliance().toString();
@@ -172,7 +171,7 @@ public class Robot extends TimedRobot {
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
-    //RobotContainer.m_robotDrive.setBrakeMode(true); //? Enable Brake Mode
+    //RobotContainer.m_robotDrive.setBrakeMode(true);
   }
 
   /* This function is called periodically during test mode. */

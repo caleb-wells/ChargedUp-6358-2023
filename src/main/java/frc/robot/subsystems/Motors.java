@@ -4,15 +4,15 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 
 public class Motors extends SubsystemBase {
-  //* Creates a new Motors. */
 
-  public Spark armMotor = new Spark(Constants.ExtraMotorConstants.armMotor);
+  public VictorSPX armMotor = new VictorSPX(Constants.ExtraMotorConstants.armMotor);
 
   public Motors() { }
 
@@ -21,8 +21,8 @@ public class Motors extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void runMotor(Spark motor, double speed){
-    motor.set(speed);
+  public void runMotor(VictorSPX motor, double speed){
+    motor.set(VictorSPXControlMode.PercentOutput, speed);
   }
   }
-
+  

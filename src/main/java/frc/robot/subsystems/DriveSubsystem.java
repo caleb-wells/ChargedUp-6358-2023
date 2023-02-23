@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class DriveSubsystem extends SubsystemBase {
   //& Create SwerveModules using SwerveModules.java
   //?Blue
-  private final SwerveModule m_frontLeft = new SwerveModule(
+  private static final SwerveModule m_frontLeft = new SwerveModule(
       DriveConstants.kFrontLeftDrivingCanId,
       DriveConstants.kFrontLeftTurningCanId,
       DriveConstants.kFrontLeftChassisAngularOffset);
@@ -31,13 +31,13 @@ public class DriveSubsystem extends SubsystemBase {
       DriveConstants.kFrontRightChassisAngularOffset);
 
   //^Yellow
-  private final SwerveModule m_rearLeft = new SwerveModule(
+  private static final SwerveModule m_rearLeft = new SwerveModule(
       DriveConstants.kRearLeftDrivingCanId,
       DriveConstants.kRearLeftTurningCanId,
       DriveConstants.kBackLeftChassisAngularOffset);
 
   //TODO Orange
-  private final SwerveModule m_rearRight = new SwerveModule(
+  private static final SwerveModule m_rearRight = new SwerveModule(
       DriveConstants.kRearRightDrivingCanId,
       DriveConstants.kRearRightTurningCanId,
       DriveConstants.kBackRightChassisAngularOffset);
@@ -151,20 +151,27 @@ public class DriveSubsystem extends SubsystemBase {
  * @param brake If true, sets brake mode, otherwise sets coast mode
  */
 public void setBrakeMode(boolean brake) {
-  //? Determine whether the mode should be Brake or Coast
+  //Determine whether the mode should be Brake or Coast
   IdleMode mode = brake ? IdleMode.kBrake : IdleMode.kCoast;
   
-  //&Define Idle Mode for Driving Motors
+  //Set Idle Mode for Driving Motors
   m_frontLeft.setDriveIdleMode(mode);
   m_frontRight.setDriveIdleMode(mode);
   m_rearLeft.setDriveIdleMode(mode);
   m_rearRight.setDriveIdleMode(mode);
 
-  //&Define Idle Mode for Turning Motors
+  //Set Idle Mode for Turning Motors
   m_frontLeft.setTurnIdleMode(mode);
   m_frontRight.setTurnIdleMode(mode);
   m_rearLeft.setTurnIdleMode(mode);
   m_rearRight.setTurnIdleMode(mode);
+}
+
+public static void driveForward(double speed) {
+    m_frontLeft.setDesiredState(new SwerveModuleState(speed, Rotation2d.fromDegrees(0)));
+    m_frontRight.setDesiredState(new SwerveModuleState(speed, Rotation2d.fromDegrees(0)));
+    m_rearLeft.setDesiredState(new SwerveModuleState(speed, Rotation2d.fromDegrees(0)));
+    m_rearRight.setDesiredState(new SwerveModuleState(speed, Rotation2d.fromDegrees(0)));
 }
 
   /**

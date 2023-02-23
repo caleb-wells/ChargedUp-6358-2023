@@ -11,13 +11,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Piston extends SubsystemBase {
   /** Creates a new Piston. */
   private static final int PH_CAN_ID = 10;
-  private static int forwardChannel =8;
-  private static int reverseChannel =9;
+  private static int forwardChannel = 8;
+  private static int reverseChannel = 9;
   public static PneumaticHub m_pH = new PneumaticHub(PH_CAN_ID);
   public static DoubleSolenoid m_doubleSolenoid = m_pH.makeDoubleSolenoid(forwardChannel,reverseChannel);
 
-  public Piston() { 
-  }
+  public Piston() { }
 
   public DoubleSolenoid getSolenoid() {
     return m_doubleSolenoid;

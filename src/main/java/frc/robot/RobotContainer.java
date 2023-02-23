@@ -8,7 +8,8 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.LEDs.SetLEDController;
+import frc.robot.commands.Auto.MainAuto;
+import frc.robot.commands.LEDs.LEDController;
 import frc.robot.commands.Piston.ExtendPiston;
 import frc.robot.commands.Piston.RetractPiston;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
@@ -18,14 +19,14 @@ import frc.robot.subsystems.Piston;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-//import frc.robot.subsystems.Motors; //& Uncomment when it is time to use additional motors
+import frc.robot.subsystems.Motors; 
 
-//?New Auto Imports
-//!Java Auto Imports
+//Java Auto Imports
 import java.util.HashMap;
 import java.util.List;
 import java.util.*;
-//!PathPlanner Imports
+
+//PathPlanner Imports
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
@@ -39,23 +40,19 @@ import com.pathplanner.lib.auto.SwerveAutoBuilder;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  //^ The Robot's Subsystems
   public final static DriveSubsystem m_robotDrive = new DriveSubsystem();
-  //? Will uncomment once it is required, currently the SPARK is off of the robot
-  //private final Motors m_motors = new Motors(); <-- Will uncomment once it is time for other motors.
 
-  //^ The Driver's Controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
 
-  //^ The CoPilots Controller
   Joystick m_copilotController = new Joystick(OIConstants.kCoPilotControllerPort);
 
-  //^LED Instances
-  private Spark m_LEDs = LEDStrip.get();
+  private Spark m_LEDs = LEDStrip.getLEDs();
 
   public Piston m_piston = new Piston();
 
-  //*Beginning of PathPlanner Code
+  public Motors m_motors = new Motors();
+
+  //Beginning of PathPlanner Code
   // This will load the file "MainAuto.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
   // for every path in the group
   public static List<PathPlannerTrajectory> pathGroup = PathPlanner.loadPathGroup("MainAuto", new PathConstraints(4, 3));
@@ -74,21 +71,21 @@ public class RobotContainer {
     true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
     m_robotDrive // The drive subsystem. Used to properly set the requirements of path following commands
    );
-  //*End of PathPlanner Code
+  //End of PathPlanner Code
 
+  Command fullAuto = autoBuilder.fullAuto(pathGroup);
+
+  Command mainAuto = new MainAuto();
   /**
-   * *The container for the robot. Contains subsystems, OI devices, and commands.
+   * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    //^ Configure the button bindings
+
     configureButtonBindings();
 
     // Configure default commands --> This is how the robot drives, should not need to be adjusted, if the robot is driving
     // improperly, there is a greater likelyhood that it is somewhere else in the code *cough* SwerveModule.java *cough*
     m_robotDrive.setDefaultCommand(
-        // The left stick controls translation of the robot.
-        // Turning is controlled by the X axis of the right stick.
-        //! Keep Robot Centric until debugging has finished
         new RunCommand(
             () -> m_robotDrive.drive(
                 MathUtil.applyDeadband(m_driverController.getLeftY(), 0.25),
@@ -113,49 +110,47 @@ public class RobotContainer {
         .whileTrue(new RunCommand(
             () -> m_robotDrive.setToZero(),
             m_robotDrive));
-    
-    //~Set LEDs to Purple
+
     new JoystickButton(m_driverController, 2)
         .onTrue(new RunCommand(
-            () -> new SetLEDController(0.91, m_LEDs),
-                m_robotDrive));
-        /*.onFalse(new RunCommand(
+            () -> new LEDController(0.91, m_LEDs),
+                m_robotDrive))
+        .onFalse(new RunCommand(
             () -> new LEDController(Robot.defaultLEDColor, m_LEDs),
-                m_robotDrive));*/
+                m_robotDrive));
 
-    //^Set LEDs to Yellow
     new JoystickButton(m_driverController, 3)
         .onTrue(new RunCommand(
-            () -> new SetLEDController(0.69, m_LEDs),
-                m_robotDrive));
-        /*.onFalse(new RunCommand(
+            () -> new LEDController(0.69, m_LEDs),
+                m_robotDrive))
+        .onFalse(new RunCommand(
             () -> new LEDController(Robot.defaultLEDColor, m_LEDs),
-                m_robotDrive));*/
+                m_robotDrive));
 
-    //Calls setX() method in DriveSubsystem
     new JoystickButton(m_driverController, 4)
         .whileTrue(new RunCommand(
             () -> m_robotDrive.setX(),
             m_robotDrive));
     
     new JoystickButton(m_copilotController, 1)
-        .whileTrue(new RunCommand(() -> new ExtendPiston(), m_piston));
+        .onTrue(new RunCommand(() -> new ExtendPiston(), m_piston))
+        .onFalse(new RunCommand(() -> new RetractPiston(), m_piston));
 
     new JoystickButton(m_copilotController, 2)
-        .whileTrue(new RunCommand(() -> new RetractPiston(), m_piston));
+        .whileTrue(new RunCommand(
+        () -> m_motors.runMotor(m_motors.armMotor, 0.5),
+        m_motors))
+        .whileFalse(new RunCommand(
+            () -> m_motors.runMotor(m_motors.armMotor, 0),
+            m_motors));
 
-    //Balance Robot on Charging Station on X axis //& Will uncomment once required, currently very buggy
+    //& Will uncomment once required, currently very buggy
     //new JoystickButton(m_driverController, 5)
         //.whileTrue(new RunCommand(() -> RobotBalance.balanceRobotOnX(), m_robotDrive));
 
-    //Balance Robot on Charging Station on Y axis //& Will uncomment once required, currently very buggy
+    //& Will uncomment once required, currently very buggy
     //new JoystickButton(m_driverController, 6)
         //.whileTrue(new RunCommand(() -> RobotBalance.balanceRobotOnY(), m_robotDrive));
-    
-    /*new JoystickButton(m_driverController, 3) //& Will uncomment once required
-        .whileFalse(new RunCommand(
-            () -> m_motors.runMotor(m_motors.armMotor, 0),
-            m_motors));*/
   }
 
   /**
@@ -164,10 +159,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-
-    //Creates the main auto command, this will be set as m_autonomousCommand in Robot.java
-    Command MainAuto = autoBuilder.fullAuto(pathGroup);
-
-    return MainAuto;
+    return mainAuto;
   }
 }

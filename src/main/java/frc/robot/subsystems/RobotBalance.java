@@ -24,7 +24,7 @@ public class RobotBalance {
                 0,
                 false);
         }
-        gyro.setYawAxis(IMUAxis.kZ);
+        //gyro.setYawAxis(IMUAxis.kZ);
     }
 
     public static void balanceRobotOnY() {
@@ -38,6 +38,6 @@ public class RobotBalance {
                 0,
                 false);
         }
-        gyro.setYawAxis(IMUAxis.kZ);
+        //gyro.setYawAxis(IMUAxis.kZ);
     }
 }

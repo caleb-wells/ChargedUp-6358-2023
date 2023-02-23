@@ -8,8 +8,6 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveSubsystem;
 
-//~ Instant commands call initialisze and then end immediately.
-//! They don't need any other life-cycle methods.
 public class SetCoastModeCommand extends InstantCommand {
   private DriveSubsystem m_subsystem = RobotContainer.m_robotDrive;
 
@@ -27,9 +25,8 @@ public class SetCoastModeCommand extends InstantCommand {
     m_subsystem.setBrakeMode(false); // Disable brake mode
   }
 
-  //! Allow this command to run when disabled DO NOT REMOVE
-  @Override
+  /*@Override
   public boolean runsWhenDisabled() {
       return true;
-  }
+  }*/
 }
