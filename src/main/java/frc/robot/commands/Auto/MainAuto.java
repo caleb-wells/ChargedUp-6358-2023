@@ -5,8 +5,7 @@
 package frc.robot.commands.Auto;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-//import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.commands.DriveForward;
+import frc.robot.commands.Drive.DriveForward;
 
 public class MainAuto extends SequentialCommandGroup {
 
@@ -16,5 +15,5 @@ public class MainAuto extends SequentialCommandGroup {
       //new WaitCommand(4),
       new DriveForward(-1));
   }
-  
+
 }
