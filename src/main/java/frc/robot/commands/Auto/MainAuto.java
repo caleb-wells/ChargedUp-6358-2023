@@ -12,8 +12,6 @@ public class MainAuto extends SequentialCommandGroup {
   public MainAuto() {
     addCommands(
       new DriveForward(1)
-      //new WaitCommand(4),
-      //new DriveForward(-1)
       );
   }
 
