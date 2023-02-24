@@ -124,8 +124,8 @@ public final class Constants {
     public static final IdleMode kTurningMotorIdleMode = IdleMode.kBrake;
 
     //Current limits <- Prevents Brownouts and high battery draw
-    public static final int kDrivingMotorCurrentLimit = 55; // amps
-    public static final int kTurningMotorCurrentLimit = 25; // amps 
+    //public static final int kDrivingMotorCurrentLimit = 55; // amps
+    //public static final int kTurningMotorCurrentLimit = 25; // amps 
   }
 
   public static final class OIConstants {

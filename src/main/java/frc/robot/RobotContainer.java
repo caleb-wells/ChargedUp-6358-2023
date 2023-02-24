@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.Arm.MoveArm;
 import frc.robot.commands.Auto.MainAuto;
-import frc.robot.commands.LEDs.SetLEDs;
 import frc.robot.commands.Piston.ExtendPiston;
 import frc.robot.commands.Piston.RetractPiston;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
@@ -99,22 +98,6 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    new JoystickButton(m_driverController, 2)
-        .onTrue(new RunCommand(
-            () -> new SetLEDs(0.91, m_leds),
-                m_robotDrive))
-        .onFalse(new RunCommand(
-            () -> new SetLEDs(Robot.defaultLEDColor, m_leds),
-                m_robotDrive));
-
-    new JoystickButton(m_driverController, 3)
-        .onTrue(new RunCommand(
-            () -> new SetLEDs(0.69, m_leds),
-                m_robotDrive))
-        .onFalse(new RunCommand(
-            () -> new SetLEDs(Robot.defaultLEDColor, m_leds),
-                m_robotDrive));
-    
     new JoystickButton(m_copilotController, 1)
         .onTrue(new RunCommand(() -> new ExtendPiston(), m_piston))
         .onFalse(new RunCommand(() -> new RetractPiston(), m_piston));
@@ -124,17 +107,12 @@ public class RobotContainer {
             () -> new MoveArm(0.5)))
         .whileFalse(new RunCommand(
             () -> new MoveArm(0)));
-    
+
     new JoystickButton(m_copilotController, 3)
-        .whileTrue(new RunCommand(() -> new DriveSubsystem().setX()));
-
-    //& Will uncomment once required, currently very buggy
-    //new JoystickButton(m_driverController, 5)
-        //.whileTrue(new RunCommand(() -> RobotBalance.balanceRobotOnX(), m_robotDrive));
-
-    //& Will uncomment once required, currently very buggy
-    //new JoystickButton(m_driverController, 6)
-        //.whileTrue(new RunCommand(() -> RobotBalance.balanceRobotOnY(), m_robotDrive));
+        .whileTrue(new RunCommand(
+            () -> new MoveArm(-0.5)))
+        .onFalse(new RunCommand(
+            () -> new MoveArm(0)));
   }
 
   /**
