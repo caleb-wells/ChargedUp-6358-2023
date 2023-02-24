@@ -16,7 +16,7 @@ import frc.robot.commands.Piston.RetractPiston;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.LEDStrip;
-import frc.robot.subsystems.Piston;
+import frc.robot.subsystems.Pneumatics;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -48,7 +48,7 @@ public class RobotContainer {
 
   private Spark m_LEDs = LEDStrip.getLEDs();
 
-  public Piston m_piston = new Piston();
+  public Pneumatics m_piston = new Pneumatics();
 
   //Beginning of PathPlanner Code
   // This will load the file "MainAuto.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
