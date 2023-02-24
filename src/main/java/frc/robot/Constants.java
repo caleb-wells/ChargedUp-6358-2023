@@ -5,8 +5,6 @@
 package frc.robot;
 
 import com.revrobotics.CANSparkMax.IdleMode;
-
-//Math Imports
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -27,7 +25,7 @@ public final class Constants {
   public static final class DriveConstants {
     //& Driving Parameters - Note that these are not the maximum capable speeds of
     //& the robot, rather, the allowed maximum speeds
-    public static final double kMaxSpeedMetersPerSecond = 2.2;
+    public static final double kMaxSpeedMetersPerSecond = 1.9;
     public static final double kMaxAngularSpeed = 2 * Math.PI; // radians per second
 
     //Chassis configuration
@@ -108,7 +106,7 @@ public final class Constants {
     public static final double kTurningEncoderPositionPIDMinInput = 0; // radians
     public static final double kTurningEncoderPositionPIDMaxInput = kTurningEncoderPositionFactor; // radians
 
-    public static final double kDrivingP = 0.020;
+    public static final double kDrivingP = 0.015;
     public static final double kDrivingI = 0;
     public static final double kDrivingD = 0;
     public static final double kDrivingFF = 1 / kDriveWheelFreeSpeedRps;
@@ -122,13 +120,12 @@ public final class Constants {
     public static final double kTurningMinOutput = -1;
     public static final double kTurningMaxOutput = 1;
 
-    //Old Braking System
     public static final IdleMode kDrivingMotorIdleMode = IdleMode.kBrake;
     public static final IdleMode kTurningMotorIdleMode = IdleMode.kBrake;
 
     //Current limits <- Prevents Brownouts and high battery draw
-    public static final int kDrivingMotorCurrentLimit = 50; // amps
-    public static final int kTurningMotorCurrentLimit = 20; // amps 
+    //public static final int kDrivingMotorCurrentLimit = 55; // amps
+    //public static final int kTurningMotorCurrentLimit = 25; // amps 
   }
 
   public static final class OIConstants {
