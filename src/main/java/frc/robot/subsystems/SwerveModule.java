@@ -4,12 +4,12 @@
 
 package frc.robot.subsystems;
 
-//~FIRST Math Imports
+//FIRST Math Imports
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 
-//~REVRobotics Imports
+//REVRobotics Imports
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
@@ -18,23 +18,22 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
 
-//~Constants Import
 import frc.robot.Constants.ModuleConstants;
 
 public class SwerveModule {
-  //~Motor Controllers
+  //Motor Controllers
   private final CANSparkMax m_drivingSparkMax;
   private final CANSparkMax m_turningSparkMax;
 
-  //~Encoders - Relative for driving, and Absolute for turning -- ALWAYS
+  //Encoders - Relative for driving, and Absolute for turning -- ALWAYS
   private final RelativeEncoder m_drivingEncoder;
   private final AbsoluteEncoder m_turningEncoder;
 
-  //~PIDControllers - Must use separate PID Controllers for Driving and Turning!!
+  //PIDControllers - Must use separate PID Controllers for Driving and Turning!!
   private final SparkMaxPIDController m_drivingPIDController;
   private final SparkMaxPIDController m_turningPIDController;
 
-  //~Chassis Offset and Desired State of Swere Modules
+  //Chassis Offset and Desired State of Swere Modules
   private double m_chassisAngularOffset = 0;
   private SwerveModuleState m_desiredState = new SwerveModuleState(0.0, new Rotation2d());
 
@@ -52,15 +51,15 @@ public class SwerveModule {
     m_drivingSparkMax.restoreFactoryDefaults();
     m_turningSparkMax.restoreFactoryDefaults();
 
-    //^ Setup encoders and PID controllers for the driving and turning SPARKS MAX.
+    //Instantiate encoders and PID controllers for the driving and turning SPARKS MAX.
     m_drivingEncoder = m_drivingSparkMax.getEncoder();
     m_turningEncoder = m_turningSparkMax.getAbsoluteEncoder(Type.kDutyCycle);
 
-    //^Create PID Controllers
+    //Create PID Controllers
     m_drivingPIDController = m_drivingSparkMax.getPIDController();
     m_turningPIDController = m_turningSparkMax.getPIDController();
 
-    //^Set the feedback devices
+    //Set the feedback devices
     m_drivingPIDController.setFeedbackDevice(m_drivingEncoder);
     m_turningPIDController.setFeedbackDevice(m_turningEncoder);
 
@@ -75,6 +74,7 @@ public class SwerveModule {
     // APIs.
     //This line must be set in order to be used with WPILib since it expects radians
     //
+    m_turningEncoder.setPositionConversionFactor(ModuleConstants.kTurningEncoderPositionFactor);
     m_turningEncoder.setVelocityConversionFactor(ModuleConstants.kTurningEncoderVelocityFactor);
 
     // Invert the turning encoder, since the output shaft rotates in the opposite direction of
@@ -149,12 +149,6 @@ public class SwerveModule {
         m_drivingEncoder.getPosition(),
         new Rotation2d(m_turningEncoder.getPosition() - m_chassisAngularOffset));
   }
-
-  /*public SwerveModulePosition getRadiansPosition() {
-    return new SwerveModulePosition(
-        (m_drivingEncoder.getPosition() * (Math.PI * 2)),
-        new Rotation2d((m_turningEncoder.getPosition() * (Math.PI * 2)) - m_chassisAngularOffset));
-  }*/
 
   public void setPositionConversionFactor(boolean radians) {
     if(radians) {

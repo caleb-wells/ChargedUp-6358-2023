@@ -17,35 +17,35 @@ import frc.robot.Constants.DriveConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveSubsystem extends SubsystemBase {
-  //& Create SwerveModules using SwerveModules.java
-  //?Blue
-  private final SwerveModule m_frontLeft = new SwerveModule(
+
+  //Blue
+  private static final SwerveModule m_frontLeft = new SwerveModule(
       DriveConstants.kFrontLeftDrivingCanId,
       DriveConstants.kFrontLeftTurningCanId,
       DriveConstants.kFrontLeftChassisAngularOffset);
 
-  //!Red
+  //Red
   public static final SwerveModule m_frontRight = new SwerveModule(
       DriveConstants.kFrontRightDrivingCanId,
       DriveConstants.kFrontRightTurningCanId,
       DriveConstants.kFrontRightChassisAngularOffset);
 
-  //^Yellow
-  private final SwerveModule m_rearLeft = new SwerveModule(
+  //Yellow
+  private static final SwerveModule m_rearLeft = new SwerveModule(
       DriveConstants.kRearLeftDrivingCanId,
       DriveConstants.kRearLeftTurningCanId,
       DriveConstants.kBackLeftChassisAngularOffset);
 
-  //TODO Orange
-  private final SwerveModule m_rearRight = new SwerveModule(
+  //Orange
+  private static final SwerveModule m_rearRight = new SwerveModule(
       DriveConstants.kRearRightDrivingCanId,
       DriveConstants.kRearRightTurningCanId,
       DriveConstants.kBackRightChassisAngularOffset);
 
-  //~Initialize the ADIS16470 IMU Gyro, located in the SPI Port on the RoboRio
+  //Initialize the ADIS16470 IMU Gyro, located in the SPI Port on the RoboRio
   public static final ADIS16470_IMU m_gyro = new ADIS16470_IMU();
 
-  //^ Odometry class for tracking robot pose
+  //Odometry class for tracking robot pose
   SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(
       DriveConstants.kDriveKinematics,
       Rotation2d.fromDegrees(m_gyro.getAngle()),
@@ -113,19 +113,6 @@ public class DriveSubsystem extends SubsystemBase {
    *                      field.
    */
   public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
-    if(rot >= 0.12 || rot <= -0.12) {
-      m_frontLeft.setPositionConversionFactor(false);
-      m_frontRight.setPositionConversionFactor(false);
-      m_rearLeft.setPositionConversionFactor(false);
-      m_rearRight.setPositionConversionFactor(false);
-    }
-    if(xSpeed >= 0.10 || xSpeed <= -0.10 || ySpeed >= 0.10 || ySpeed <= -0.10) {
-      m_frontLeft.setPositionConversionFactor(true);
-      m_frontRight.setPositionConversionFactor(true);
-      m_rearLeft.setPositionConversionFactor(true);
-      m_rearRight.setPositionConversionFactor(true);
-    }
-    
     // Adjust input based on max speed
     xSpeed *= DriveConstants.kMaxSpeedMetersPerSecond;
     ySpeed *= DriveConstants.kMaxSpeedMetersPerSecond;
@@ -139,10 +126,10 @@ public class DriveSubsystem extends SubsystemBase {
     SwerveDriveKinematics.desaturateWheelSpeeds(
         swerveModuleStates, DriveConstants.kMaxSpeedMetersPerSecond);
     
-    m_frontLeft.setDesiredState(swerveModuleStates[0]);
-    m_frontRight.setDesiredState(swerveModuleStates[1]);
-    m_rearLeft.setDesiredState(swerveModuleStates[2]);
-    m_rearRight.setDesiredState(swerveModuleStates[3]);
+    m_frontLeft.setDesiredState(swerveModuleStates[3]); //Originally 0
+    m_frontRight.setDesiredState(swerveModuleStates[0]); //Origianlly 1
+    m_rearLeft.setDesiredState(swerveModuleStates[1]); //Originally 2
+    m_rearRight.setDesiredState(swerveModuleStates[2]); //Originally 3
   }
 
 /**
@@ -151,20 +138,27 @@ public class DriveSubsystem extends SubsystemBase {
  * @param brake If true, sets brake mode, otherwise sets coast mode
  */
 public void setBrakeMode(boolean brake) {
-  //? Determine whether the mode should be Brake or Coast
+  //Determine whether the mode should be Brake or Coast
   IdleMode mode = brake ? IdleMode.kBrake : IdleMode.kCoast;
   
-  //&Define Idle Mode for Driving Motors
+  //Set Idle Mode for Driving Motors
   m_frontLeft.setDriveIdleMode(mode);
   m_frontRight.setDriveIdleMode(mode);
   m_rearLeft.setDriveIdleMode(mode);
   m_rearRight.setDriveIdleMode(mode);
 
-  //&Define Idle Mode for Turning Motors
+  //Set Idle Mode for Turning Motors
   m_frontLeft.setTurnIdleMode(mode);
   m_frontRight.setTurnIdleMode(mode);
   m_rearLeft.setTurnIdleMode(mode);
   m_rearRight.setTurnIdleMode(mode);
+}
+
+public static void driveForward(double speed) {
+    m_frontLeft.setDesiredState(new SwerveModuleState(speed, Rotation2d.fromDegrees(0)));
+    m_frontRight.setDesiredState(new SwerveModuleState(speed, Rotation2d.fromDegrees(0)));
+    m_rearLeft.setDesiredState(new SwerveModuleState(speed, Rotation2d.fromDegrees(0)));
+    m_rearRight.setDesiredState(new SwerveModuleState(speed, Rotation2d.fromDegrees(0)));
 }
 
   /**

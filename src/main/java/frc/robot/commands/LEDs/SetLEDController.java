@@ -15,7 +15,11 @@ import frc.robot.Robot;
 public class SetLEDController extends SequentialCommandGroup {
   /** Creates a new SetLEDController. */
   public SetLEDController(double setting, Spark leds) {
-    // Add your commands in the addCommands() call, e.g.
-    addCommands(new LEDController(setting, leds), new WaitCommand(10), new LEDController(Robot.defaultLEDColor, leds));
+
+    addCommands(
+      new LEDController(setting, leds), 
+      new WaitCommand(10), 
+      new LEDController(Robot.defaultLEDColor, leds));
+  
   }
 }

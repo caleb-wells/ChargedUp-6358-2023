@@ -15,19 +15,6 @@ public class LEDController extends InstantCommand {
     LED.set(setting);
   }
 
-  //This code creates a new thread, however this does not solve our issue with the LEDs seen as adding the thread will freeze everything
-  /*new Thread(() -> {
-        try {
-          LED.set(setting);
-          System.out.println("Timer is about to be called");
-          Timer.delay(5000);
-          System.out.println("Timer finished successfully, thread sleep is being called now");
-          Thread.sleep(5000);
-          System.out.println("Thread sleep finished successfully!");
-          LED.set(Robot.defaultLEDColor);
-        } catch (Exception e) { }
-      }).start();*/
-
   // Called when the command is initially scheduled.
   @Override
   public void initialize() { }
