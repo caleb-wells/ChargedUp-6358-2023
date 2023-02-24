@@ -113,19 +113,6 @@ public class DriveSubsystem extends SubsystemBase {
    *                      field.
    */
   public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
-    if(rot >= 0.12 || rot <= -0.12) {
-      m_frontLeft.setPositionConversionFactor(false);
-      m_frontRight.setPositionConversionFactor(false);
-      m_rearLeft.setPositionConversionFactor(false);
-      m_rearRight.setPositionConversionFactor(false);
-    }
-    if(xSpeed >= 0.10 || xSpeed <= -0.10 || ySpeed >= 0.10 || ySpeed <= -0.10) {
-      m_frontLeft.setPositionConversionFactor(true);
-      m_frontRight.setPositionConversionFactor(true);
-      m_rearLeft.setPositionConversionFactor(true);
-      m_rearRight.setPositionConversionFactor(true);
-    }
-    
     // Adjust input based on max speed
     xSpeed *= DriveConstants.kMaxSpeedMetersPerSecond;
     ySpeed *= DriveConstants.kMaxSpeedMetersPerSecond;
@@ -139,10 +126,10 @@ public class DriveSubsystem extends SubsystemBase {
     SwerveDriveKinematics.desaturateWheelSpeeds(
         swerveModuleStates, DriveConstants.kMaxSpeedMetersPerSecond);
     
-    m_frontLeft.setDesiredState(swerveModuleStates[0]);
-    m_frontRight.setDesiredState(swerveModuleStates[1]);
-    m_rearLeft.setDesiredState(swerveModuleStates[2]);
-    m_rearRight.setDesiredState(swerveModuleStates[3]);
+    m_frontLeft.setDesiredState(swerveModuleStates[3]); //Originally 0
+    m_frontRight.setDesiredState(swerveModuleStates[0]); //Origianlly 1
+    m_rearLeft.setDesiredState(swerveModuleStates[1]); //Originally 2
+    m_rearRight.setDesiredState(swerveModuleStates[2]); //Originally 3
   }
 
 /**

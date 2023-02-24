@@ -106,11 +106,6 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    new JoystickButton(m_driverController, 1)
-        .whileTrue(new RunCommand(
-            () -> m_robotDrive.setToZero(),
-            m_robotDrive));
-
     new JoystickButton(m_driverController, 2)
         .onTrue(new RunCommand(
             () -> new LEDController(0.91, m_LEDs),
@@ -126,11 +121,6 @@ public class RobotContainer {
         .onFalse(new RunCommand(
             () -> new LEDController(Robot.defaultLEDColor, m_LEDs),
                 m_robotDrive));
-
-    new JoystickButton(m_driverController, 4)
-        .whileTrue(new RunCommand(
-            () -> m_robotDrive.setX(),
-            m_robotDrive));
     
     new JoystickButton(m_copilotController, 1)
         .onTrue(new RunCommand(() -> new ExtendPiston(), m_piston))
@@ -138,11 +128,9 @@ public class RobotContainer {
 
     new JoystickButton(m_copilotController, 2)
         .whileTrue(new RunCommand(
-        () -> m_motors.runMotor(m_motors.armMotor, 0.5),
-        m_motors))
+        () -> m_motors.runArm(0.5)))
         .whileFalse(new RunCommand(
-            () -> m_motors.runMotor(m_motors.armMotor, 0),
-            m_motors));
+            () -> m_motors.runArm(0)));
 
     //& Will uncomment once required, currently very buggy
     //new JoystickButton(m_driverController, 5)

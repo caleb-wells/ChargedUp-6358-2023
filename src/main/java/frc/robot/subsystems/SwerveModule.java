@@ -74,6 +74,7 @@ public class SwerveModule {
     // APIs.
     //This line must be set in order to be used with WPILib since it expects radians
     //
+    m_turningEncoder.setPositionConversionFactor(ModuleConstants.kTurningEncoderPositionFactor);
     m_turningEncoder.setVelocityConversionFactor(ModuleConstants.kTurningEncoderVelocityFactor);
 
     // Invert the turning encoder, since the output shaft rotates in the opposite direction of
@@ -148,12 +149,6 @@ public class SwerveModule {
         m_drivingEncoder.getPosition(),
         new Rotation2d(m_turningEncoder.getPosition() - m_chassisAngularOffset));
   }
-
-  /*public SwerveModulePosition getRadiansPosition() {
-    return new SwerveModulePosition(
-        (m_drivingEncoder.getPosition() * (Math.PI * 2)),
-        new Rotation2d((m_turningEncoder.getPosition() * (Math.PI * 2)) - m_chassisAngularOffset));
-  }*/
 
   public void setPositionConversionFactor(boolean radians) {
     if(radians) {

@@ -4,15 +4,14 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 
 public class Motors extends SubsystemBase {
 
-  public VictorSPX armMotor = new VictorSPX(Constants.ExtraMotorConstants.armMotor);
+  public VictorSP armMotor = new VictorSP(Constants.ExtraMotorConstants.armMotor);
 
   public Motors() { }
 
@@ -21,8 +20,8 @@ public class Motors extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void runMotor(VictorSPX motor, double speed){
-    motor.set(VictorSPXControlMode.PercentOutput, speed);
+  public void runArm(double speed){
+    armMotor.set(speed);
   }
   }
   
