@@ -8,6 +8,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.Arm.MoveArm;
 import frc.robot.commands.Auto.MainAuto;
 import frc.robot.commands.LEDs.LEDController;
 import frc.robot.commands.Piston.ExtendPiston;
@@ -19,7 +20,6 @@ import frc.robot.subsystems.Piston;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.subsystems.Motors; 
 
 //Java Auto Imports
 import java.util.HashMap;
@@ -49,8 +49,6 @@ public class RobotContainer {
   private Spark m_LEDs = LEDStrip.getLEDs();
 
   public Piston m_piston = new Piston();
-
-  public Motors m_motors = new Motors();
 
   //Beginning of PathPlanner Code
   // This will load the file "MainAuto.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
@@ -128,9 +126,9 @@ public class RobotContainer {
 
     new JoystickButton(m_copilotController, 2)
         .whileTrue(new RunCommand(
-        () -> m_motors.runArm(0.5)))
+        () -> new MoveArm(0.5)))
         .whileFalse(new RunCommand(
-            () -> m_motors.runArm(0)));
+            () -> new MoveArm(0)));
 
     //& Will uncomment once required, currently very buggy
     //new JoystickButton(m_driverController, 5)
