@@ -42,13 +42,13 @@ import com.pathplanner.lib.auto.SwerveAutoBuilder;
 public class RobotContainer {
   public final static DriveSubsystem m_robotDrive = new DriveSubsystem();
 
-  XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
+  public final XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
 
-  Joystick m_copilotController = new Joystick(OIConstants.kCoPilotControllerPort);
+  public final Joystick m_copilotController = new Joystick(OIConstants.kCoPilotControllerPort);
 
-  private Spark m_LEDs = LEDStrip.getLEDs();
+  private final Spark m_LEDs = LEDStrip.getLEDs();
 
-  public Pneumatics m_piston = new Pneumatics();
+  public final Pneumatics m_piston = new Pneumatics();
 
   //Beginning of PathPlanner Code
   // This will load the file "MainAuto.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
