@@ -87,7 +87,7 @@ public class RobotContainer {
         new RunCommand(
             () -> m_robotDrive.drive(
                 MathUtil.applyDeadband(m_driverController.getLeftY(), 0.25),
-                MathUtil.applyDeadband(m_driverController.getLeftX(), 0.25),
+                MathUtil.applyDeadband(-m_driverController.getLeftX(), 0.25),
                 MathUtil.applyDeadband(m_driverController.getRightX(), 0.25),
                 true),
             m_robotDrive));
