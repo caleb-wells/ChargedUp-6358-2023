@@ -9,17 +9,15 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Robot;
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// information, see:
-// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class SetLEDController extends SequentialCommandGroup {
-  /** Creates a new SetLEDController. */
-  public SetLEDController(double setting, Spark leds) {
+public class TimedSetLEDs extends SequentialCommandGroup {
+
+  public TimedSetLEDs(double setting, Spark leds) {
 
     addCommands(
-      new LEDController(setting, leds), 
+      new SetLEDs(setting, leds), 
       new WaitCommand(10), 
-      new LEDController(Robot.defaultLEDColor, leds));
+      new SetLEDs(Robot.defaultLEDColor, leds)
+    );
   
   }
 }

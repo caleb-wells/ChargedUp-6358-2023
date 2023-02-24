@@ -10,14 +10,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.commands.LEDs.LEDController;
+import frc.robot.commands.LEDs.SetLEDs;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.LEDStrip;
 import frc.robot.subsystems.SwerveModule;
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.DriverStation;
-//import edu.wpi.first.wpilibj2.command.button.Trigger;
-//import frc.robot.commands.SetCoastModeCommand;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -34,13 +31,13 @@ public class Robot extends TimedRobot {
 
   public static SwerveModule m_SDModule = DriveSubsystem.m_frontRight;
 
-  public static Spark m_leds = LEDStrip.getLEDs();
+  public static Spark m_leds = RobotContainer.m_leds;
 
   public static String kAllianceString = DriverStation.getAlliance().toString();
 
   public static double defaultLEDColor = (kAllianceString.contains("Blue") ? 0.85 : 0.61); //Sets the color to our alliance color
 
-  public static InstantCommand setLEDDefault = new InstantCommand(() -> new LEDController(defaultLEDColor, m_leds));
+  public static InstantCommand setLEDDefault = new InstantCommand(() -> new SetLEDs(defaultLEDColor, m_leds));
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -90,7 +87,6 @@ public class Robot extends TimedRobot {
       defaultLEDColor = 0.85;
     }
 
-    //*Vars
     double turnEncoder = m_SDModule.getTurningEncoderValue();
     double driveEncoder = m_SDModule.getDrivingEncoderValue();
     double gyroAngle = m_gyro.getAngle();
@@ -98,7 +94,6 @@ public class Robot extends TimedRobot {
     String position = m_SDModule.getPosition().toString();
     String state = m_SDModule.getState().toString();
 
-    //*SmartDashboard Keys
     SmartDashboard.putNumber("Front Right Turn Encoder", turnEncoder);
     SmartDashboard.putNumber("Front Right Drive Encoder", driveEncoder);
     SmartDashboard.putNumber("Front Right Drive Encoder Position Conversion", encoderConversionValue);

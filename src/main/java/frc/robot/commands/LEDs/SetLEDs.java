@@ -4,14 +4,12 @@
 
 package frc.robot.commands.LEDs;
 
-//import edu.wpi.first.wpilibj.Timer;
-//import frc.robot.Robot;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
-public class LEDController extends InstantCommand {
+public class SetLEDs extends InstantCommand {
 
-  public LEDController(double setting, Spark LED) {
+  public SetLEDs(double setting, Spark LED) {
     LED.set(setting);
   }
 

@@ -9,11 +9,9 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.Pneumatics;
 
 public class ExtendPiston extends InstantCommand {
+  
   public ExtendPiston() {
     Pneumatics.m_doubleSolenoid.set(DoubleSolenoid.Value.kForward);
   }
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() { }
 }

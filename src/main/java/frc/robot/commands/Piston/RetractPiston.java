@@ -9,11 +9,9 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.Pneumatics;
 
 public class RetractPiston extends InstantCommand {
+  
   public RetractPiston() {
     Pneumatics.m_doubleSolenoid.set(DoubleSolenoid.Value.kReverse);
   }
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() { }
 }
