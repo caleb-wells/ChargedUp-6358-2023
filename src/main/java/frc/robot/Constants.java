@@ -4,7 +4,7 @@
 
 package frc.robot;
 
-//~ Math Imports
+import com.revrobotics.CANSparkMax.IdleMode;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -15,7 +15,7 @@ import edu.wpi.first.math.util.Units;
  * numerical or boolean
  * constants. This class should not be used for any other purpose. All constants
  * should be declared
- * globally (i.e. public static). //!Do not put anything functional in this class.
+ * globally (i.e. public static).
  *
  * It is advised to statically import this class (or one of its inner classes)
  * wherever the
@@ -25,63 +25,55 @@ public final class Constants {
   public static final class DriveConstants {
     //& Driving Parameters - Note that these are not the maximum capable speeds of
     //& the robot, rather, the allowed maximum speeds
-    //?Initial value was 4.8 Meters/Second
-    public static final double kMaxSpeedMetersPerSecond = 4.8;
+    public static final double kMaxSpeedMetersPerSecond = 1.9;
     public static final double kMaxAngularSpeed = 2 * Math.PI; // radians per second
 
-    //TODO(Caleb) Double check TrackWidth and WheelBase
-    //^ Chassis configuration
+    //Chassis configuration
     public static final double kTrackWidth = Units.inchesToMeters(21);
 
-    //^ Distance between centers of right and left wheels on robot
-    public static final double kWheelBase = Units.inchesToMeters(12);
+    //Distance between centers of right and left wheels on robot
+    public static final double kWheelBase = Units.inchesToMeters(11.5);
 
-    //^ Distance between front and back wheels on robot
+    //Distance between front and back wheels on robot
     public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
         new Translation2d(kWheelBase / 2, kTrackWidth / 2),
         new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
         new Translation2d(-kWheelBase / 2, kTrackWidth / 2),
         new Translation2d(-kWheelBase / 2, -kTrackWidth / 2));
 
-    //^ Angular offsets of the modules relative to the chassis in radians
-    //! I think some of our issues are rooted here.
-    public static final double kFrontLeftChassisAngularOffset = -Math.PI / 2; //3π/2?
+    //Angular offsets of the modules relative to the chassis in radians
+    public static final double kFrontLeftChassisAngularOffset = -Math.PI / 2;
     public static final double kFrontRightChassisAngularOffset = 0;
     public static final double kBackLeftChassisAngularOffset = Math.PI;
     public static final double kBackRightChassisAngularOffset = Math.PI / 2;
 
-    //^ SPARK MAX CAN IDs
     //&Driving SPARK MAX IDs
-    //?Blue
-    public static final int kFrontLeftDrivingCanId = 6; //Originally 6
-    //^Yellow
-    public static final int kRearLeftDrivingCanId = 7; //Originally 7
-    //!Red
-    public static final int kFrontRightDrivingCanId = 9; //Originally 9
-    //TODO Orange
-    public static final int kRearRightDrivingCanId = 8; //Originally 8
+    //Red
+    public static final int kFrontLeftDrivingCanId = 9;
+    //Blue
+    public static final int kRearLeftDrivingCanId = 6;
+    //Orange
+    public static final int kFrontRightDrivingCanId = 8;
+    //Yellow
+    public static final int kRearRightDrivingCanId = 7;
 
     //&Turning SPARK MAX IDs
-    //?Blue
-    public static final int kFrontLeftTurningCanId = 4; //Originally 4
-    //^Yellow
-    public static final int kRearLeftTurningCanId = 3; //Originally 3
-    //!Red
-    public static final int kFrontRightTurningCanId = 2; //Originally 2
-    //TODO Orange
-    public static final int kRearRightTurningCanId = 5; //Originally 5
+    //Red
+    public static final int kFrontLeftTurningCanId = 2;
+    //Blue
+    public static final int kRearLeftTurningCanId = 4;
+    //Orange
+    public static final int kFrontRightTurningCanId = 5;
+    //Yellow
+    public static final int kRearRightTurningCanId = 3;
  
-    //!Tells the DriveSubsytem whether or not the gyro needs to be reveresed
-    //TODO(Caleb) Determine if the gyro needs reveresed or not IMPORTANT
     public static final boolean kGyroReversed = false;
   }
 
   public static final class ModuleConstants {
-    //! The Configured Swerve module can be configured with one of three pinion gears: 12T, 13T, or 14T.
-    //? This changes the drive speed of the module (a pinion gear with more teeth will result in a
-    //? robot that drives faster).
+
     //& NEOS
-    //^ Pinion teeth for drive motor - 12 tooth spur gear is driven by CIM Falcon 500 Motor - Per AndyMark
+    //Pinion teeth for drive motor - 12 tooth spur gear is driven by CIM Falcon 500 Motor - Per AndyMark
     public static final int kDrivingMotorPinionTeeth = 12;
 
     //~Taken from SwerveControllerCommand project and are used to create a new ProfiledPIDController
@@ -89,53 +81,51 @@ public final class Constants {
     public static final double kMaxModuleAngularAccelerationRadiansPerSecondSquared = 2 * Math.PI;
     public static final double kPModuleTurningController = 1;
 
-    //^ Invert the turning encoder, since the output shaft rotates in the opposite direction of
-    //^ the steering motor in the Swerve Module.
-    //TODO(Caleb) Does the Turning Encoder need inverted?
+    //Invert the turning encoder, since the output shaft rotates in the opposite direction of
+    //the steering motor in the Swerve Module.
     public static final boolean kTurningEncoderInverted = false;
 
-    //! Calculations required for driving motor conversion factors and feed forward
+    //Calculations required for driving motor conversion factors and feed forward
     public static final double kDrivingMotorFreeSpeedRps = NeoMotorConstants.kFreeSpeedRpm / 60;
     public static final double kWheelDiameterMeters = 0.1;
     public static final double kWheelCircumferenceMeters = kWheelDiameterMeters * Math.PI;
-    //! 45 teeth on the wheel's bevel gear, 22 teeth on the first-stage spur gear, 15 teeth on the bevel pinion
+    
+    //45 teeth on the wheel's bevel gear, 22 teeth on the first-stage spur gear, 15 teeth on the bevel pinion
     public static final double kDrivingMotorReduction = (40.0 * 20) / (kDrivingMotorPinionTeeth * 15);
     public static final double kDriveWheelFreeSpeedRps = (kDrivingMotorFreeSpeedRps * kWheelCircumferenceMeters) / kDrivingMotorReduction;
 
-    //?Driving Encoder Config
+    //Driving Encoder Config
     public static final double kDrivingEncoderPositionFactor = (kWheelDiameterMeters * Math.PI) / kDrivingMotorReduction; // meters
     public static final double kDrivingEncoderVelocityFactor = ((kWheelDiameterMeters * Math.PI) / kDrivingMotorReduction) / 60.0; // meters per second
 
-    //?Turning Encoder Config
+    //Turning Encoder Config
     public static final double kTurningEncoderPositionFactor = (2 * Math.PI); // radians
     public static final double kTurningEncoderVelocityFactor = (2 * Math.PI) / 60.0; // radians per second
 
-    //?PID Mins and Maxs
+    //PID Mins and Maxs
     public static final double kTurningEncoderPositionPIDMinInput = 0; // radians
     public static final double kTurningEncoderPositionPIDMaxInput = kTurningEncoderPositionFactor; // radians
 
-    //TODO(Caleb) Update Driving and Turning PID values to match current robot configuration, values must be <= 1
-    public static final double kDrivingP = 0.025;
+    public static final double kDrivingP = 0.015;
     public static final double kDrivingI = 0;
     public static final double kDrivingD = 0;
     public static final double kDrivingFF = 1 / kDriveWheelFreeSpeedRps;
     public static final double kDrivingMinOutput = -1;
     public static final double kDrivingMaxOutput = 1;
 
-    public static final double kTurningP = 0.4;
+    public static final double kTurningP = 0.20;
     public static final double kTurningI = 0;
     public static final double kTurningD = 0;
     public static final double kTurningFF = 0;
     public static final double kTurningMinOutput = -1;
     public static final double kTurningMaxOutput = 1;
 
-    //? Old Braking System
-    /*public static final IdleMode kDrivingMotorIdleMode = IdleMode.kBrake;
-    public static final IdleMode kTurningMotorIdleMode = IdleMode.kBrake;*/
+    public static final IdleMode kDrivingMotorIdleMode = IdleMode.kBrake;
+    public static final IdleMode kTurningMotorIdleMode = IdleMode.kBrake;
 
-    //? Current limits <- Prevents Brownouts and high battery draw
-    public static final int kDrivingMotorCurrentLimit = 50; // amps //TODO(Caleb) May need to be adjusted.
-    public static final int kTurningMotorCurrentLimit = 20; // amps //TODO(Caleb) May need to be adjusted.
+    //Current limits <- Prevents Brownouts and high battery draw
+    //public static final int kDrivingMotorCurrentLimit = 55; // amps
+    //public static final int kTurningMotorCurrentLimit = 25; // amps 
   }
 
   public static final class OIConstants {
@@ -160,7 +150,7 @@ public final class Constants {
         kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
   }
 
-  //!Defines NEO Motor Constants, should NEVER be changed, these are specific to the motors that we are using
+  //Defines NEO Motor Constants, should NEVER be changed
   public static final class NeoMotorConstants {
     public static final double kFreeSpeedRpm = 5676;
   }
