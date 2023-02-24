@@ -124,6 +124,9 @@ public class RobotContainer {
             () -> new MoveArm(0.5)))
         .whileFalse(new RunCommand(
             () -> new MoveArm(0)));
+    
+    new JoystickButton(m_copilotController, 3)
+        .whileTrue(new RunCommand(() -> new DriveSubsystem().setX()));
 
     //& Will uncomment once required, currently very buggy
     //new JoystickButton(m_driverController, 5)
