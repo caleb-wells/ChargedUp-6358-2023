@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-import com.revrobotics.CANSparkMax.IdleMode;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -25,7 +24,7 @@ public final class Constants {
   public static final class DriveConstants {
     //& Driving Parameters - Note that these are not the maximum capable speeds of
     //& the robot, rather, the allowed maximum speeds
-    public static final double kMaxSpeedMetersPerSecond = 1.9;
+    public static final double kMaxSpeedMetersPerSecond = 2;
     public static final double kMaxAngularSpeed = 2 * Math.PI; // radians per second
 
     //Chassis configuration
@@ -113,15 +112,12 @@ public final class Constants {
     public static final double kDrivingMinOutput = -1;
     public static final double kDrivingMaxOutput = 1;
 
-    public static final double kTurningP = 0.20;
+    public static final double kTurningP = 0.25;
     public static final double kTurningI = 0;
     public static final double kTurningD = 0;
     public static final double kTurningFF = 0;
     public static final double kTurningMinOutput = -1;
     public static final double kTurningMaxOutput = 1;
-
-    public static final IdleMode kDrivingMotorIdleMode = IdleMode.kBrake;
-    public static final IdleMode kTurningMotorIdleMode = IdleMode.kBrake;
 
     //Current limits <- Prevents Brownouts and high battery draw
     //public static final int kDrivingMotorCurrentLimit = 55; // amps
@@ -156,6 +152,7 @@ public final class Constants {
   }
 
   public static final class ExtraMotorConstants {
-    public static final int armMotor = 1;
+    public static final int elevatorMotor = 1;
+    public static final int armMotor = 2;
   }
 }

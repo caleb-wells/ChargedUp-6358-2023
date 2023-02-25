@@ -25,8 +25,8 @@ public class SetCoastModeCommand extends InstantCommand {
     m_subsystem.setBrakeMode(false); // Disable brake mode
   }
 
-  /*@Override
+  @Override
   public boolean runsWhenDisabled() {
       return true;
-  }*/
+  }
 }
