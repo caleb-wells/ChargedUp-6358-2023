@@ -126,9 +126,9 @@ public class DriveSubsystem extends SubsystemBase {
         swerveModuleStates, DriveConstants.kMaxSpeedMetersPerSecond);
     
     m_frontLeft.setDesiredState(swerveModuleStates[1]); //Originally 0
-    m_frontRight.setDesiredState(swerveModuleStates[2]); //Origianlly 1
+    m_frontRight.setDesiredState(swerveModuleStates[0]); //Origianlly 1
     m_rearLeft.setDesiredState(swerveModuleStates[3]); //Originally 2
-    m_rearRight.setDesiredState(swerveModuleStates[0]); //Originally 3
+    m_rearRight.setDesiredState(swerveModuleStates[2]); //Originally 3
   }
 
 /**

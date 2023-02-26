@@ -81,9 +81,9 @@ public class RobotContainer {
     m_robotDrive.setDefaultCommand(
         new RunCommand(
             () -> m_robotDrive.drive(
-                MathUtil.applyDeadband(m_driverController.getLeftY(), 0.23),
-                MathUtil.applyDeadband(-m_driverController.getLeftX(), 0.23),
-                MathUtil.applyDeadband(m_driverController.getRightX(), 0.23),
+                MathUtil.applyDeadband(-m_driverController.getLeftY(), 0.10),
+                MathUtil.applyDeadband(m_driverController.getLeftX(), 0.10),
+                MathUtil.applyDeadband(m_driverController.getRightX(), 0.10),
                 false),
             m_robotDrive));
   }
@@ -112,8 +112,7 @@ public class RobotContainer {
           () -> new ExtendArm(0)));
 
     new JoystickButton(m_copilotController, 1)
-        .onTrue(new RunCommand(() -> new ExtendPiston(), m_piston))
-        .onFalse(new RunCommand(() -> new RetractPiston(), m_piston));
+        .onTrue(new RunCommand(() -> new ExtendPiston(), m_piston));
 
     new JoystickButton(m_copilotController, 2)
         .whileTrue(new RunCommand(
@@ -128,7 +127,7 @@ public class RobotContainer {
             () -> new RaiseArm(0)));
 
     new JoystickButton(m_copilotController, 4)
-        .whileTrue(new RunCommand(() -> m_robotDrive.setToZero()));
+      .onTrue(new RunCommand(() -> new RetractPiston(), m_piston));
   }
 
   /**

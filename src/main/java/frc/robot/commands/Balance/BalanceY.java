@@ -5,7 +5,7 @@
 package frc.robot.commands.Balance;
 
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
-import edu.wpi.first.wpilibj.ADIS16470_IMU.IMUAxis;
+//import edu.wpi.first.wpilibj.ADIS16470_IMU.IMUAxis;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveSubsystem;
@@ -15,7 +15,7 @@ public class BalanceY extends CommandBase {
   private static DriveSubsystem robotDrive = RobotContainer.m_robotDrive;
 
   public BalanceY() {
-    gyro.setYawAxis(IMUAxis.kY);
+    //gyro.setYawAxis(IMUAxis.kY);
     double ySpeed = 0;
 
     while(gyro.getAngle() < -4.0 || gyro.getAngle() > 4.0) {
