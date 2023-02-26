@@ -11,9 +11,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Pneumatics extends SubsystemBase {
   private static final int PH_CAN_ID = 10;
 
-  private static int forwardChannel = 8;
+  private static int forwardChannel = 6;
 
-  private static int reverseChannel = 9;
+  private static int reverseChannel = 7;
 
   public static PneumaticHub m_pH = new PneumaticHub(PH_CAN_ID);
   

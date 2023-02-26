@@ -8,12 +8,12 @@ import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 
-public class MoveArm extends CommandBase {
+public class RaiseArm extends CommandBase {
   
-  public static VictorSP armMotor = new VictorSP(Constants.ExtraMotorConstants.armMotor);
+  public static VictorSP elevatorMotor = new VictorSP(Constants.ExtraMotorConstants.elevatorMotor);
 
-  public MoveArm(double speed) {
-    armMotor.set(speed);
+  public RaiseArm(double speed) {
+    elevatorMotor.set(speed);
   }
 
 }

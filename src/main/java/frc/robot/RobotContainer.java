@@ -8,7 +8,8 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.Arm.MoveArm;
+import frc.robot.commands.Arm.ExtendArm;
+import frc.robot.commands.Arm.RaiseArm;
 import frc.robot.commands.Auto.MainAuto;
 import frc.robot.commands.Piston.ExtendPiston;
 import frc.robot.commands.Piston.RetractPiston;
@@ -80,10 +81,10 @@ public class RobotContainer {
     m_robotDrive.setDefaultCommand(
         new RunCommand(
             () -> m_robotDrive.drive(
-                MathUtil.applyDeadband(m_driverController.getLeftY(), 0.23),
-                MathUtil.applyDeadband(-m_driverController.getLeftX(), 0.23),
-                MathUtil.applyDeadband(m_driverController.getRightX(), 0.23),
-                true),
+                MathUtil.applyDeadband(-m_driverController.getLeftY(), 0.10),
+                MathUtil.applyDeadband(m_driverController.getLeftX(), 0.10),
+                MathUtil.applyDeadband(m_driverController.getRightX(), 0.10),
+                false),
             m_robotDrive));
   }
 
@@ -98,21 +99,35 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
+    new JoystickButton(m_driverController, 3)
+        .whileTrue(new RunCommand(
+          () -> new ExtendArm(1)))
+        .whileFalse(new RunCommand(
+          () -> new ExtendArm(0)));
+      
+    new JoystickButton(m_driverController, 2)
+        .whileTrue(new RunCommand(
+          () -> new ExtendArm(-1)))
+        .whileFalse(new RunCommand(
+          () -> new ExtendArm(0)));
+
     new JoystickButton(m_copilotController, 1)
-        .onTrue(new RunCommand(() -> new ExtendPiston(), m_piston))
-        .onFalse(new RunCommand(() -> new RetractPiston(), m_piston));
+        .onTrue(new RunCommand(() -> new ExtendPiston(), m_piston));
 
     new JoystickButton(m_copilotController, 2)
         .whileTrue(new RunCommand(
-            () -> new MoveArm(0.5)))
+            () -> new RaiseArm(0.5)))
         .whileFalse(new RunCommand(
-            () -> new MoveArm(0)));
+            () -> new RaiseArm(0)));
 
     new JoystickButton(m_copilotController, 3)
         .whileTrue(new RunCommand(
-            () -> new MoveArm(-0.5)))
-        .onFalse(new RunCommand(
-            () -> new MoveArm(0)));
+            () -> new RaiseArm(-0.5)))
+        .whileFalse(new RunCommand(
+            () -> new RaiseArm(0)));
+
+    new JoystickButton(m_copilotController, 4)
+      .onTrue(new RunCommand(() -> new RetractPiston(), m_piston));
   }
 
   /**

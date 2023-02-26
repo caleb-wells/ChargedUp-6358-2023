@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-import com.revrobotics.CANSparkMax.IdleMode;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -29,10 +28,10 @@ public final class Constants {
     public static final double kMaxAngularSpeed = 2 * Math.PI; // radians per second
 
     //Chassis configuration
-    public static final double kTrackWidth = Units.inchesToMeters(21);
+    public static final double kTrackWidth = Units.inchesToMeters(11.5);
 
     //Distance between centers of right and left wheels on robot
-    public static final double kWheelBase = Units.inchesToMeters(11.5);
+    public static final double kWheelBase = Units.inchesToMeters(21);
 
     //Distance between front and back wheels on robot
     public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
@@ -106,22 +105,19 @@ public final class Constants {
     public static final double kTurningEncoderPositionPIDMinInput = 0; // radians
     public static final double kTurningEncoderPositionPIDMaxInput = kTurningEncoderPositionFactor; // radians
 
-    public static final double kDrivingP = 0.015;
+    public static final double kDrivingP = 0.010;
     public static final double kDrivingI = 0;
     public static final double kDrivingD = 0;
     public static final double kDrivingFF = 1 / kDriveWheelFreeSpeedRps;
     public static final double kDrivingMinOutput = -1;
     public static final double kDrivingMaxOutput = 1;
 
-    public static final double kTurningP = 0.20;
+    public static final double kTurningP = 1;
     public static final double kTurningI = 0;
     public static final double kTurningD = 0;
     public static final double kTurningFF = 0;
     public static final double kTurningMinOutput = -1;
     public static final double kTurningMaxOutput = 1;
-
-    public static final IdleMode kDrivingMotorIdleMode = IdleMode.kBrake;
-    public static final IdleMode kTurningMotorIdleMode = IdleMode.kBrake;
 
     //Current limits <- Prevents Brownouts and high battery draw
     //public static final int kDrivingMotorCurrentLimit = 55; // amps
@@ -156,6 +152,7 @@ public final class Constants {
   }
 
   public static final class ExtraMotorConstants {
-    public static final int armMotor = 1;
+    public static final int elevatorMotor = 1;
+    public static final int armMotor = 2;
   }
 }
