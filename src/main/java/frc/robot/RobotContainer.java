@@ -27,8 +27,6 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.Pneumatics;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-//import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
-//import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import java.util.HashMap;
 import java.util.List;
@@ -93,7 +91,7 @@ public class RobotContainer {
         new RunCommand(
             () -> m_robotDrive.drive(
                 MathUtil.applyDeadband(-m_driverController.getLeftY(), 0.10),
-                MathUtil.applyDeadband(m_driverController.getLeftX(), 0.10),
+                MathUtil.applyDeadband(-m_driverController.getLeftX(), 0.10),
                 MathUtil.applyDeadband(m_driverController.getRightX(), 0.10),
                 false),
             m_robotDrive));
@@ -167,18 +165,6 @@ public class RobotContainer {
     var thetaController = new ProfiledPIDController(
         AutoConstants.kPThetaController, 0, 0, AutoConstants.kThetaControllerConstraints);
     thetaController.enableContinuousInput(-Math.PI, Math.PI);
-
-    /*SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
-        exampleTrajectory,
-        m_robotDrive::getPose, // Functional interface to feed supplier
-        DriveConstants.kDriveKinematics,
-
-        // Position controllers
-        new PIDController(AutoConstants.kPXController, 0, 0),
-        new PIDController(AutoConstants.kPYController, 0, 0),
-        thetaController,
-        m_robotDrive::setModuleStates,
-        // m_robotDrive);*/
 
     // Reset odometry to the starting pose of the trajectory.
     m_robotDrive.resetOdometry(exampleTrajectory.getInitialPose());
