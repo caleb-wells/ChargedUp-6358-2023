@@ -111,9 +111,6 @@ public class RobotContainer {
         .whileFalse(new RunCommand(
           () -> new ExtendArm(0)));
 
-    new JoystickButton(m_copilotController, 1)
-        .onTrue(new RunCommand(() -> new ExtendPiston(), m_piston));
-
     new JoystickButton(m_copilotController, 2)
         .whileTrue(new RunCommand(
             () -> new RaiseArm(0.5)))
@@ -127,6 +124,9 @@ public class RobotContainer {
             () -> new RaiseArm(0)));
 
     new JoystickButton(m_copilotController, 4)
+      .onTrue(new RunCommand(() -> new ExtendPiston(), m_piston));
+
+    new JoystickButton(m_copilotController, 1)
       .onTrue(new RunCommand(() -> new RetractPiston(), m_piston));
   }
 
