@@ -4,10 +4,22 @@
 
 package frc.robot.commands.Auto;
 
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.Arm.ExtendArm;
 
 public class MainAuto extends SequentialCommandGroup {
   
-  public MainAuto() { }
+  private Timer timer = new Timer();
+  public MainAuto() {
+    timer.start();
+    while (timer.get() <= 3) {
+      new RunCommand(() -> new ExtendArm(1));
+    }
+    new RunCommand(() -> new ExtendArm(0));
+    timer.stop();
+    timer.reset();
+   }
   
 }
