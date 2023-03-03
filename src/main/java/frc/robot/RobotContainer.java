@@ -5,8 +5,17 @@
 package frc.robot;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.Constants.AutoConstants;
+import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.Arm.ExtendArm;
 import frc.robot.commands.Arm.RaiseArm;
@@ -82,7 +91,7 @@ public class RobotContainer {
         new RunCommand(
             () -> m_robotDrive.drive(
                 MathUtil.applyDeadband(-m_driverController.getLeftY(), 0.10),
-                MathUtil.applyDeadband(m_driverController.getLeftX(), 0.10),
+                MathUtil.applyDeadband(-m_driverController.getLeftX(), 0.10),
                 MathUtil.applyDeadband(m_driverController.getRightX(), 0.10),
                 false),
             m_robotDrive));
@@ -136,6 +145,31 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return mainAuto;
+    // Create config for trajectory
+    TrajectoryConfig config = new TrajectoryConfig(
+        AutoConstants.kMaxSpeedMetersPerSecond,
+        AutoConstants.kMaxAccelerationMetersPerSecondSquared)
+        // Add kinematics to ensure max speed is actually obeyed
+        .setKinematics(DriveConstants.kDriveKinematics);
+
+    // An example trajectory to follow. All units in meters.
+    Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
+        // Start at the origin facing the +X direction
+        new Pose2d(0, 0, new Rotation2d(0)),
+        // Pass through these two interior waypoints, making an 's' curve path
+        List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
+        // End 3 meters straight ahead of where we started, facing forward
+        new Pose2d(3, 0, new Rotation2d(0)),
+        config);
+
+    var thetaController = new ProfiledPIDController(
+        AutoConstants.kPThetaController, 0, 0, AutoConstants.kThetaControllerConstraints);
+    thetaController.enableContinuousInput(-Math.PI, Math.PI);
+
+    // Reset odometry to the starting pose of the trajectory.
+    m_robotDrive.resetOdometry(exampleTrajectory.getInitialPose());
+
+    // Run path following command, then stop at the end.
+    return fullAuto.andThen(() -> m_robotDrive.drive(0, 0, 0, false));
   }
 }
