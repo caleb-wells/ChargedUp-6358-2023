@@ -48,12 +48,12 @@ public class RobotContainer {
   // Beginning of PathPlanner Code
   // This will load the file "MainAuto.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
   // for every path in the group
-  public static List<PathPlannerTrajectory> pathGroup = PathPlanner.loadPathGroup("MainAuto", new PathConstraints(4, 3));
+  public List<PathPlannerTrajectory> pathGroup = PathPlanner.loadPathGroup("MainAuto", new PathConstraints(4, 3));
 
   private Map<String, Command> eventMap = new HashMap<>();
 
   // Create the AutoBuilder. This only needs to be created once when robot code starts, not every time you want to create an auto command. A good place to put this is in RobotContainer along with your subsystems.
-  SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
+  public SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
     m_robotDrive::getPose, // Pose2d supplier
     m_robotDrive::resetOdometry, // Pose2d consumer, used to reset odometry at the beginning of auto
     m_robotDrive.getKinematics(), // SwerveDriveKinematics
@@ -66,7 +66,7 @@ public class RobotContainer {
    );
   // End of PathPlanner Code
 
-  Command fullAuto = autoBuilder.fullAuto(pathGroup);
+  public Command fullAuto = autoBuilder.fullAuto(pathGroup);
 
   Command mainAuto = new MainAuto();
   /**
