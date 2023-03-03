@@ -57,8 +57,10 @@ public class MainAuto extends SequentialCommandGroup {
     }
     //Once those three seconds have elapsed stop running arm
     new RunCommand(() -> new ExtendArm(0));
+
     //Drive robot forward
     fullAuto.schedule();
+    
     //Hopefully fix swerve error
     m_drive.drive(0, 0, 0, false);
     
