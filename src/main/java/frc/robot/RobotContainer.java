@@ -37,7 +37,6 @@ public class RobotContainer {
 
   public final Pneumatics m_piston = new Pneumatics();
 
-  Command mainAuto = new MainAuto();
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -105,6 +104,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return mainAuto;
+    return new MainAuto();
   }
 }
