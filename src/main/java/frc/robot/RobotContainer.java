@@ -67,13 +67,13 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    new JoystickButton(m_driverController, 3)
+    new JoystickButton(m_copilotController, 5)
         .whileTrue(new RunCommand(
           () -> new ExtendArm(1)))
         .whileFalse(new RunCommand(
           () -> new ExtendArm(0)));
       
-    new JoystickButton(m_driverController, 2)
+    new JoystickButton(m_copilotController, 6)
         .whileTrue(new RunCommand(
           () -> new ExtendArm(-1)))
         .whileFalse(new RunCommand(

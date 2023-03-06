@@ -50,15 +50,14 @@ public class MainAuto extends SequentialCommandGroup {
   public MainAuto() {
     //Start Timer
     timer.start();
-
     //While auto has been running for less than 3 seconds extend the arm
     while (timer.get() <= 3) {
       new RunCommand(() -> new ExtendArm(1));
     }
+
     //Once those three seconds have elapsed stop running arm
     new RunCommand(() -> new ExtendArm(0));
 
-    //Drive robot forward
     fullAuto.schedule();
     
     //Hopefully fix swerve error
