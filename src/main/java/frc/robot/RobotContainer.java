@@ -28,14 +28,6 @@ import frc.robot.subsystems.Pneumatics;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import java.util.HashMap;
-import java.util.List;
-import java.util.*;
-import com.pathplanner.lib.PathConstraints;
-import com.pathplanner.lib.PathPlanner;
-import com.pathplanner.lib.PathPlannerTrajectory;
-import com.pathplanner.lib.auto.PIDConstants;
-import com.pathplanner.lib.auto.SwerveAutoBuilder;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -54,30 +46,6 @@ public class RobotContainer {
 
   public final Pneumatics m_piston = new Pneumatics();
 
-  // Beginning of PathPlanner Code
-  // This will load the file "MainAuto.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
-  // for every path in the group
-  public static List<PathPlannerTrajectory> pathGroup = PathPlanner.loadPathGroup("MainAuto", new PathConstraints(4, 3));
-
-  private Map<String, Command> eventMap = new HashMap<>();
-
-  // Create the AutoBuilder. This only needs to be created once when robot code starts, not every time you want to create an auto command. A good place to put this is in RobotContainer along with your subsystems.
-  SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
-    m_robotDrive::getPose, // Pose2d supplier
-    m_robotDrive::resetOdometry, // Pose2d consumer, used to reset odometry at the beginning of auto
-    m_robotDrive.getKinematics(), // SwerveDriveKinematics
-    new PIDConstants(5.0, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
-    new PIDConstants(0.5, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
-    m_robotDrive::setModuleStates, // Module states consumer used to output to the drive subsystem
-    eventMap,
-    true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
-    m_robotDrive // The drive subsystem. Used to properly set the requirements of path following commands
-   );
-  // End of PathPlanner Code
-
-  Command fullAuto = autoBuilder.fullAuto(pathGroup);
-
-  Command mainAuto = new MainAuto();
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -108,13 +76,13 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    new JoystickButton(m_driverController, 3)
+    new JoystickButton(m_copilotController, 5)
         .whileTrue(new RunCommand(
           () -> new ExtendArm(1)))
         .whileFalse(new RunCommand(
           () -> new ExtendArm(0)));
       
-    new JoystickButton(m_driverController, 2)
+    new JoystickButton(m_copilotController, 6)
         .whileTrue(new RunCommand(
           () -> new ExtendArm(-1)))
         .whileFalse(new RunCommand(
@@ -145,31 +113,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // Create config for trajectory
-    TrajectoryConfig config = new TrajectoryConfig(
-        AutoConstants.kMaxSpeedMetersPerSecond,
-        AutoConstants.kMaxAccelerationMetersPerSecondSquared)
-        // Add kinematics to ensure max speed is actually obeyed
-        .setKinematics(DriveConstants.kDriveKinematics);
-
-    // An example trajectory to follow. All units in meters.
-    Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
-        // Start at the origin facing the +X direction
-        new Pose2d(0, 0, new Rotation2d(0)),
-        // Pass through these two interior waypoints, making an 's' curve path
-        List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
-        // End 3 meters straight ahead of where we started, facing forward
-        new Pose2d(3, 0, new Rotation2d(0)),
-        config);
-
-    var thetaController = new ProfiledPIDController(
-        AutoConstants.kPThetaController, 0, 0, AutoConstants.kThetaControllerConstraints);
-    thetaController.enableContinuousInput(-Math.PI, Math.PI);
-
-    // Reset odometry to the starting pose of the trajectory.
-    m_robotDrive.resetOdometry(exampleTrajectory.getInitialPose());
-
-    // Run path following command, then stop at the end.
-    return fullAuto.andThen(() -> m_robotDrive.drive(0, 0, 0, false));
+    return new MainAuto();
   }
 }
