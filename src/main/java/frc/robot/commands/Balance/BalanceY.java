@@ -8,22 +8,24 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveSubsystem;
 
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
+import edu.wpi.first.wpilibj.ADIS16470_IMU.IMUAxis;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-//import edu.wpi.first.wpilibj.ADIS16470_IMU.IMUAxis;
 
 public class BalanceY extends CommandBase {
   private static ADIS16470_IMU gyro = DriveSubsystem.m_gyro;
   private static DriveSubsystem robotDrive = RobotContainer.m_robotDrive;
 
   public BalanceY() {
-    //gyro.setYawAxis(IMUAxis.kY);
+    gyro.setYawAxis(IMUAxis.kY);
     double ySpeed = 0;
 
     while(gyro.getAngle() < -4.0 || gyro.getAngle() > 4.0) {
-        ySpeed = (gyro.getAngle()/5)/3;
+        //ySpeed = (gyro.getAngle()/5)/3;
+        ySpeed = 0.1;
         robotDrive.drive(0, ySpeed, 0, false);
     }
-    //gyro.setYawAxis(IMUAxis.kZ);
+    
+    gyro.setYawAxis(IMUAxis.kZ);
   }
 
   // Called when the command is initially scheduled.
