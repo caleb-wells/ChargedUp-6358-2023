@@ -10,8 +10,8 @@ To get started, make sure you have calibrated the zero offsets for the absolute 
 
 ## Prerequisites
 * `SPARK MAX Firmware` **v1.6.3** - Adds features that are required for our swerve
-* `REVLib` **v2023.1.1** - Includes APIs for the new firmware features
-* `WPILib` **v2023.4.1** - Newest version available at the time this repository was updated. *Future versions may not be compatible with this project*
+* `REVLib` **v2023.1.3** - Includes APIs for the new firmware features
+* `WPILib` **v2023.4.2** - Newest version available at the time this repository was updated. *Future/Previous versions may not be compatible with this project*
 
 ## Recommended Extensions
 * Colorful Comments v1.1.0 or Higher
