@@ -7,12 +7,16 @@ package frc.robot.commands.Arm;
 import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.subsystems.ArmSubsystem;
 
 public class ExtendArm extends CommandBase {
   public static final VictorSP armMotor = new VictorSP(Constants.ExtraMotorConstants.armMotor);
+  public static ArmSubsystem arm = new ArmSubsystem();
 
   public ExtendArm(double speed) {
-    armMotor.set(speed);
+    if(!arm.isFullyExtended()) {
+      armMotor.set(speed); 
+    }
   }
 
 }

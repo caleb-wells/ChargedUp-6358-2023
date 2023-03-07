@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.Drive.SetCoastModeCommand;
 import frc.robot.commands.LEDs.SetLEDs;
+import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.SwerveModule;
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
@@ -40,6 +41,8 @@ public class Robot extends TimedRobot {
   public static double defaultLEDColor = (kAllianceString.contains("Blue") ? 0.85 : 0.61); //Sets the color to our alliance color
 
   public static InstantCommand setLEDDefault = new InstantCommand(() -> new SetLEDs(defaultLEDColor, m_leds));
+
+  public static ArmSubsystem armSubsystem = RobotContainer.m_armSubsystem;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -162,7 +165,9 @@ public class Robot extends TimedRobot {
 
   /* This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() { }
+  public void teleopPeriodic() { 
+    System.out.println(armSubsystem.getDistance()/360);
+  }
 
   @Override
   public void testInit() {

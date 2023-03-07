@@ -5,17 +5,8 @@
 package frc.robot;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.Constants.AutoConstants;
-import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.Arm.ExtendArm;
 import frc.robot.commands.Arm.RaiseArm;
@@ -23,6 +14,7 @@ import frc.robot.commands.Auto.MainAuto;
 import frc.robot.commands.Piston.ExtendPiston;
 import frc.robot.commands.Piston.RetractPiston;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.Pneumatics;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -37,6 +29,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  */
 public class RobotContainer {
   public static final DriveSubsystem m_robotDrive = new DriveSubsystem();
+
+  public static final ArmSubsystem m_armSubsystem = new ArmSubsystem();
 
   public final XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
 
