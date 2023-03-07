@@ -31,8 +31,6 @@ public class Robot extends TimedRobot {
 
   public RobotContainer m_robotContainer;
 
-  //private ADIS16470_IMU m_gyro = DriveSubsystem.m_gyro;
-
   public static SwerveModule m_SDModule = DriveSubsystem.m_frontRight;
 
   public static Spark m_leds = RobotContainer.m_leds;
@@ -44,6 +42,8 @@ public class Robot extends TimedRobot {
   public static InstantCommand setLEDDefault = new InstantCommand(() -> new SetLEDs(defaultLEDColor, m_leds));
 
   public static ArmSubsystem armSubsystem = RobotContainer.m_armSubsystem;
+
+  //private ADIS16470_IMU m_gyro = DriveSubsystem.m_gyro;
 
   /**
    * This function is run when the robot is first started up and should be used for any
