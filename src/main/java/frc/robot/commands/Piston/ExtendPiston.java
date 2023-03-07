@@ -4,9 +4,10 @@
 
 package frc.robot.commands.Piston;
 
+import frc.robot.subsystems.Pneumatics;
+
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.subsystems.Pneumatics;
 
 public class ExtendPiston extends InstantCommand {
   

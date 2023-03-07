@@ -4,7 +4,10 @@
 
 package frc.robot.subsystems;
 
+import frc.robot.Constants.DriveConstants;
+
 import com.revrobotics.CANSparkMax.IdleMode;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -13,30 +16,29 @@ import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
-import frc.robot.Constants.DriveConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveSubsystem extends SubsystemBase {
 
-  //Blue
+  //Blue - Front Left
   private static final SwerveModule m_frontLeft = new SwerveModule(
       DriveConstants.kFrontLeftDrivingCanId,
       DriveConstants.kFrontLeftTurningCanId,
       DriveConstants.kFrontLeftChassisAngularOffset);
 
-  //Red
+  //Red - Front Right
   public static final SwerveModule m_frontRight = new SwerveModule(
       DriveConstants.kFrontRightDrivingCanId,
       DriveConstants.kFrontRightTurningCanId,
       DriveConstants.kFrontRightChassisAngularOffset);
 
-  //Yellow
+  //Yellow - Back Left
   private static final SwerveModule m_rearLeft = new SwerveModule(
       DriveConstants.kRearLeftDrivingCanId,
       DriveConstants.kRearLeftTurningCanId,
       DriveConstants.kBackLeftChassisAngularOffset);
 
-  //Orange
+  //Orange - Back Right
   private static final SwerveModule m_rearRight = new SwerveModule(
       DriveConstants.kRearRightDrivingCanId,
       DriveConstants.kRearRightTurningCanId,

@@ -162,4 +162,8 @@ public final class Constants {
     public static final int armEncoderChannel1 = 0;
     public static final int armEncoderChannel2 = 1;
   }
+
+  public static final class LEDConstants {
+    public static final int ledSparkPort = 0;
+  }
 }

@@ -4,9 +4,10 @@
 
 package frc.robot.commands.Arm;
 
+import frc.robot.Constants;
+
 import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 
 public class RaiseArm extends CommandBase {
   

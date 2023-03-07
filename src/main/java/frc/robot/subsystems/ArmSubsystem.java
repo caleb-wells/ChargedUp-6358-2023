@@ -4,12 +4,13 @@
 
 package frc.robot.subsystems;
 
+import frc.robot.Constants;
+import frc.robot.Constants.ArmConstants;
+
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
-import frc.robot.Constants.ArmConstants;
 
 public class ArmSubsystem extends SubsystemBase {
   /** Creates a new ArmSubsystem. */

@@ -4,6 +4,9 @@
 
 package frc.robot.commands.Auto;
 
+import frc.robot.commands.Arm.ExtendArm;
+import frc.robot.subsystems.DriveSubsystem;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,8 +21,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.Arm.ExtendArm;
-import frc.robot.subsystems.DriveSubsystem;
+
 
 public class MainAuto extends SequentialCommandGroup {
   private Timer timer = new Timer();
@@ -68,7 +70,7 @@ public class MainAuto extends SequentialCommandGroup {
     
     //Stop and Reset Timer
     timer.stop();
-    
+
     //System.out.println("Robot Autonomous ended in " + timer.get() + " seconds.");
     timer.reset();
    }
