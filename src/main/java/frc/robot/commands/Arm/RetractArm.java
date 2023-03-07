@@ -7,12 +7,12 @@ package frc.robot.commands.Arm;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ArmSubsystem;
 
-public class ExtendArm extends CommandBase {
+public class RetractArm extends CommandBase {
   public static ArmSubsystem arm = new ArmSubsystem();
 
-  public ExtendArm(double speed) {
-    if(!arm.isFullyExtendedOut()) {
-      arm.setMotorSpeed(speed); 
+  public RetractArm(double speed) {
+    if(!arm.isFullyExtendedIn()) {
+      arm.setMotorSpeed(speed);
     }
   }
 

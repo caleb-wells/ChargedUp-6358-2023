@@ -6,24 +6,41 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Constants.ArmConstants;
 
 public class ArmSubsystem extends SubsystemBase {
   /** Creates a new ArmSubsystem. */
   private final Encoder m_encoder;
   private double distance = 0;
+  public static final VictorSP armMotor = new VictorSP(Constants.ExtraMotorConstants.armMotor);
 
   public ArmSubsystem() {
     m_encoder = new Encoder(ArmConstants.armEncoderChannel1, ArmConstants.armEncoderChannel2, false, CounterBase.EncodingType.k4X);
     m_encoder.setDistancePerPulse(1);
   }
 
-  public boolean isFullyExtended() {
-
+  public boolean isFullyExtendedOut() {
     distance = (m_encoder.getDistance()/360);
 
-    if(Math.abs(distance) <= 13) {
+    if(distance <= 13) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  /** */
+  public void setMotorSpeed(double speed){
+    armMotor.set(speed);
+  }
+
+  public boolean isFullyExtendedIn() {
+    distance = (m_encoder.getDistance()/360);
+
+    if(distance <= -13) {
       return true;
     } else {
       return false;

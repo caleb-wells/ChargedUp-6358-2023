@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.Arm.ExtendArm;
 import frc.robot.commands.Arm.RaiseArm;
+import frc.robot.commands.Arm.RetractArm;
 import frc.robot.commands.Auto.MainAuto;
 import frc.robot.commands.Piston.ExtendPiston;
 import frc.robot.commands.Piston.RetractPiston;
@@ -78,9 +79,9 @@ public class RobotContainer {
       
     new JoystickButton(m_copilotController, 6)
         .whileTrue(new RunCommand(
-          () -> new ExtendArm(-1)))
+          () -> new RetractArm(-1)))
         .whileFalse(new RunCommand(
-          () -> new ExtendArm(0)));
+          () -> new RetractArm(0)));
 
     new JoystickButton(m_copilotController, 2)
         .whileTrue(new RunCommand(

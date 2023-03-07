@@ -26,9 +26,9 @@ public class MainAuto extends SequentialCommandGroup {
   private DriveSubsystem m_drive = new DriveSubsystem();
   
   // Beginning of PathPlanner Code
-  // This will load the file "MainAuto.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
+  // This will load the file "MainAuto.path" and generate it with a max velocity of 2 m/s and a max acceleration of 0.5 m/s^2
   // for every path in the group
-  public List<PathPlannerTrajectory> pathGroup = PathPlanner.loadPathGroup("MainAuto", new PathConstraints(4, 3));
+  public List<PathPlannerTrajectory> pathGroup = PathPlanner.loadPathGroup("MainAuto", new PathConstraints(2, 0.5));
 
   private Map<String, Command> eventMap = new HashMap<>();
 
@@ -45,11 +45,13 @@ public class MainAuto extends SequentialCommandGroup {
     m_drive // The drive subsystem. Used to properly set the requirements of path following commands
    );
   // End of PathPlanner Code
+
   public Command fullAuto = autoBuilder.fullAuto(pathGroup);
 
   public MainAuto() {
     //Start Timer
     timer.start();
+
     //While auto has been running for less than 3 seconds extend the arm
     while (timer.get() <= 3) {
       new RunCommand(() -> new ExtendArm(1));
@@ -58,6 +60,7 @@ public class MainAuto extends SequentialCommandGroup {
     //Once those three seconds have elapsed stop running arm
     new RunCommand(() -> new ExtendArm(0));
 
+    //Schedule Auto command so that the robot moves (In Theory)
     fullAuto.schedule();
     
     //Hopefully fix swerve error
@@ -65,6 +68,7 @@ public class MainAuto extends SequentialCommandGroup {
     
     //Stop and Reset Timer
     timer.stop();
+    
     //System.out.println("Robot Autonomous ended in " + timer.get() + " seconds.");
     timer.reset();
    }
