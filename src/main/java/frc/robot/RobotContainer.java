@@ -18,11 +18,10 @@ import frc.robot.subsystems.Pneumatics;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
-
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
@@ -40,7 +39,7 @@ public class RobotContainer {
 
   public final Pneumatics m_piston = new Pneumatics();
 
-  public final XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
+  public final CommandXboxController m_driverController = new CommandXboxController(OIConstants.kDriverControllerPort);
 
   public final Joystick m_copilotController = new Joystick(OIConstants.kCoPilotControllerPort);
 
@@ -79,13 +78,13 @@ public class RobotContainer {
 
     new JoystickButton(m_copilotController, 2)
       .whileTrue(new RunCommand(
-        () -> new RaiseArm(0.85)))
+        () -> new RaiseArm(0.86)))
       .whileFalse(new RunCommand(
         () -> new RaiseArm(0)));
 
     new JoystickButton(m_copilotController, 3)
       .whileTrue(new RunCommand(
-        () -> new RaiseArm(-0.85)))
+        () -> new RaiseArm(-0.86)))
       .whileFalse(new RunCommand(
         () -> new RaiseArm(0)));
 
