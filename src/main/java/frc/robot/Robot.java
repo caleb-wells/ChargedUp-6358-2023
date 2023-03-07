@@ -56,6 +56,7 @@ public class Robot extends TimedRobot {
 
     //Sets the color of the LEDs on the robot
     kAllianceString = DriverStation.getAlliance().toString();
+
     if(kAllianceString.contains("Red")) {
       defaultLEDColor = 0.61;
     }
@@ -174,6 +175,7 @@ public class Robot extends TimedRobot {
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
+    
     //RobotContainer.m_robotDrive.setBrakeMode(true);
   }
 
