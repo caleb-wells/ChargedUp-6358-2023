@@ -53,13 +53,13 @@ public class RobotContainer {
     // Configure default commands --> This is how the robot drives, should not need to be adjusted, if the robot is driving
     // improperly, it is very likely that it is somewhere else in the code *cough* SwerveModule.java *cough*
     m_robotDrive.setDefaultCommand(
-        new RunCommand(
-            () -> m_robotDrive.drive(
-                MathUtil.applyDeadband(-m_driverController.getLeftY(), 0.11),
-                MathUtil.applyDeadband(-m_driverController.getLeftX(), 0.11),
-                MathUtil.applyDeadband(-m_driverController.getRightX(), 0.11),
-                false),
-            m_robotDrive));
+      new RunCommand(
+        () -> m_robotDrive.drive(
+          MathUtil.applyDeadband(-m_driverController.getLeftY(), 0.11),
+          MathUtil.applyDeadband(-m_driverController.getLeftX(), 0.11),
+          MathUtil.applyDeadband(-m_driverController.getRightX(), 0.11),
+          false),
+          m_robotDrive));
   }
 
   /**
