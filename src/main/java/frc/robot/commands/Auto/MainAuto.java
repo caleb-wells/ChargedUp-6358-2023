@@ -72,7 +72,6 @@ public class MainAuto extends SequentialCommandGroup {
     //Stop and Reset Timer
     timer.stop();
 
-    //System.out.println("Robot Autonomous ended in " + timer.get() + " seconds.");
     timer.reset();
    }
   
