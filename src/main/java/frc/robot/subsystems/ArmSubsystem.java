@@ -19,7 +19,7 @@ public class ArmSubsystem extends SubsystemBase {
   public static final VictorSP armMotor = new VictorSP(Constants.ExtraMotorConstants.armMotor);
 
   public ArmSubsystem() {
-    m_encoder = new Encoder(ArmConstants.armEncoderChannel1, ArmConstants.armEncoderChannel2, false, CounterBase.EncodingType.k4X);
+    m_encoder = new Encoder(ArmConstants.armEncoderChannel1, ArmConstants.armEncoderChannel2, true, CounterBase.EncodingType.k4X);
     m_encoder.setDistancePerPulse(1);
   }
 
@@ -27,9 +27,9 @@ public class ArmSubsystem extends SubsystemBase {
     distance = (m_encoder.getDistance()/360);
 
     if(distance <= 13) {
-      return true;
-    } else {
       return false;
+    } else {
+      return true;
     }
   }
 
@@ -41,7 +41,7 @@ public class ArmSubsystem extends SubsystemBase {
   public boolean isFullyExtendedIn() {
     distance = (m_encoder.getDistance()/360);
 
-    if(distance <= -13) {
+    if(distance <= 1.25 && distance >= -0.5) {
       return true;
     } else {
       return false;
