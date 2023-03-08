@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.VisionConstants;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import edu.wpi.first.networktables.NetworkTable;
@@ -21,20 +22,12 @@ public class LimelightVision extends SubsystemBase {
 
   double targetOffsetAngle_Vertical = ty.getDouble(0.0);
   
-  //How many degrees back is your limelight rotated from perfectly vertical?
-  double limelightMountAngleDegrees = 25.0;
-  
-  //Distance from the center of the Limelight lens to the floor
-  double limelightLensHeightInches = 20.0;
-  
-  //Distance from the target to the floor
-  double goalHeightInches = 60.0;
-  
-  double angleToGoalDegrees = limelightMountAngleDegrees + targetOffsetAngle_Vertical;
+  double angleToGoalDegrees = VisionConstants.limelightMountAngleDegrees + targetOffsetAngle_Vertical;
+    
   double angleToGoalRadians = angleToGoalDegrees * (Math.PI / 180.0);
-  
+
   //Calculate Distance
-  double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches)/Math.tan(angleToGoalRadians);
+  double distanceFromLimelightToGoalInches = (VisionConstants.goalHeightInches - VisionConstants.limelightLensHeightInches)/Math.tan(angleToGoalRadians);
 
   public LimelightVision() { }
 

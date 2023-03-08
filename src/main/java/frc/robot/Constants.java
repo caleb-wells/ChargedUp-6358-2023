@@ -48,7 +48,7 @@ public final class Constants {
     public static final double kBackLeftChassisAngularOffset = Math.PI;
     public static final double kBackRightChassisAngularOffset = Math.PI / 2;
 
-    //&Driving SPARK MAX IDs
+    //&Driving SPARK MAX CAN IDs
     //Red
     public static final int kFrontLeftDrivingCanId = 9;
     //Blue
@@ -58,7 +58,7 @@ public final class Constants {
     //Yellow
     public static final int kRearRightDrivingCanId = 7;
 
-    //&Turning SPARK MAX IDs
+    //&Turning SPARK MAX CAN IDs
     //Red
     public static final int kFrontLeftTurningCanId = 2;
     //Blue
@@ -165,5 +165,16 @@ public final class Constants {
 
   public static final class LEDConstants {
     public static final int ledSparkPort = 0;
+  }
+
+  public static final class VisionConstants {
+    //How many degrees back is your limelight rotated from perfectly vertical?
+    public static final double limelightMountAngleDegrees = 25.0;
+
+    //Distance from the center of the Limelight lens to the floor
+    public static final double limelightLensHeightInches = 20.0;
+
+    //Distance from the target to the floor
+    public static final double goalHeightInches = 60.0;
   }
 }
