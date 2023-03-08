@@ -23,7 +23,7 @@ public class SetCoastModeCommand extends InstantCommand {
 
   @Override
   public void initialize() {
-    m_subsystem.setBrakeMode(false); // Disable brake mode
+    m_subsystem.setBrakeMode(true); // Disable brake mode
   }
 
   @Override
