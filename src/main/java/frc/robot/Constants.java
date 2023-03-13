@@ -122,7 +122,7 @@ public final class Constants {
     public static final double kTurningMaxOutput = 1;
 
     //Current limits <- Prevents Brownouts and high battery draw
-    public static final int kDrivingMotorCurrentLimit = 55; // amps
+    public static final int kDrivingMotorCurrentLimit = 50; // amps
     public static final int kTurningMotorCurrentLimit = 25; // amps 
   }
 

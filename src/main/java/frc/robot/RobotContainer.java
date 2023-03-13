@@ -9,7 +9,6 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.commands.Arm.ExtendArm;
 import frc.robot.commands.Arm.RaiseArm;
 import frc.robot.commands.Arm.RetractArm;
-import frc.robot.commands.Auto.MainAuto;
 import frc.robot.commands.Piston.ExtendPiston;
 import frc.robot.commands.Piston.RetractPiston;
 import frc.robot.subsystems.ArmSubsystem;
@@ -19,7 +18,6 @@ import frc.robot.subsystems.Pneumatics;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -103,14 +101,5 @@ public class RobotContainer {
         () -> new RetractArm(-1)))
       .whileFalse(new RunCommand(
         () -> new RetractArm(0)));
-  }
-
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
-  public Command getAutonomousCommand() {
-    return new MainAuto();
   }
 }
