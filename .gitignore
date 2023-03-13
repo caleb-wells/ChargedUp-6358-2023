@@ -169,3 +169,6 @@ bin/
 # wpilib preferences
 .wpilib
 /.wpilib
+
+#IntelliJ Idea IDE folder
+.idea
